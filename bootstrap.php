@@ -39,7 +39,7 @@ function __autoload($class_name) {
  * of each registred file, and that it's globally access-
  * able.
  *
- * @usage 	$registr->objectName = new Object;
+ * @usage 	$registry->objectName = new Object;
  *
  */
 
