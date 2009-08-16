@@ -27,6 +27,6 @@ else {
 	if (!method_exists($object, $_POST['action']))
 		throw new Exception($_POST['action'] . ' method not found @ Handler');
 	else 
-		$object->$action();
+		$object->$action($_POST);
 }
 ?>
