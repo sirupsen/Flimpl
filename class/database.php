@@ -82,6 +82,8 @@ class Database {
 	 * @parm 	string 	$query 	The query to perform
 	 * @parm 	array 	$return The result array
 	 *
+	 * @todo 	Print a warning if there's no entries (by default
+	 * it'll give a warning that foreach got a wrong condition)
 	 */
 
 	public function select_tpl($query) {
@@ -93,6 +95,9 @@ class Database {
 		while ($row = mysql_fetch_assoc($query)) {
 			$return[] = $row;
 		}
+
+		if(mysql_num_rows($query) < 1)
+			return array("No entries");
 
 		return $return;
 	}
