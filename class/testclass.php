@@ -43,7 +43,7 @@ class TestClass {
 		while ($row = mysql_fetch_assoc($query)) {
 			$return[] = array(
 				"name" => $row['name'] . 'John',
-				"age" => $this->plusAge($row['column'], 2)
+				"age" => $this->plusAge($row['age'], 8)
 			);
 		}
 
