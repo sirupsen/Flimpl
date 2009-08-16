@@ -48,10 +48,13 @@ body {
     
 	font-family: verdana, arial, sans-serif;
     font-size: 10pt;
+
+	font-weight: 700;
 }
 
 p {
     padding: 5px 0 10px 0;
+	line-height: 13pt;
 }
 
 a {
@@ -121,7 +124,7 @@ h2 {
 
 h3 {
    color: #01B0F0;
-   font-size: 150%;
+   font-size: 200%;
    font-weight: 700;
 }
 
@@ -514,6 +517,10 @@ br.both{
 
 .indent {
 	margin-left: 20px;
+}
+
+.super-indent {
+	margin-left: 40px;
 }
 
 /* Uploading */

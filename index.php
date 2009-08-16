@@ -11,12 +11,13 @@
 require_once("bootstrap.php");
 
 // Instances the TestClass which we call a function from, to fetch custom information
-$test_class = new TestClass;
+$sample = new Sample;
 
 // Instances the Template class
 $tpl = new Template;
 
-
+$tpl->articles = $sample->getArticles();
+$tpl->links = $registry->db->select_tpl("SELECT name, url FROM links");
 
 echo $tpl;
 ?>

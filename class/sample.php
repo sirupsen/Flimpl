@@ -37,34 +37,21 @@ class Sample {
 	 *
 	 */
 
-	public function selectCustom() {
-		$query = $this->registry->db->select("SELECT * FROM names");
+	public function getArticles() {
+		$query = $this->registry->db->select("SELECT * FROM articles");
 		
 		if (mysql_num_rows($query) < 1)
 			return array('No entries');
 
 		while ($row = mysql_fetch_assoc($query)) {
 			$return[] = array(
-				"name" => $row['name'] . 'John',
-				"age" => $this->plusAge($row['age'], 8)
+				'title' => $row['title'],
+				'text' => $row['text'],
+				'author' => $row['author'],
+				'time' => $this->registry->lib->timeDifference($row['time'])
 			);
 		}
 
 		return $return;
-	}
-
-	/*
-	 *
-	 * A simple function within this class to plus the age with
-	 * a custom number.
-	 *
-	 * @parm 	integer 	$age 	The current age
-	 * @parm 	integer 	$plus 	What should be added to the age
-	 * @return 	integer 	$.. 	First parm + second parm
-	 *
-	 */
-
-	private function plusAge($age, $plus) {
-		return $age + $plus;
 	}
 }
