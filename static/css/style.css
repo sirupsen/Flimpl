@@ -109,18 +109,26 @@ a:hover {
 
 h1 {
     color: #E82960;
-    font-size: 300%;
+    font-size: 400%;
 	font-weight:700;
 }
 
 h2 {
     color: #CAE847;
     font-size: 220%;
+	font-weight: 700;
 }
 
 h3 {
    color: #01B0F0;
    font-size: 150%;
+   font-weight: 700;
+}
+
+/* Larger classes */
+
+#content {
+	margin-top: 20px;
 }
 
 /* Navigation */
@@ -168,8 +176,12 @@ hr {
     margin: 0;
 }
 
-/* Validation classes */
 
+.weight {
+	font-weight: 700;
+}
+/* Validation classes */
+class
 input.valid {
 	color: #AEEE00;
 	border: 1px solid;
