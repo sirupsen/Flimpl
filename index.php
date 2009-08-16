@@ -29,6 +29,13 @@ $tpl->articles = array(array('title' => 'Title #1', 'content' => 'Content #1'), 
 // rows from the query into the names variable ($names)
 $tpl->names = $registry->db->select_tpl("SELECT * FROM names");
 
+$data = array(
+	'name' => 'name_raw',
+	'age' => 'column_raw'
+);
+
+$registry->db->insert('names', $data);
+
 // This time we use a method from the TestClass, and puts
 // it into the fucked variable ($fucked), this method
 // simply takes some stuff from a database and makes
