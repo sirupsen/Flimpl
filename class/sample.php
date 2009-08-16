@@ -13,7 +13,7 @@ require_once("bootstrap.php");
  *
  */
 
-class TestClass {
+class Sample {
     protected $registry;
 	
 	/*
