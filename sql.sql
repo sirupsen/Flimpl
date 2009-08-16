@@ -10,7 +10,7 @@ USE `db`;
 CREATE TABLE `names` (
    `id` int(11),
    `name` varchar(255),
-   `column` varchar(255),
+   `age` varchar(255),
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET latin1;
 
