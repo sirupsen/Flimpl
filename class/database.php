@@ -115,25 +115,21 @@ class Database {
 		if(empty($data))
 			throw new Exception("No data defined for insert() @ Database");
 
-		$columns = '(';
-		$values = '(';
-
 		foreach ($data as $key => $value) {
-			$columns .= $key . ',';
+			$sets .= $key . " = ";
 
 			if (is_null($value)) {
-				$values .= 'NULL,';
+				$values .= 'NULL, ';
 			}
 
 			$value = addslashes($value);
-			$values .= $value . ',';
+			$sets .= "'" . $value . "', ";
 		}
-		
-		// Remove the last dot, and adds the last ")"
-		$columns = rtrim($columns, ',') . ')';
-		$values = rtrim($values, ',') . ')';
+		$sets = rtrim($sets, ', ');
 
-		$query = 'INSERT INTO' . $table . $columns . ' VALUES ' . $values;
+		$query = 'INSERT INTO ' . $table . ' SET ' . $sets;
+
+		echo $query;
 
 		return $this->insertQuery($query);
 	}
@@ -205,7 +201,7 @@ class Database {
 
 	public function delete($table, $conditions) {	
 		if(empty($table))
-			throw new Exception("No table defined for insert() @ Database");
+			throw new Exception("No table defined for delete() @ Database");
 
 		if(empty($conditions))
 			throw new Exception("Must pass conditions array to delete() @ Database");
