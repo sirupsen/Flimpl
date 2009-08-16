@@ -1,10 +1,11 @@
 Flimpl
 ======
+Flimpl is a simple non-mvc framework I made – mostly to see if I could, and making a framework turns out to be the very best way to expand your knowledge in a language you thought you already mastered. It has some basic features, and is faily fast.
+
+As this is an open source project, you are welcome to fork it and request me to pull your changes.
 
 Author: Sirupsen
-
 Website: http://sirupsen.dk/
-
 Contact: sirup@sirupsen.dk
 
 Introduction
