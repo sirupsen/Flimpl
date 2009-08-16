@@ -2,7 +2,9 @@ Flimpl
 ======
 
 Author: Sirupsen
+
 Website: http://sirupsen.dk/
+
 Contact: sirup@sirupsen.dk
 
 Introduction
@@ -41,7 +43,7 @@ The registry class is used for handling all the instances of classes created thr
 Template Class
 --------------
 
-	The template class is to define variables inside templates, this is so that all the php is kept away from the actual template file. Except for the printing of the actual values, which uses the well known php markup. I felt there were no need to create a new markup for this part, I don't like smarty like engines they provide a totally different markup for the template system, and it's slower when it's such a big system. This class simply uses PHP as the template engine. For usage see the /index.php file.
+The template class is to define variables inside templates, this is so that all the php is kept away from the actual template file. Except for the printing of the actual values, which uses the well known php markup. I felt there were no need to create a new markup for this part, I don't like smarty like engines they provide a totally different markup for the template system, and it's slower when it's such a big system. This class simply uses PHP as the template engine. For usage see the /index.php file.
 
 Library Class
 -------------
