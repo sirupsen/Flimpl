@@ -39,11 +39,8 @@ class Sample {
 
 	public function getArticles() {
 		$query = $this->registry->db->select("SELECT * FROM articles");
-		
-		if (mysql_num_rows($query) < 1)
-			return array('No entries');
 
-		while ($row = mysql_fetch_assoc($query)) {
+		while ($row = mysqli_fetch_assoc($query)) {
 			$return[] = array(
 				'title' => $row['title'],
 				'text' => $row['text'],
