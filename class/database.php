@@ -1,5 +1,4 @@
 <?php
-require_once("bootstrap.php");
 
 /*
  *
@@ -13,6 +12,8 @@ require_once("bootstrap.php");
  */
 
 class Database {
+
+	public $mysqli;
 	
 	/*
 	 *
@@ -27,30 +28,7 @@ class Database {
 	 */
 
 	public function __construct($host='localhost', $user='root', $password='', $db='db') {
-		$this->connect($host, $user, $password, $db);
-	}
-	
-	/*
-	 * The function which makes the actual connection to the database.
-	 *
-	 * @parm 	string 	$host 	The host (f.e. localhost)
-	 * @parm 	string 	$user 	The username (f.e. root)
-	 * @parm 	string 	$password 	The password (f.e. password)
-	 * @parm 	string 	$db 	The database used (f.e. database)
-	 *
-	 */
-
-	public function connect($host, $user, $password, $db) {
-		// Connects to database and notifies on error
-		$connect = mysql_connect($host, $user, $password);
-		if(!$connect)
-			throw new Exception("Couldn't connect to $host as $user");
-		
-		if($db != FALSE) {
-			$select_db = mysql_select_db($db, $connect);
-			if(!$select_db)
-				throw new Exception("Couldn't select the database '$db'");
-		}
+		$this->mysqli = new Mysqli($host, $user, $password, $db);
 	}
 
 	/*
@@ -65,9 +43,9 @@ class Database {
 	 */
 
 	public function select($query) {
-		$query = mysql_query($query);
+		$query = $this->mysqli->query($query);
 
-		if (!$query)
+		if (!$query || !is_object($query))
 			throw new Exception("Unable to select");
 
 		return $query;
@@ -84,20 +62,18 @@ class Database {
 	 *
 	 * @todo 	Print a warning if there's no entries (by default
 	 * it'll give a warning that foreach got a wrong condition)
+	 *
 	 */
 
 	public function select_tpl($query) {
-		$query = mysql_query($query);
+		$query = $this->mysqli->query($query);
 
-		if (!$query)
-			throw new Exception("Unable to select");
+		if (!$query || !is_object($query))
+			throw new Exception("Unable to select_tpl");
 
-		while ($row = mysql_fetch_assoc($query)) {
+		while ($row = $query->fetch_assoc()) {
 			$return[] = $row;
 		}
-
-		if(mysql_num_rows($query) < 1)
-			return array("No entries");
 
 		return $return;
 	}
@@ -132,9 +108,7 @@ class Database {
 		}
 		$sets = rtrim($sets, ', ');
 
-		$query = 'INSERT INTO ' . $table . ' SET ' . $sets;
-
-		echo $query;
+		$query = "INSERT INTO {$table} SET {$sets}";
 
 		return $this->insertQuery($query);
 	}
@@ -171,7 +145,7 @@ class Database {
 			}
 
 			$value = addslashes($value);
-			$sets .= $value . ',';
+			$sets .= "'" . $value . "',";
 		}
 
 		foreach ($conditions as $key => $value) {
@@ -182,17 +156,17 @@ class Database {
 			}
 
 			$value = addslashes($value);
-			$conditions_sql .= $value . ' AND ';
+			$conditions_sql .= "'" . $value . "' AND ";
 		}
 
 		// Remove trailing comma from the sets
 		$sets = rtrim($sets, ',');
 		// Remove trailing AND from the conditions
-		$condition_sql = rtrim($conditions_sql, ' AND '); 
+		$conditions = rtrim($conditions_sql, ' AND '); 
 
-		$query = 'UPDATE' . $table . ' SET ' . $sets . ' WHERE ' . $conditions_sql;
+		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions}";
 
-		return $this->updateQuery($query, $this->con);
+		return $this->updateQuery($query);
 	}
 
 	/*
@@ -218,8 +192,9 @@ class Database {
 				throw new Exception("Must pass values to all conditions");
 
 			$value = addslashes($value);
-			$sets .= $value . ' AND ';
+			$sets .= "'" . $value . "' AND ";
 		}
+		$conditions = rtrim($sets, ' AND ');
 
 		$sql = "DELETE FROM {$table} WHERE {$conditions}";
 
@@ -249,7 +224,7 @@ class Database {
 		$sql = explode(';', $content);
 
 		foreach($sql as $query) {
-			mysql_query($query);
+			$this->mysqli->query($query);
 		}
 
 		return true;
@@ -266,12 +241,12 @@ class Database {
 	 */
 
 	public function insertQuery($query) {
-		$query = mysql_query($query);	
+		$query = $this->mysqli->query($query);	
 
 		if (!$query)
 			throw new Exception("Couldn't insert @ Databse: " . mysql_error());
 
-		return mysql_insert_id();	
+		return $this->mysqli->insert_id;	
 	}
 
 	/*
@@ -285,12 +260,12 @@ class Database {
 	 */
 
 	public function updateQuery($query) {
-		$query = mysql_query($query);
+		$query = $this->mysqli->query($query);
 
 		if (!$query)
 			throw new Exception("Couldn't update @ Database: " . mysql_error());
 
-		return mysql_affected_rows();
+		return $this->mysqli->affected_rows;
 	}
 
 	/*
@@ -306,11 +281,11 @@ class Database {
 	 */
 
 	public function deleteQuery($query) {
-		$query = mysql_query($query);
+		$query = $this->mysqli->query($query);
 
 		if (!$query)
 			throw new Exception("Couldn't delete @ Database: " . mysql_error());
 
-		return mysql_affected_rows();
+		return $this->mysqli->affected_rows;
 	}
 }
