@@ -40,7 +40,7 @@ class Sample {
 	public function getArticles() {
 		$query = $this->registry->db->select("SELECT * FROM articles");
 
-		while ($row = mysqli_fetch_assoc($query)) {
+		while ($row = $query->fetch_assoc()) {
 			$return[] = array(
 				'title' => $row['title'],
 				'text' => $row['text'],
