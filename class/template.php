@@ -51,14 +51,14 @@ final class Template {
 		return $break[count($break) - 1];
 	}
 
-	/**
+	/*
 	*
 	* Extracts the array into strings, and then includes the template file
 	* and returns it.
 	*
 	* @return 	mixed 	$content 	The template files content
 	*
-	*/
+        */
 
     private function process() {
         extract($this->data);
@@ -66,7 +66,7 @@ final class Template {
 		ob_start();
         include($this->template);
 		$content = ob_get_contents();
-		ob_end_clean();
+		ob_clean();
 
 		return $content;
     }
