@@ -59,7 +59,7 @@ class Library {
 		return "$difference $periods[$j] {$tense}";
 	}
 
-	public function tweet($message, $user, $password) {
+	public function tweet($message, $username, $password) {
 		$context = stream_context_create(array( 
 			'http' => array( 
 			  'method'  => 'POST', 
