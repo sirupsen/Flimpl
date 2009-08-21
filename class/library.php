@@ -81,5 +81,17 @@ class Library {
 
 		return $grav_url;
 	}
+
+	public function email($to, $subject, $message, $from="sirup@sirupsen.dk", $additional_headers) {
+		$headers = "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html\r\n";
+		$headers .= "To: $to\r\n";
+		$headers .= "From: $from\r\n";
+		
+		if ($additional_headers > 0)
+			$headers .= $additional_headers;
+
+		mail($to, $subject, $message, $headers);
+	}
 }
 ?>
