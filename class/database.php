@@ -38,12 +38,34 @@ class Database {
 	 * @parm 	string 	$query 	The query to perform
 	 * @return 	string 	$query 	The query
 	 *
-	 * @todo Make this class escape a condition array (key => value)
 	 *
 	 */
 
-	public function select($query) {
-		$query = $this->mysqli->query($query);
+	public function select($table, $columns='*', $conditions='', $extra='') {
+		if(is_array($columns))
+			$columns = implode(', ', $columns);
+
+		if(is_array($table))
+			$table = implode(', ', $table);
+
+		$sets = '';
+		foreach ($conditions as $key => $value) {
+			$sets .= $key . ' = ';
+
+			if (is_null($value)) {
+				$value = 'NULL, ';
+			}
+
+			$value = addslashes($value);
+			$sets .= "'" . $value . "',";
+		}
+		$conditions = rtrim($sets, ',');
+		
+		$where = 'WHERE';
+		if (empty($conditions))
+			$where = '';
+
+		$query = $this->mysqli->query("SELECT {$columns} FROM {$table} {$where} {$conditions} {$extra}");
 
 		if (!$query || !is_object($query))
 			throw new Exception("Unable to select");
