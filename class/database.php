@@ -310,9 +310,3 @@ class Database {
 		return $this->mysqli->affected_rows;
 	}
 }
-
-$db = new Database;
-
-$select = $db->select_tpl('entries');
-
-print_r($select);
