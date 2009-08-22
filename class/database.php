@@ -36,16 +36,15 @@ class Database {
 	 *
 	 * Selects something from the database, and returns the query.
 	 *
-	 * @parm 	string 	$query 	The query to perform
+	 * @parm 	string|array 	$table 	The table(s)
+	 * @parm 	string 	$columns 	The column(s), default is all
+	 * @parm 	array 	$conditions 	The conditions for the query
+	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	string 	$query 	The query
-	 *
 	 *
 	 */
 
 	public function select($table, $columns='*', $conditions='', $extra='') {
-		if(is_array($columns))
-			$columns = implode(', ', $columns);
-
 		if(is_array($table))
 			$table = implode(', ', $table);
 
@@ -85,8 +84,11 @@ class Database {
 	 * array. This is usefull for just dumping a query to the
 	 * database without needing to modify the values.
 	 *
-	 * @parm 	string 	$query 	The query to perform
-	 * @parm 	array 	$return The result array
+	 * @parm 	string|array 	$table 	The table(s)
+	 * @parm 	string 	$columns 	The column(s), default is all
+	 * @parm 	array 	$conditions 	The conditions for the query
+	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
+	 * @return 	array 	$return 	An array of all entries
 	 *
 	 */
 
@@ -143,6 +145,7 @@ class Database {
 	 * @parm 	string 	$table 	The table to perform the action on (f.e. articles)
 	 * @parm 	array 	$data 	The columns in the row(s) to update (column => value)
 	 * @parm 	array 	$conditions 	The conditions at which to update (column => value):w
+	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	integer $affected_rows 	The amount of rows affected by the update
 	 *
 	 */
@@ -196,6 +199,8 @@ class Database {
 	 * Deletes rows from a given table which matches the conditions.
 	 *
 	 * @parm 	string 	$table 	The table to perform updates (i.e. names)
+	 * @parm 	array 	$conditions 	The conditions to perform the query on
+	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @parm 	array 	$conditions 	The conditions at which to delete (column => value)
 	 *
 	 */
