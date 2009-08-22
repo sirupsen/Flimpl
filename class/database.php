@@ -7,7 +7,7 @@
  *
  * @date 	10. August, 2009
  *
- * @authors Macha, Sirupsen, Cwii
+ * @author 	Sirupsen
  *  
  */
 
@@ -317,7 +317,7 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		if (!$query)
-			throw new Exception("Couldn't delete @ Database ($this->last_query): " . mysql_error());
+			throw new Exception("Couldn't delete @ Database: " . mysql_error());
 
 		return $this->mysqli->affected_rows;
 	}
