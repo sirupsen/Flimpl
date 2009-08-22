@@ -13,10 +13,6 @@
  */
 
 class Library {
-	
-	public function __construct() {
-		
-	}
 
 	public function timeDifference($date) {
 		if(empty($date)) {
@@ -80,7 +76,7 @@ class Library {
 		return $grav_url;
 	}
 
-	public function email($to, $subject, $message, $from="sirup@sirupsen.dk", $additional_headers='') {
+	public function email($to, $subject, $message, $from="noreply@example.com", $additional_headers='') {
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html\r\n";
 		$headers .= "To: $to\r\n";
