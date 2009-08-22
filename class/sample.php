@@ -38,7 +38,7 @@ class Sample {
 	 */
 
 	public function getArticles() {
-		$query = $this->registry->db->select("SELECT * FROM articles");
+		$query = $this->registry->db->select('articles');
 
 		while ($row = $query->fetch_assoc()) {
 			$return[] = array(
