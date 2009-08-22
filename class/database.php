@@ -14,6 +14,7 @@
 class Database {
 
 	public $mysqli;
+	public $last_query;
 	
 	/*
 	 *
@@ -146,7 +147,7 @@ class Database {
 	 *
 	 */
 
-	public function update($table, $data, $conditions) {
+	public function update($table, $data, $conditions, $extra) {
 		if(empty($table))
 			throw new Exception("No table defined for insert() @ Database");
 
@@ -185,7 +186,7 @@ class Database {
 		// Remove trailing AND from the conditions
 		$conditions = rtrim($conditions_sql, ' AND '); 
 
-		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions}";
+		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions} {$extra}";
 
 		return $this->updateQuery($query);
 	}
@@ -199,7 +200,7 @@ class Database {
 	 *
 	 */
 
-	public function delete($table, $conditions) {	
+	public function delete($table, $conditions, $extra) {	
 		if(empty($table))
 			throw new Exception("No table defined for delete() @ Database");
 
@@ -217,7 +218,7 @@ class Database {
 		}
 		$conditions = rtrim($sets, ' AND ');
 
-		$sql = "DELETE FROM {$table} WHERE {$conditions}";
+		$sql = "DELETE FROM {$table} WHERE {$conditions} {$extra}";
 
 		return $this->deleteQuery($sql);
 	}
@@ -262,6 +263,7 @@ class Database {
 	 */
 
 	public function insertQuery($query) {
+		$this->last_query = '<b>Insert Query:</b>' . $query;
 		$query = $this->mysqli->query($query);	
 
 		if (!$query)
@@ -281,6 +283,7 @@ class Database {
 	 */
 
 	public function updateQuery($query) {
+		$this->last_query = '<b>Update Query:</b> ' . $query;
 		$query = $this->mysqli->query($query);
 
 		if (!$query)
