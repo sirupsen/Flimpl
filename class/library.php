@@ -1,4 +1,5 @@
 <?php
+require_once("bootstrap.php");
 
 /*
  *
@@ -11,7 +12,6 @@
  * @date 	12. August, 2009
  *
  */
-
 class Library {
 
 	/*
@@ -100,7 +100,7 @@ class Library {
 	 *
 	 */
 
-	public function gravatar($email, $size=100, $default='') {
+	public function gravatar($email, $size=100, $default = '') {
 		$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=".md5( strtolower($email) ).
 			"&default=".urlencode($default).
 			"&size=".$size;
