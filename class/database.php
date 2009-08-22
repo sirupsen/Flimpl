@@ -73,7 +73,7 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		if (!$query || !is_object($query))
-			throw new Exception("Unable to select @ Database");
+			throw new Exception('<b>Database:</b> Not able to select()');
 
 		return $query;
 	}
@@ -199,14 +199,14 @@ class Database {
 
 	public function delete($table, $conditions='', $extra='') {	
 		if(empty($table))
-			throw new Exception("No table defined for delete() @ Database");
+			throw new Exception('<b>Database:</b> Required argument $table is empty');
 
 		if (is_array($conditions)) {
 			foreach ($conditions as $key => $value) {
 				$sets .= $key . ' = ';
 
 				if (is_null($value))
-					throw new Exception("Must pass values to all conditions");
+					throw new Exception('<b>Database:</b> Must pass a value to all delete() conditions');
 
 				$value = addslashes($value);
 				$sets .= "'" . $value . "' AND ";
@@ -233,20 +233,21 @@ class Database {
 
 	public function executeFile($file) {
 		if(empty($file))
-			throw new Exception("No file passed to executeFile() @ Database");
+			throw new Exception('<b>Database:</b> No file passed to executeFile()');
 
 		if (!file_exists($file))
-			throw new Exception("The passed to executeFile() doesn't exist");
+			throw new Exception('<b>Database:</b> File passed to executeFile() does not exist');
 
 		$content = file_get_contents($file);
 
 		if(!$content)
-			throw new Exception("Unable to read file passed to executeFile()");
+			throw new Exception('<b>Database:</b> Not able to read file passed to executeFile()');
 
 		$sql = explode(';', $content);
 
 		foreach($sql as $query) {
-			$this->mysqli->query($query);
+			if(!$this->mysqli->query($query))
+				throw new Exception('<b>Database:</b> A query failed while executing ' . $file . ' in executeFile()');
 		}
 
 		return true;
@@ -264,10 +265,8 @@ class Database {
 
 	public function insertQuery($query) {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
-		$query = $this->mysqli->query($query);	
-
-		if (!$query)
-			throw new Exception("Couldn't insert @ Databse: " . mysql_error());
+		if (!$this->mysqli->query($query))
+			throw new Exception('<b>Database:</b> Unable to perform the query');
 
 		return $this->mysqli->insert_id;	
 	}
@@ -284,10 +283,9 @@ class Database {
 
 	public function updateQuery($query) {
 		$this->last_query = '<b>Update Query:</b> ' . $query;
-		$query = $this->mysqli->query($query);
 
-		if (!$query)
-			throw new Exception("Couldn't update @ Database: " . mysql_error());
+		if (!$this->mysqli->query($query))
+			throw new Exception('<b>Database:</b> Unable to perform the query');
 
 		return $this->mysqli->affected_rows;
 	}
@@ -306,10 +304,9 @@ class Database {
 
 	public function deleteQuery($query) {
 		$this->last_query = '<b>Delete Query:</b> ' . $query;
-		$query = $this->mysqli->query($query);
 
-		if (!$query)
-			throw new Exception("Couldn't delete @ Database: " . mysql_error());
+		if (!$this->mysqli->query($query))
+			throw new Exception('<b>Database:</b> Unable to perform the query');
 
 		return $this->mysqli->affected_rows;
 	}
