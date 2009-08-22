@@ -70,7 +70,7 @@ class Database {
 
 		$query = "SELECT {$columns} FROM {$table} {$where} {$conditions} {$extra}";
 
-		$this->last_query = $query;
+		$this->last_query = '<b>Select Query:</b> ' . $query;
 		$query = $this->mysqli->query($query);
 
 		if (!$query || !is_object($query))
@@ -263,7 +263,7 @@ class Database {
 	 */
 
 	public function insertQuery($query) {
-		$this->last_query = '<b>Insert Query:</b>' . $query;
+		$this->last_query = '<b>Insert Query:</b> ' . $query;
 		$query = $this->mysqli->query($query);	
 
 		if (!$query)
@@ -305,6 +305,7 @@ class Database {
 	 */
 
 	public function deleteQuery($query) {
+		$this->last_query = '<b>Delete Query:</b> ' . $query;
 		$query = $this->mysqli->query($query);
 
 		if (!$query)
