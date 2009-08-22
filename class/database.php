@@ -48,24 +48,29 @@ class Database {
 		if(is_array($table))
 			$table = implode(', ', $table);
 
-		$sets = '';
-		foreach ($conditions as $key => $value) {
-			$sets .= $key . ' = ';
+		if(is_array($conditions)) {
+			$sets = '';
+			foreach ($conditions as $key => $value) {
+				$sets .= $key . ' = ';
 
-			if (is_null($value)) {
-				$value = 'NULL, ';
+				if (is_null($value)) {
+					$value = 'NULL, ';
+				}
+
+				$value = addslashes($value);
+				$sets .= "'" . $value . "',";
 			}
-
-			$value = addslashes($value);
-			$sets .= "'" . $value . "',";
+			$conditions = rtrim($sets, ',');
 		}
-		$conditions = rtrim($sets, ',');
 		
 		$where = 'WHERE';
 		if (empty($conditions))
 			$where = '';
 
-		$query = $this->mysqli->query("SELECT {$columns} FROM {$table} {$where} {$conditions} {$extra}");
+		$query = "SELECT {$columns} FROM {$table} {$where} {$conditions} {$extra}";
+
+		$this->last_query = $query;
+		$query = $this->mysqli->query($query);
 
 		if (!$query || !is_object($query))
 			throw new Exception("Unable to select");
@@ -82,16 +87,10 @@ class Database {
 	 * @parm 	string 	$query 	The query to perform
 	 * @parm 	array 	$return The result array
 	 *
-	 * @todo 	Print a warning if there's no entries (by default
-	 * it'll give a warning that foreach got a wrong condition)
-	 *
 	 */
 
-	public function select_tpl($query) {
-		$query = $this->mysqli->query($query);
-
-		if (!$query || !is_object($query))
-			throw new Exception("Unable to select_tpl");
+	public function select_tpl($table, $columns='*', $conditions='', $extra='') {
+		$query = $this->select($table, $columns, $conditions, $extra);
 
 		while ($row = $query->fetch_assoc()) {
 			$return[] = $row;
@@ -311,3 +310,9 @@ class Database {
 		return $this->mysqli->affected_rows;
 	}
 }
+
+$db = new Database;
+
+$select = $db->select_tpl('entries');
+
+print_r($select);
