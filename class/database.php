@@ -150,7 +150,7 @@ class Database {
 	 *
 	 */
 
-	public function update($table, $data, $conditions, $extra) {
+	public function update($table, $data, $conditions, $extra='') {
 		if(empty($table))
 			throw new Exception("No table defined for insert() @ Database");
 
@@ -205,25 +205,28 @@ class Database {
 	 *
 	 */
 
-	public function delete($table, $conditions, $extra) {	
+	public function delete($table, $conditions='', $extra='') {	
 		if(empty($table))
 			throw new Exception("No table defined for delete() @ Database");
 
-		if(empty($conditions))
-			throw new Exception("Must pass conditions array to delete() @ Database");
+		if (is_array($conditions)) {
+			foreach ($conditions as $key => $value) {
+				$sets .= $key . ' = ';
 
-		foreach ($conditions as $key => $value) {
-			$sets .= $key . ' = ';
+				if (is_null($value))
+					throw new Exception("Must pass values to all conditions");
 
-			if (is_null($value))
-				throw new Exception("Must pass values to all conditions");
-
-			$value = addslashes($value);
-			$sets .= "'" . $value . "' AND ";
+				$value = addslashes($value);
+				$sets .= "'" . $value . "' AND ";
+			}
+			$conditions = rtrim($sets, ' AND ');
 		}
-		$conditions = rtrim($sets, ' AND ');
 
-		$sql = "DELETE FROM {$table} WHERE {$conditions} {$extra}";
+		$where = 'WHERE';
+		if(empty($conditions))
+			$where = '';
+
+		$sql = "DELETE FROM {$table} {$where} {$conditions} {$extra}";
 
 		return $this->deleteQuery($sql);
 	}
@@ -314,7 +317,7 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		if (!$query)
-			throw new Exception("Couldn't delete @ Database: " . mysql_error());
+			throw new Exception("Couldn't delete @ Database ($this->last_query): " . mysql_error());
 
 		return $this->mysqli->affected_rows;
 	}
