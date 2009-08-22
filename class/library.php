@@ -94,4 +94,14 @@ class Library {
 
 		return true;
 	}
+
+	public function randString($length=8) {
+		$char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+
+		for($i; $i<$length; $i++) {
+			$string .= $char[rand(0, strlen($char))];
+		}
+
+		return $string;
+	}
 }
