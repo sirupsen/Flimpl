@@ -114,6 +114,12 @@ class Database {
 	 */
 
 	public function insert($table, $data) {
+		if(empty($table) || empty($data))
+			throw new Exception('<b>Database:</b> Required argument for insert() empty');
+
+		if(!is_array($data))
+			throw new Exception('<b>Database:</b> Argument $data for insert is <b>not</b> an array');
+
 		foreach ($data as $key => $value) {
 			$sets .= $key . " = ";
 
@@ -145,8 +151,12 @@ class Database {
 	 */
 
 	public function update($table, $data, $conditions, $extra='') {
-		// Builds a "key = value," string for each pair. 
-		$sets = "";
+		if(empty($table) || empty($data) || empty($conditions))
+			throw new Exception('<b>Database</b> Required argument for update() empty');
+
+		if(!is_array($data) || !is_array($conditions))
+			throw new Exception('<b>Database</b> Argument $data or $condition for update() is <b>not</b> an array');
+
 		foreach ($data as $key => $value) {
 			$sets .= $key . ' = ';
 
@@ -157,6 +167,7 @@ class Database {
 			$value = addslashes($value);
 			$sets .= "'" . $value . "',";
 		}
+		$sets = rtrim($sets, ',');
 
 		foreach ($conditions as $key => $value) {
 			$conditions_sql .= $key . ' = ';
@@ -168,7 +179,6 @@ class Database {
 			$value = addslashes($value);
 			$conditions_sql .= "'" . $value . "' AND ";
 		}
-		$sets = rtrim($sets, ',');
 		$conditions = rtrim($conditions_sql, ' AND '); 
 
 		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions} {$extra}";
