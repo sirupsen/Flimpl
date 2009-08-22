@@ -73,7 +73,7 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		if (!$query || !is_object($query))
-			throw new Exception("Unable to select");
+			throw new Exception("Unable to select @ Database");
 
 		return $query;
 	}
@@ -114,12 +114,6 @@ class Database {
 	 */
 
 	public function insert($table, $data) {
-		if(empty($table))
-			throw new Exception("No table defined for insert() @ Database");
-
-		if(empty($data))
-			throw new Exception("No data defined for insert() @ Database");
-
 		foreach ($data as $key => $value) {
 			$sets .= $key . " = ";
 
@@ -151,15 +145,6 @@ class Database {
 	 */
 
 	public function update($table, $data, $conditions, $extra='') {
-		if(empty($table))
-			throw new Exception("No table defined for insert() @ Database");
-
-		if(empty($data))
-			throw new Exception("Must data array to update function");
-
-		if(empty($conditions))
-			throw new Exception("Must pass conditions array to update function");
-
 		// Builds a "key = value," string for each pair. 
 		$sets = "";
 		foreach ($data as $key => $value) {
@@ -183,10 +168,7 @@ class Database {
 			$value = addslashes($value);
 			$conditions_sql .= "'" . $value . "' AND ";
 		}
-
-		// Remove trailing comma from the sets
 		$sets = rtrim($sets, ',');
-		// Remove trailing AND from the conditions
 		$conditions = rtrim($conditions_sql, ' AND '); 
 
 		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions} {$extra}";
