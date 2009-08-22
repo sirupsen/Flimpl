@@ -17,7 +17,7 @@ $sample = new Sample;
 $tpl = new Template;
 
 $tpl->articles = $sample->getArticles();
-$tpl->links = $registry->db->select_tpl("SELECT name, url FROM links");
+$tpl->links = $registry->db->select_tpl('links');
 
 echo $tpl;
 ?>
