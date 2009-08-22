@@ -14,6 +14,15 @@
 
 class Library {
 
+	/*
+	 *
+	 * Returns the time difference in words. Like:
+	 * 2 hours ago, 2 days ago, 4 months ago, etc.
+	 *
+	 * @parm 	string|integer 	$date 	The date, get's converted with strtotime
+	 * @return 	string 	$misc 	The time difference
+	 */
+
 	public function timeDifference($date) {
 		if(empty($date)) {
 			return "No date provided";
@@ -53,6 +62,17 @@ class Library {
 		return "$difference $periods[$j] {$tense}";
 	}
 
+	/*
+	 *
+	 * We're all happy tweeters, tweet with this function!
+	 *
+	 * @parm 	string 	$message 	The tweet
+	 * @parm 	string 	$username 	The username of the user
+	 * @parm 	string 	$password 	The password of the user
+	 * @return 	bool 	true|false
+	 *
+	 */
+
 	public function tweet($message, $username, $password) {
 		$context = stream_context_create(array( 
 			'http' => array( 
@@ -68,7 +88,19 @@ class Library {
 		  return false !== $ret; 
 	}
 
-	public function gravatar($email, $default, $size='100') {
+	/*
+	 *
+	 * Everyone loves gravatar, make it a bit easier to use
+	 * with this function.
+	 *
+	 * @parm 	string 	$email 	Email of the user
+	 * @parm 	int 	$size 	The size of the image
+	 * @parm 	string 	$default 	[OPT] The image shown if the user doesn't have a gravatar
+	 * @return 	string 	$grav_url 	The url of gravatar image.
+	 *
+	 */
+
+	public function gravatar($email, $size=100, $default='') {
 		$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=".md5( strtolower($email) ).
 			"&default=".urlencode($default).
 			"&size=".$size;
@@ -76,11 +108,21 @@ class Library {
 		return $grav_url;
 	}
 
+	/*
+	 *
+	 * Easy html email.
+	 *
+	 * @parm 	string 	$to 	Recipent
+	 * @parm 	string 	$subject 	Subject of the email send
+	 * @parm 	string 	$message 	The actual email
+	 * @parm 	string 	$from 	[OPT] Who's the email from?
+	 * @parm 	string 	$additional_headers 	[OPT] Additional headers (f.e. reply to)
+	 *
+	 */
+
 	public function email($to, $subject, $message, $from="noreply@example.com", $additional_headers='') {
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html\r\n";
-		$headers .= "To: $to\r\n";
-		$headers .= "From: $from\r\n";
 		
 		if ($additional_headers > 0)
 			$headers .= $additional_headers;
@@ -91,8 +133,20 @@ class Library {
 		return true;
 	}
 
-	public function randString($length=8) {
-		$char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+	/*
+	 *
+	 * Generates a random string with letters and numbers
+	 *
+	 * @parm 	int 	$length 	[OPT] Length of the string
+	 * @parm 	string 	$chars 	[OPT] The chars to generate from
+	 *
+	 */
+
+	public function randString($length=8, $chars) {
+		$char = $chars;
+
+		if(1 > $char)
+			$char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 
 		for($i; $i<$length; $i++) {
 			$string .= $char[rand(0, strlen($char))];
