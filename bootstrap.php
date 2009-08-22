@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * The boostrap file is a file which is included in all other files
