@@ -121,7 +121,7 @@ class Database {
 			$return[] = $row;
 		}
 
-		// Return it!
+		// return it!
 		return $return;
 	}
 
