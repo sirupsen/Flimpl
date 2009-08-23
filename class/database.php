@@ -412,7 +412,7 @@ class Database {
 		echo 'Select..';
 		echo '<pre>';
 		if ($select = $this->select('articles', array('id' => $insert), '')) {
-			while($row = $select->fetch_assoc()) {
+			while($row = $this->row($select)) {
 				print_r($row);	
 			}
 		}
@@ -427,7 +427,7 @@ class Database {
 		echo 'Select again..';
 		echo '<pre>';
 		if ($select = $this->select('articles', array('id' => $insert), '')) {
-			while($row = $select->fetch_assoc()) {
+			while($row = $this->row($select)) {
 				print_r($row);	
 			}
 		}
