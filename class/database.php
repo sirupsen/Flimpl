@@ -46,7 +46,7 @@ class Database {
 	public function select($table, $columns='*', $conditions='', $extra='') {
 		if(is_array($table)) {
 			foreach ($table as $table) {
-				$tables[] = $table;
+				$tables[] = addslashes($table);
 			}
 			$table = implode(', ', $tables);
 		}
@@ -68,7 +68,7 @@ class Database {
 
 		if(is_array($columns) {
 			foreach ($columns as $column) {
-				$cols[] = $column;
+				$cols[] = addslashes($column);
 			}
 			$columns = implode(', ', $cols);
 		}
@@ -132,7 +132,7 @@ class Database {
 
 		if(is_array($table)) {
 			foreach ($table as $table) {
-				$tables[] = $table;
+				$tables[] = addslashes($table);
 			}
 			$table = implode(', ', $tables);
 		}
@@ -169,15 +169,12 @@ class Database {
 	 */
 
 	public function update($table, $data, $conditions, $extra='') {
-		if(empty($table) || empty($data) || empty($conditions))
-			throw new Exception('<b>Database</b> Required argument for update() empty');
-
 		if(!is_array($data) || !is_array($conditions))
 			throw new Exception('<b>Database</b> Argument $data or $condition for update() is <b>not</b> an array');
 
 		if(is_array($table)) {
 			foreach ($table as $table) {
-				$tables[] = $table;
+				$tables[] = addslashes($table);
 			}
 			$table = implode(', ', $tables);
 		}
@@ -223,12 +220,9 @@ class Database {
 	 */
 
 	public function delete($table, $conditions='', $extra='') {	
-		if(empty($table))
-			throw new Exception('<b>Database:</b> Required argument $table is empty');
-
 		if(is_array($table)) {
 			foreach ($table as $table) {
-				$tables[] = $table;
+				$tables[] = addslashes($table);
 			}
 			$table = implode(', ', $tables);
 		}
