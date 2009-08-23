@@ -60,19 +60,9 @@ class Database {
 		// The conditions SHOULD be an array, parse them so their ready for the
 		// query. If it's not an array, throw an exception
 		if($conditions) {
-			if(is_array($conditions)) {
-				foreach ($conditions as $key => $value) {
-					$sets .= $key . ' = ';
-
-					if (is_null($value)) {
-						$value = 'NULL, ';
-					}
-
-					$value = addslashes($value);
-					$sets .= "'" . $value . "' AND ";
-				}
-				$conditions = 'WHERE ' . rtrim($sets, ' AND ');
-			} else
+			if(is_array($conditions))
+				$conditions = 'WHERE ' . $this->prepare($conditions, ' AND '); 
+			else
 				throw new Exception('<b>Database:</b> Parameter $conditions <b>must</b> be an array');
 		}
 
@@ -158,18 +148,7 @@ class Database {
 			$table = implode(', ', $tables);
 		}
 
-		// Prepare the data array for query
-		foreach ($data as $key => $value) {
-			$sets .= $key . " = ";
-
-			if (is_null($value)) {
-				$values .= 'NULL, ';
-			}
-
-			$value = addslashes($value);
-			$sets .= "'" . $value . "', ";
-		}
-		$sets = rtrim($sets, ', ');
+		$sets = $this->prepare($data);
 
 		// Make the query
 		$query = "INSERT INTO {$table} SET {$sets}";
@@ -208,37 +187,30 @@ class Database {
 			$table = implode(', ', $tables);
 		}
 
-		// Prepare $data for the sql query
+		$sets = $this->prepare($data);
+		$conditions = $this->prepare($conditions, ' AND ');
+
+		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions} {$extra}";
+
+		return $this->updateQuery($query);
+	}
+
+	private function prepare($data, $splitter=', ') {
+		if(!is_array($data))
+			throw new Exception('<b>Database:</b> Array passed to prepare was not an array');
+
 		foreach ($data as $key => $value) {
 			$sets .= $key . ' = ';
 
 			if (is_null($value)) {
 				$value = 'NULL, ';
 			}
-
+			
 			$value = addslashes($value);
-			$sets .= "'" . $value . "',";
+			$sets .= "'" . $value . "'$splitter";
 		}
-		// Remove trailing comma
-		$sets = rtrim($sets, ',');
-
-		// Prepare $conditions for the query
-		foreach ($conditions as $key => $value) {
-			$conditions_sql .= $key . ' = ';
-
-			if (is_null($value)) {
-			$value = 'NULL, ';
-			}
-
-			$value = addslashes($value);
-			$conditions_sql .= "'" . $value . "' AND ";
-		}
-		// Bye trailing AND!
-		$conditions = rtrim($conditions_sql, ' AND '); 
-
-		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions} {$extra}";
-
-		return $this->updateQuery($query);
+		
+		return rtrim($sets, $splitter);
 	}
 
 	/*
@@ -265,19 +237,9 @@ class Database {
 		}
 
 		// Prepare $conditions for the query
-		if (is_array($conditions)) {
-			foreach ($conditions as $key => $value) {
-				$sets .= $key . ' = ';
-
-				if (is_null($value))
-					throw new Exception('<b>Database:</b> Must pass a value to all delete() conditions');
-
-				$value = addslashes($value);
-				$sets .= "'" . $value . "' AND ";
-			}
-			// Bye last AND! And set WHERE in start =)
-			$conditions = ' WHERE ' . rtrim($sets, ' AND ');
-		} else
+		if (is_array($conditions))
+			$conditions = ' WHERE ' . $this->prepare($conditions, ' AND '); 
+		else
 			throw new Exception('<b>Database:</b> Parameter $conditions in delete() were not an array');
 
 		$sql = "DELETE FROM {$table} {$conditions} {$extra}";
@@ -317,8 +279,7 @@ class Database {
 
 			// So it's easier to check the errors..
 			foreach($sql as $query) {
-				if(!$this->mysqli->query($query))
-					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute() (' . $this->mysqli->error . ')');
+				$this->executeQuery($query);
 			}
 		}
 
@@ -384,6 +345,15 @@ class Database {
 		return $this->mysqli->affected_rows;
 	}
 
+	public function executeQuery($query) {
+		$this->last_query = '<b>Execute Query:</b> ' . $query;
+
+		if(!$this->mysqli->query($query))
+					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute() (' . $this->mysqli->error . ')');
+
+		return true;
+	}
+
 	/*
 	 *
 	 * This method is mainly used for debugging the entire class at once,
@@ -434,8 +404,8 @@ class Database {
 		if($delete = $this->delete('articles', $conditions))
 			echo '<b>success!</b> (' . $delete . ')<br/><br/>';
 
-		echo 'Select again to check if it is deleted..';
-		if ($select = $this->select('articles', array('id' => $insert), '')) {
+		echo 'Check if it is deleted..';
+		if ($select = $this->select('articles', array('id' => $insert))) {
 			$num = $selected->num_rows;
 			if($num == 0) {
 				echo '<b>success!</b>';
@@ -443,3 +413,6 @@ class Database {
 		}
 	}
 }
+
+$db = new Database;
+$db->test();
