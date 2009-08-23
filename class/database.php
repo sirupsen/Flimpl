@@ -381,7 +381,7 @@ class Database {
 	 */
 
 	public function row($obj) {
-		foreach ($obj->fetch_array() as $key => $value) {
+		foreach ($obj->fetch_assoc() as $key => $value) {
 			$row[$key] = stripslashes($value);
 		}
 
