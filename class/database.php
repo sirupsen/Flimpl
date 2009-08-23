@@ -112,7 +112,7 @@ class Database {
 		$query = $this->select($table, $conditions, $columns, $extra);
 
 		// Make an array with the content
-		while ($row = $query->fetch_assoc()) {
+		while ($row = $this->row($query)) {
 			$return[] = $row;
 		}
 
@@ -367,6 +367,25 @@ class Database {
 		}
 		
 		return rtrim($sets, $splitter);
+	}
+
+	/*
+	 *
+	 * By default the class adds slashes to everything, if you use
+	 * this function when looping the query, it automaticly strips
+	 * the slashes.
+	 *
+	 * @param 	object 	$obj 	The query
+	 * @return 	array 	$row 	The escaped row(s)
+	 *
+	 */
+
+	public function row($obj) {
+		foreach ($obj->fetch_array() as $key => $value) {
+			$row[$key] = stripslashes($value);
+		}
+
+		return $row;
 	}
 
 	/*
