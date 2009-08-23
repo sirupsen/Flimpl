@@ -296,7 +296,7 @@ class Database {
 	 *
 	 */
 
-	public function executeFile($file) {
+	public function execute($file) {
 		// If the parameter passed is not an array, make it!
 		if (!is_array($files) {
 			$files[] = $files;
