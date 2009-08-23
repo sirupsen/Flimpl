@@ -45,8 +45,12 @@ class Database {
 	 */
 
 	public function select($table, $columns='*', $conditions='', $extra='') {
-		if(is_array($table))
-			$table = implode(', ', $table);
+		if(is_array($table)) {
+			foreach ($table as $table) {
+				$tables[] = $table;
+			}
+			$table = implode(', ', $tables);
+		}
 
 		if(is_array($conditions)) {
 			$sets = '';
@@ -61,6 +65,13 @@ class Database {
 				$sets .= "'" . $value . "',";
 			}
 			$conditions = rtrim($sets, ',');
+		}
+
+		if(is_array($columns) {
+			foreach ($columns as $column) {
+				$cols[] = $column;
+			}
+			$columns = implode(', ', $cols);
 		}
 		
 		$where = 'WHERE';
