@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  * The database class, it's used to connect to the database and perform
@@ -128,15 +127,15 @@ class Database {
 		if(empty($table) || empty($data))
 			throw new Exception('<b>Database:</b> Required argument for insert() empty');
 
+		if(!is_array($data))
+			throw new Exception('<b>Database:</b> Argument $data for insert is <b>not</b> an array');
+
 		if(is_array($table)) {
 			foreach ($table as $table) {
 				$tables[] = $table;
 			}
 			$table = implode(', ', $tables);
 		}
-
-		if(!is_array($data))
-			throw new Exception('<b>Database:</b> Argument $data for insert is <b>not</b> an array');
 
 		foreach ($data as $key => $value) {
 			$sets .= $key . " = ";
@@ -298,8 +297,9 @@ class Database {
 
 	public function insertQuery($query) {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
+
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the query');
+			throw new Exception('<b>Database:</b> Unable to perform the insert query');
 
 		return $this->mysqli->insert_id;	
 	}
@@ -318,7 +318,7 @@ class Database {
 		$this->last_query = '<b>Update Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the query');
+			throw new Exception('<b>Database:</b> Unable to perform the update query');
 
 		return $this->mysqli->affected_rows;
 	}
@@ -339,7 +339,7 @@ class Database {
 		$this->last_query = '<b>Delete Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the query');
+			throw new Exception('<b>Database:</b> Unable to perform the delete query');
 
 		return $this->mysqli->affected_rows;
 	}
