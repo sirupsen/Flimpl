@@ -36,9 +36,9 @@ class Database {
 	 *
 	 * Selects something from the database, and returns the query.
 	 *
-	 * @param 	string|array 	$table 	The table(s)
-	 * @param 	string 	$columns 	The column(s), default is all
+	 * @param 	mixed 	$table 	The table(s)
 	 * @param 	array 	$conditions 	The conditions for the query
+	 * @param 	string 	$columns 	The column(s), default is all
 	 * @param 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	string 	$query 	The query
 	 *
@@ -99,9 +99,9 @@ class Database {
 	 * array. This is usefull for just dumping a query to the
 	 * database without needing to modify the values.
 	 *
-	 * @param 	string|array 	$table 	The table(s)
-	 * @param 	string 	$columns 	The column(s), default is all
+	 * @param 	mixed 	$table 	The table(s)
 	 * @param 	array 	$conditions 	The conditions for the query
+	 * @param 	string 	$columns 	The column(s), default is all
 	 * @param 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	array 	$return 	An array of all entries
 	 *
@@ -195,23 +195,6 @@ class Database {
 		return $this->updateQuery($query);
 	}
 
-	private function prepare($data, $splitter=', ') {
-		if(!is_array($data))
-			throw new Exception('<b>Database:</b> Array passed to prepare was not an array');
-
-		foreach ($data as $key => $value) {
-			$sets .= $key . ' = ';
-
-			if (is_null($value)) {
-				$value = 'NULL, ';
-			}
-			
-			$value = addslashes($value);
-			$sets .= "'" . $value . "'$splitter";
-		}
-		
-		return rtrim($sets, $splitter);
-	}
 
 	/*
 	 *
@@ -279,7 +262,7 @@ class Database {
 
 			// So it's easier to check the errors..
 			foreach($sql as $query) {
-				$this->executeQuery($query);
+				$this->executeQuery($query, $file);
 			}
 		}
 
@@ -345,13 +328,46 @@ class Database {
 		return $this->mysqli->affected_rows;
 	}
 
-	public function executeQuery($query) {
+	/*
+	 * Executes a query for the execute function 
+	 * 
+	 * @param 	string 	$query 	The query to execute 
+	 * @return 	bool 	true 	
+	 */
+
+	public function executeQuery($query, $file) {
 		$this->last_query = '<b>Execute Query:</b> ' . $query;
 
 		if(!$this->mysqli->query($query))
 					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute() (' . $this->mysqli->error . ')');
 
 		return true;
+	}
+	
+	/*
+	 * Prepares something for the SQL query 
+	 * 
+	 * @param 	array 	$data 	The data to prepare 
+	 * @param 	string 	$splitter 	How to split it (f.e. conditions is AND)
+	 * @return 	string 	..... 	Prepared string
+	 */
+
+	private function prepare($data, $splitter=', ') {
+		if(!is_array($data))
+			throw new Exception('<b>Database:</b> Array passed to prepare was not an array');
+
+		foreach ($data as $key => $value) {
+			$sets .= $key . ' = ';
+
+			if (is_null($value)) {
+				$value = 'NULL, ';
+			}
+			
+			$value = addslashes($value);
+			$sets .= "'" . $value . "'$splitter";
+		}
+		
+		return rtrim($sets, $splitter);
 	}
 
 	/*
