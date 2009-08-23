@@ -253,7 +253,6 @@ class Database {
 			// So, what is the contents of this file?
 			$content = file_get_contents($file);
 
-			// Owpz, no content
 			if(!$content)
 				throw new Exception('<b>Database:</b> Not able to read ' . $file . ' passed to execute()');
 
@@ -354,7 +353,7 @@ class Database {
 
 	private function prepare($data, $splitter=', ') {
 		if(!is_array($data))
-			throw new Exception('<b>Database:</b> Array passed to prepare was not an array');
+			throw new Exception('<b>Database:</b> Param passed to prepare was not an array');
 
 		foreach ($data as $key => $value) {
 			$sets .= $key . ' = ';
