@@ -45,6 +45,9 @@ class Database {
 	 */
 
 	public function select($table, $columns='*', $conditions='', $extra='') {
+		if(empty($table)
+			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
+
 		// If the user made $table parm an array, escape it and make it into
 		// a string we can use in the query.
 		if(is_array($table)) {
@@ -137,9 +140,12 @@ class Database {
 	 */
 
 	public function insert($table, $data) {
+		if(empty($table)
+			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
+
 		// Data is not an array, throw exception
 		if(!is_array($data))
-			throw new Exception('<b>Database:</b> Argument $data for insert is <b>not</b> an array');
+			throw new Exception('<b>Database:</b> Argument $data for insert() is <b>not</b> an array');
 
 		// Should table happen to be an array, escape it and make it into a string
 		// ready for the query.
@@ -184,9 +190,12 @@ class Database {
 	 */
 
 	public function update($table, $data, $conditions, $extra='') {
+		if(empty($table)
+			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
+
 		// Oops, $data or $conditions were not an array!
 		if(!is_array($data) || !is_array($conditions))
-			throw new Exception('<b>Database</b> Argument $data or $condition for update() is/are <b>not</b> an array');
+			throw new Exception('<b>Database</b> Argument $data or $condition for update() is/are <b>not</b> (an) array(s)');
 
 		// Should table happen to be an array, escape it and make it into a string
 		// ready for the query.
@@ -242,6 +251,9 @@ class Database {
 	 */
 
 	public function delete($table, $conditions='', $extra='') {	
+		if(empty($table)
+			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
+
 		// Hello dear $table, are you an array you'll not be able to break anything!
 		if(is_array($table)) {
 			foreach ($table as $table) {
@@ -285,24 +297,32 @@ class Database {
 	 */
 
 	public function executeFile($file) {
-		// Uuooh, the file doesn't exist!
-		if (!file_exists($file))
-			throw new Exception('<b>Database:</b> File passed to executeFile() does not exist');
+		// If the parameter passed is not an array, make it!
+		if (!is_array($files) {
+			$files[] = $files;
+		}
 
-		// So, what is the contents of this file?
-		$content = file_get_contents($file);
+		// For each file in the array, run it
+		foreach ($files as $file) {
+			// Uuooh, the file doesn't exist!
+			if (!file_exists($file))
+				throw new Exception('<b>Database:</b> File ' . $file . ' passed to executeFile() does not exist');
 
-		// Owpz, no content
-		if(!$content)
-			throw new Exception('<b>Database:</b> Not able to read file passed to executeFile()');
+			// So, what is the contents of this file?
+			$content = file_get_contents($file);
 
-		// Split it!
-		$sql = explode(';', $content);
+			// Owpz, no content
+			if(!$content)
+				throw new Exception('<b>Database:</b> Not able to read ' . $file . ' passed to executeFile()');
 
-		// So it's easier to check the errors..
-		foreach($sql as $query) {
-			if(!$this->mysqli->query($query))
-				throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in executeFile()');
+			// Split it!
+			$sql = explode(';', $content);
+
+			// So it's easier to check the errors..
+			foreach($sql as $query) {
+				if(!$this->mysqli->query($query))
+					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in executeFile()');
+			}
 		}
 
 		return true;
