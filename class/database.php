@@ -28,7 +28,8 @@ class Database {
 	 */
 
 	public function __construct($host='localhost', $user='root', $password='', $db='db') {
-		$this->mysqli = new Mysqli($host, $user, $password, $db);
+		if (!$this->mysqli = new Mysqli($host, $user, $password, $db))
+			throw new Exception("<b>Database:</b> Unable to connect");
 	}
 
 	/*
@@ -44,6 +45,8 @@ class Database {
 	 */
 
 	public function select($table, $columns='*', $conditions='', $extra='') {
+		// If the user made $table parm an array, escape it and make it into
+		// a string we can use in the query.
 		if(is_array($table)) {
 			foreach ($table as $table) {
 				$tables[] = addslashes($table);
@@ -51,8 +54,9 @@ class Database {
 			$table = implode(', ', $tables);
 		}
 
+		// The conditions SHOULD be an array, parse them so their ready for the
+		// query. If it's not an array, throw an exception
 		if(is_array($conditions)) {
-			$sets = '';
 			foreach ($conditions as $key => $value) {
 				$sets .= $key . ' = ';
 
@@ -64,8 +68,10 @@ class Database {
 				$sets .= "'" . $value . "',";
 			}
 			$conditions = rtrim($sets, ',');
-		}
+		} else
+			throw new Exception('<b>Database:</b> Parameter $conditions <b>must</b> be an array');
 
+		// If $columns is an array, prepare it for the query
 		if(is_array($columns) {
 			foreach ($columns as $column) {
 				$cols[] = addslashes($column);
@@ -73,15 +79,19 @@ class Database {
 			$columns = implode(', ', $cols);
 		}
 		
+		// If there's no conditions, no WHERE in the query
 		$where = 'WHERE';
 		if (empty($conditions))
 			$where = '';
 
+		// Create the query
 		$query = "SELECT {$columns} FROM {$table} {$where} {$conditions} {$extra}";
 
+		// Set the query as last query for the database, then perform it
 		$this->last_query = '<b>Select Query:</b> ' . $query;
 		$query = $this->mysqli->query($query);
 
+		// Oops, error.
 		if (!$query || !is_object($query))
 			throw new Exception('<b>Database:</b> Not able to select');
 
@@ -103,12 +113,15 @@ class Database {
 	 */
 
 	public function select_tpl($table, $columns='*', $conditions='', $extra='') {
+		// Throws the query to the select function
 		$query = $this->select($table, $columns, $conditions, $extra);
 
+		// Make an array with the content
 		while ($row = $query->fetch_assoc()) {
 			$return[] = $row;
 		}
 
+		// Return it!
 		return $return;
 	}
 
@@ -124,12 +137,12 @@ class Database {
 	 */
 
 	public function insert($table, $data) {
-		if(empty($table) || empty($data))
-			throw new Exception('<b>Database:</b> Required argument for insert() empty');
-
+		// Data is not an array, throw exception
 		if(!is_array($data))
 			throw new Exception('<b>Database:</b> Argument $data for insert is <b>not</b> an array');
 
+		// Should table happen to be an array, escape it and make it into a string
+		// ready for the query.
 		if(is_array($table)) {
 			foreach ($table as $table) {
 				$tables[] = addslashes($table);
@@ -137,6 +150,7 @@ class Database {
 			$table = implode(', ', $tables);
 		}
 
+		// Prepare the data array for query
 		foreach ($data as $key => $value) {
 			$sets .= $key . " = ";
 
@@ -147,11 +161,12 @@ class Database {
 			$value = addslashes($value);
 			$sets .= "'" . $value . "', ";
 		}
-
 		$sets = rtrim($sets, ', ');
 
+		// Make the query
 		$query = "INSERT INTO {$table} SET {$sets}";
 
+		// Send it to insertQuery
 		return $this->insertQuery($query);
 	}
 
@@ -169,9 +184,12 @@ class Database {
 	 */
 
 	public function update($table, $data, $conditions, $extra='') {
+		// Oops, $data or $conditions were not an array!
 		if(!is_array($data) || !is_array($conditions))
-			throw new Exception('<b>Database</b> Argument $data or $condition for update() is <b>not</b> an array');
+			throw new Exception('<b>Database</b> Argument $data or $condition for update() is/are <b>not</b> an array');
 
+		// Should table happen to be an array, escape it and make it into a string
+		// ready for the query.
 		if(is_array($table)) {
 			foreach ($table as $table) {
 				$tables[] = addslashes($table);
@@ -179,6 +197,7 @@ class Database {
 			$table = implode(', ', $tables);
 		}
 
+		// Prepare $data for the sql query
 		foreach ($data as $key => $value) {
 			$sets .= $key . ' = ';
 
@@ -189,8 +208,10 @@ class Database {
 			$value = addslashes($value);
 			$sets .= "'" . $value . "',";
 		}
+		// Remove trailing comma
 		$sets = rtrim($sets, ',');
 
+		// Prepare $conditions for the query
 		foreach ($conditions as $key => $value) {
 			$conditions_sql .= $key . ' = ';
 
@@ -201,6 +222,7 @@ class Database {
 			$value = addslashes($value);
 			$conditions_sql .= "'" . $value . "' AND ";
 		}
+		// Bye trailing AND!
 		$conditions = rtrim($conditions_sql, ' AND '); 
 
 		$query = "UPDATE {$table} SET {$sets} WHERE {$conditions} {$extra}";
@@ -220,6 +242,7 @@ class Database {
 	 */
 
 	public function delete($table, $conditions='', $extra='') {	
+		// Hello dear $table, are you an array you'll not be able to break anything!
 		if(is_array($table)) {
 			foreach ($table as $table) {
 				$tables[] = addslashes($table);
@@ -227,6 +250,7 @@ class Database {
 			$table = implode(', ', $tables);
 		}
 
+		// Prepare $conditions for the query
 		if (is_array($conditions)) {
 			foreach ($conditions as $key => $value) {
 				$sets .= $key . ' = ';
@@ -237,9 +261,12 @@ class Database {
 				$value = addslashes($value);
 				$sets .= "'" . $value . "' AND ";
 			}
+			// Bye last AND!
 			$conditions = rtrim($sets, ' AND ');
-		}
+		} else
+			throw new Exception('<b>Database:</b> Parameter $conditions in delete() were not an array');
 
+		// No conditions, no where
 		$where = 'WHERE';
 		if(empty($conditions))
 			$where = '';
@@ -258,22 +285,24 @@ class Database {
 	 */
 
 	public function executeFile($file) {
-		if(empty($file))
-			throw new Exception('<b>Database:</b> No file passed to executeFile()');
-
+		// Uuooh, the file doesn't exist!
 		if (!file_exists($file))
 			throw new Exception('<b>Database:</b> File passed to executeFile() does not exist');
 
+		// So, what is the contents of this file?
 		$content = file_get_contents($file);
 
+		// Owpz, no content
 		if(!$content)
 			throw new Exception('<b>Database:</b> Not able to read file passed to executeFile()');
 
+		// Split it!
 		$sql = explode(';', $content);
 
+		// So it's easier to check the errors..
 		foreach($sql as $query) {
 			if(!$this->mysqli->query($query))
-				throw new Exception('<b>Database:</b> A query failed while executing ' . $file . ' in executeFile()');
+				throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in executeFile()');
 		}
 
 		return true;
