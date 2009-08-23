@@ -306,14 +306,14 @@ class Database {
 		foreach ($files as $file) {
 			// Uuooh, the file doesn't exist!
 			if (!file_exists($file))
-				throw new Exception('<b>Database:</b> File ' . $file . ' passed to executeFile() does not exist');
+				throw new Exception('<b>Database:</b> File ' . $file . ' passed to execute() does not exist');
 
 			// So, what is the contents of this file?
 			$content = file_get_contents($file);
 
 			// Owpz, no content
 			if(!$content)
-				throw new Exception('<b>Database:</b> Not able to read ' . $file . ' passed to executeFile()');
+				throw new Exception('<b>Database:</b> Not able to read ' . $file . ' passed to execute()');
 
 			// Split it!
 			$sql = explode(';', $content);
@@ -321,7 +321,7 @@ class Database {
 			// So it's easier to check the errors..
 			foreach($sql as $query) {
 				if(!$this->mysqli->query($query))
-					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in executeFile()');
+					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute()');
 			}
 		}
 
