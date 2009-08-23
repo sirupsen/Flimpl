@@ -44,7 +44,7 @@ class Database {
 	 *
 	 */
 
-	public function select($table, $columns='*', $conditions='', $extra='') {
+	public function select($table, $conditions='', $columns='*', $extra='') {
 		if(empty($table))
 			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
 
@@ -84,8 +84,10 @@ class Database {
 			$columns = implode(', ', $cols);
 		}
 
-		if (!$columns)
+		// If somebody passed the columns argument empty
+		if (!$columns) {
 			$columns = '*';
+		}
 
 		// Create the query
 		$query = "SELECT {$columns} FROM {$table} {$conditions} {$extra}";
@@ -115,9 +117,9 @@ class Database {
 	 *
 	 */
 
-	public function select_tpl($table, $columns='*', $conditions='', $extra='') {
+	public function select_tpl($table, $conditions='', $columns='*', $extra='') {
 		// Throws the query to the select function
-		$query = $this->select($table, $columns, $conditions, $extra);
+		$query = $this->select($table, $conditions, $columns, $extra);
 
 		// Make an array with the content
 		while ($row = $query->fetch_assoc()) {
@@ -316,7 +318,7 @@ class Database {
 			// So it's easier to check the errors..
 			foreach($sql as $query) {
 				if(!$this->mysqli->query($query))
-					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute()');
+					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute() (' . $this->mysqli->error . ')');
 			}
 		}
 
@@ -337,7 +339,7 @@ class Database {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the insert query (' . $this->mysqli->error . '');
+			throw new Exception('<b>Database:</b> Unable to perform the insert query (' . $this->mysqli->error . ')');
 
 		return $this->mysqli->insert_id;	
 	}
@@ -356,7 +358,7 @@ class Database {
 		$this->last_query = '<b>Update Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the update query');
+			throw new Exception('<b>Database:</b> Unable to perform the update query (' . $this->mysqli->error . ')');
 
 		return $this->mysqli->affected_rows;
 	}
@@ -377,7 +379,7 @@ class Database {
 		$this->last_query = '<b>Delete Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the delete query');
+			throw new Exception('<b>Database:</b> Unable to perform the delete query (' . $this->mysqli->error . ')');
 
 		return $this->mysqli->affected_rows;
 	}
@@ -396,7 +398,7 @@ class Database {
 
 		echo 'Select..';
 		echo '<pre>';
-		if ($select = $this->select('articles', '*', array('id' => $insert))) {
+		if ($select = $this->select('articles', array('id' => $insert), '')) {
 			while($row = $select->fetch_assoc()) {
 				print_r($row);	
 			}
