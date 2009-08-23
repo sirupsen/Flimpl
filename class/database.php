@@ -20,10 +20,10 @@ class Database {
 	 * Constructer for the class which connects to the database, due to
 	 * that the database would be usefull without having a connection.
 	 *
-	 * @parm 	string 	$host 	The host (f.e. localhost)
-	 * @parm 	string 	$user 	The username (f.e. root)
-	 * @parm 	string 	$password 	The password (f.e. password)
-	 * @parm 	string 	$db 	The database used (f.e. database)
+	 * @param 	string 	$host 	The host (f.e. localhost)
+	 * @param 	string 	$user 	The username (f.e. root)
+	 * @param 	string 	$password 	The password (f.e. password)
+	 * @param 	string 	$db 	The database used (f.e. database)
 	 *
 	 */
 
@@ -36,10 +36,10 @@ class Database {
 	 *
 	 * Selects something from the database, and returns the query.
 	 *
-	 * @parm 	string|array 	$table 	The table(s)
-	 * @parm 	string 	$columns 	The column(s), default is all
-	 * @parm 	array 	$conditions 	The conditions for the query
-	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
+	 * @param 	string|array 	$table 	The table(s)
+	 * @param 	string 	$columns 	The column(s), default is all
+	 * @param 	array 	$conditions 	The conditions for the query
+	 * @param 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	string 	$query 	The query
 	 *
 	 */
@@ -104,10 +104,10 @@ class Database {
 	 * array. This is usefull for just dumping a query to the
 	 * database without needing to modify the values.
 	 *
-	 * @parm 	string|array 	$table 	The table(s)
-	 * @parm 	string 	$columns 	The column(s), default is all
-	 * @parm 	array 	$conditions 	The conditions for the query
-	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
+	 * @param 	string|array 	$table 	The table(s)
+	 * @param 	string 	$columns 	The column(s), default is all
+	 * @param 	array 	$conditions 	The conditions for the query
+	 * @param 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	array 	$return 	An array of all entries
 	 *
 	 */
@@ -130,8 +130,8 @@ class Database {
 	 * Inserts something into the database, and escapes the input
 	 * by adding slashes.
 	 *
-	 * @parm 	string 	$table 	The table to perform the insert on (f.e. blog_posts)
-	 * @parm 	array 	$data 	The actual data to insert as an array (column => value)
+	 * @param 	string 	$table 	The table to perform the insert on (f.e. blog_posts)
+	 * @param 	array 	$data 	The actual data to insert as an array (column => value)
 	 * @return 	integer $id 	The id of the newly inserted item (f.e. 8)
 	 * 
 	 */
@@ -175,10 +175,10 @@ class Database {
 	 * Updates a database defined with the data provided in an array, at
 	 * some given conditions.
 	 *
-	 * @parm 	string 	$table 	The table to perform the action on (f.e. articles)
-	 * @parm 	array 	$data 	The columns in the row(s) to update (column => value)
-	 * @parm 	array 	$conditions 	The conditions at which to update (column => value):w
-	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
+	 * @param 	string 	$table 	The table to perform the action on (f.e. articles)
+	 * @param 	array 	$data 	The columns in the row(s) to update (column => value)
+	 * @param 	array 	$conditions 	The conditions at which to update (column => value):w
+	 * @param 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
 	 * @return 	integer $affected_rows 	The amount of rows affected by the update
 	 *
 	 */
@@ -216,7 +216,7 @@ class Database {
 			$conditions_sql .= $key . ' = ';
 
 			if (is_null($value)) {
-				$value = 'NULL, ';
+			$value = 'NULL, ';
 			}
 
 			$value = addslashes($value);
@@ -234,10 +234,10 @@ class Database {
 	 *
 	 * Deletes rows from a given table which matches the conditions.
 	 *
-	 * @parm 	string 	$table 	The table to perform updates (i.e. names)
-	 * @parm 	array 	$conditions 	The conditions to perform the query on
-	 * @parm 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
-	 * @parm 	array 	$conditions 	The conditions at which to delete (column => value)
+	 * @param 	string 	$table 	The table to perform updates (i.e. names)
+	 * @param 	array 	$conditions 	The conditions to perform the query on
+	 * @param 	string 	$extra 	Stuff to append to the query (f.e. limit, order by)
+	 * @param 	array 	$conditions 	The conditions at which to delete (column => value)
 	 *
 	 */
 
@@ -279,7 +279,7 @@ class Database {
 	/*
 	 * Executes a file at the given path.
 	 *
-	 * @parm 	string 	$file 	The path to the file (f.e. http://example.com/file.sql)
+	 * @param 	string 	$file 	The path to the file (f.e. http://example.com/file.sql)
 	 * @return 	bool 	true
 	 *
 	 */
@@ -313,7 +313,7 @@ class Database {
 	 * Performs a query, and then returns the ID of the newly inserted
 	 * row.
 	 *
-	 * @parm 	string 	$query 	The query to perform
+	 * @param 	string 	$query 	The query to perform
 	 * @return 	integer $insert_id 	The id of the newly inserted item
 	 *
 	 */
@@ -332,7 +332,7 @@ class Database {
 	 * Performs a query, and then returns the amount of rows affected
 	 * by the action. (f.e. 6)
 	 *
-	 * @parm 	sting 	$query 	The query to perform
+	 * @param 	sting 	$query 	The query to perform
 	 * @return 	integer $affected_rows 	The amount of affected rows
 	 *
 	 */
@@ -353,7 +353,7 @@ class Database {
 	 * is that this throws a more relevant exception, and the name is
 	 * better.
 	 *
-	 * @parm 	string 	$query 	The query to perform
+	 * @param 	string 	$query 	The query to perform
 	 * @return 	integer $affected_rows 	The amount of affected rows
 	 *
 	 */
