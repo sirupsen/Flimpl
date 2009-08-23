@@ -384,6 +384,15 @@ class Database {
 		return $this->mysqli->affected_rows;
 	}
 
+	/*
+	 *
+	 * This method is mainly used for debugging the entire class at once,
+	 * by taking everything in the database, show it - then make a new
+	 * entry, view it, update it, view it again to see the changes,
+	 * and then delete it.
+	 *
+	 */
+
 	public function test() {
 		echo 'Selecting all..</br>';
 		echo '<pre>';
@@ -406,15 +415,32 @@ class Database {
 		echo '</pre>';
 
 		echo 'Updating.. ';
-		$update = array('title' => 'Updated');
+		$update = array('title' => 'Updated Text', 'text' => 'Updated Content');
 		$conditions = array('id' => $insert);
 		if ($update = $this->update('articles', $update, $conditions))
 			echo '<b>success!</b> (' . $update . ')<br/><br/>';
+
+		echo 'Select again..';
+		echo '<pre>';
+		if ($select = $this->select('articles', array('id' => $insert), '')) {
+			while($row = $select->fetch_assoc()) {
+				print_r($row);	
+			}
+		}
+		echo '</pre>';
 
 		echo 'Deleting.. ';
 		$conditions = array('id' => $insert);
 		if($delete = $this->delete('articles', $conditions))
 			echo '<b>success!</b> (' . $delete . ')<br/><br/>';
+
+		echo 'Select again to check if it is deleted..';
+		if ($select = $this->select('articles', array('id' => $insert), '')) {
+			$num = $selected->num_rows;
+			if($num == 0) {
+				echo '<b>success!</b>';
+			}
+		}
 	}
 }
 
