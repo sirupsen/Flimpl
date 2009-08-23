@@ -84,7 +84,7 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		if (!$query || !is_object($query))
-			throw new Exception('<b>Database:</b> Not able to select()');
+			throw new Exception('<b>Database:</b> Not able to select');
 
 		return $query;
 	}
@@ -128,6 +128,13 @@ class Database {
 		if(empty($table) || empty($data))
 			throw new Exception('<b>Database:</b> Required argument for insert() empty');
 
+		if(is_array($table)) {
+			foreach ($table as $table) {
+				$tables[] = $table;
+			}
+			$table = implode(', ', $tables);
+		}
+
 		if(!is_array($data))
 			throw new Exception('<b>Database:</b> Argument $data for insert is <b>not</b> an array');
 
@@ -141,6 +148,7 @@ class Database {
 			$value = addslashes($value);
 			$sets .= "'" . $value . "', ";
 		}
+
 		$sets = rtrim($sets, ', ');
 
 		$query = "INSERT INTO {$table} SET {$sets}";
@@ -167,6 +175,13 @@ class Database {
 
 		if(!is_array($data) || !is_array($conditions))
 			throw new Exception('<b>Database</b> Argument $data or $condition for update() is <b>not</b> an array');
+
+		if(is_array($table)) {
+			foreach ($table as $table) {
+				$tables[] = $table;
+			}
+			$table = implode(', ', $tables);
+		}
 
 		foreach ($data as $key => $value) {
 			$sets .= $key . ' = ';
@@ -211,6 +226,13 @@ class Database {
 	public function delete($table, $conditions='', $extra='') {	
 		if(empty($table))
 			throw new Exception('<b>Database:</b> Required argument $table is empty');
+
+		if(is_array($table)) {
+			foreach ($table as $table) {
+				$tables[] = $table;
+			}
+			$table = implode(', ', $tables);
+		}
 
 		if (is_array($conditions)) {
 			foreach ($conditions as $key => $value) {
