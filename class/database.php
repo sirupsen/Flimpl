@@ -70,7 +70,7 @@ class Database {
 				$value = addslashes($value);
 				$sets .= "'" . $value . "',";
 			}
-			$conditions = rtrim($sets, ',');
+			$conditions = ' WHERE ' . rtrim($sets, ' AND ');
 		} else
 			throw new Exception('<b>Database:</b> Parameter $conditions <b>must</b> be an array');
 
@@ -81,14 +81,9 @@ class Database {
 			}
 			$columns = implode(', ', $cols);
 		}
-		
-		// If there's no conditions, no WHERE in the query
-		$where = 'WHERE';
-		if (empty($conditions))
-			$where = '';
 
 		// Create the query
-		$query = "SELECT {$columns} FROM {$table} {$where} {$conditions} {$extra}";
+		$query = "SELECT {$columns} FROM {$table} {$conditions} {$extra}";
 
 		// Set the query as last query for the database, then perform it
 		$this->last_query = '<b>Select Query:</b> ' . $query;
@@ -273,17 +268,12 @@ class Database {
 				$value = addslashes($value);
 				$sets .= "'" . $value . "' AND ";
 			}
-			// Bye last AND!
-			$conditions = rtrim($sets, ' AND ');
+			// Bye last AND! And set WHERE in start =)
+			$conditions = ' WHERE ' . rtrim($sets, ' AND ');
 		} else
 			throw new Exception('<b>Database:</b> Parameter $conditions in delete() were not an array');
 
-		// No conditions, no where
-		$where = 'WHERE';
-		if(empty($conditions))
-			$where = '';
-
-		$sql = "DELETE FROM {$table} {$where} {$conditions} {$extra}";
+		$sql = "DELETE FROM {$table} {$conditions} {$extra}";
 
 		return $this->deleteQuery($sql);
 	}
