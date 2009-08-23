@@ -45,7 +45,7 @@ class Database {
 	 */
 
 	public function select($table, $columns='*', $conditions='', $extra='') {
-		if(empty($table)
+		if(empty($table))
 			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
 
 		// If the user made $table parm an array, escape it and make it into
@@ -59,28 +59,33 @@ class Database {
 
 		// The conditions SHOULD be an array, parse them so their ready for the
 		// query. If it's not an array, throw an exception
-		if(is_array($conditions)) {
-			foreach ($conditions as $key => $value) {
-				$sets .= $key . ' = ';
+		if($conditions) {
+			if(is_array($conditions)) {
+				foreach ($conditions as $key => $value) {
+					$sets .= $key . ' = ';
 
-				if (is_null($value)) {
-					$value = 'NULL, ';
+					if (is_null($value)) {
+						$value = 'NULL, ';
+					}
+
+					$value = addslashes($value);
+					$sets .= "'" . $value . "' AND ";
 				}
-
-				$value = addslashes($value);
-				$sets .= "'" . $value . "',";
-			}
-			$conditions = ' WHERE ' . rtrim($sets, ' AND ');
-		} else
-			throw new Exception('<b>Database:</b> Parameter $conditions <b>must</b> be an array');
+				$conditions = 'WHERE ' . rtrim($sets, ' AND ');
+			} else
+				throw new Exception('<b>Database:</b> Parameter $conditions <b>must</b> be an array');
+		}
 
 		// If $columns is an array, prepare it for the query
-		if(is_array($columns) {
+		if(is_array($columns)) {
 			foreach ($columns as $column) {
 				$cols[] = addslashes($column);
 			}
 			$columns = implode(', ', $cols);
 		}
+
+		if (!$columns)
+			$columns = '*';
 
 		// Create the query
 		$query = "SELECT {$columns} FROM {$table} {$conditions} {$extra}";
@@ -91,7 +96,7 @@ class Database {
 
 		// Oops, error.
 		if (!$query || !is_object($query))
-			throw new Exception('<b>Database:</b> Not able to select');
+			throw new Exception('<b>Database:</b> Not able to select (' . $this->mysqli->error . ')');
 
 		return $query;
 	}
@@ -135,7 +140,7 @@ class Database {
 	 */
 
 	public function insert($table, $data) {
-		if(empty($table)
+		if(empty($table))
 			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
 
 		// Data is not an array, throw exception
@@ -185,7 +190,7 @@ class Database {
 	 */
 
 	public function update($table, $data, $conditions, $extra='') {
-		if(empty($table)
+		if(empty($table))
 			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
 
 		// Oops, $data or $conditions were not an array!
@@ -246,7 +251,7 @@ class Database {
 	 */
 
 	public function delete($table, $conditions='', $extra='') {	
-		if(empty($table)
+		if(empty($table))
 			throw new Exception('<b>Database:</b> Required parameter $table was passed, but was empty');
 
 		// Hello dear $table, are you an array you'll not be able to break anything!
@@ -288,7 +293,7 @@ class Database {
 
 	public function execute($file) {
 		// If the parameter passed is not an array, make it!
-		if (!is_array($files) {
+		if (!is_array($files)) {
 			$files[] = $files;
 		}
 
@@ -332,7 +337,7 @@ class Database {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the insert query');
+			throw new Exception('<b>Database:</b> Unable to perform the insert query (' . $this->mysqli->error . '');
 
 		return $this->mysqli->insert_id;	
 	}
@@ -376,4 +381,40 @@ class Database {
 
 		return $this->mysqli->affected_rows;
 	}
+
+	public function test() {
+		echo 'Selecting all..</br>';
+		echo '<pre>';
+		if($articles = $this->select_tpl('articles'))
+			print_r($articles);
+		echo '</pre>';
+
+		echo 'Inserting.. ';
+		$new_article = array('title' => 'New Title', 'text' => 'New Content');
+		if($insert = $this->insert('articles', $new_article))
+			echo '<b>success!</b> (' . $insert . ')<br/><br/>';
+
+		echo 'Select..';
+		echo '<pre>';
+		if ($select = $this->select('articles', '*', array('id' => $insert))) {
+			while($row = $select->fetch_assoc()) {
+				print_r($row);	
+			}
+		}
+		echo '</pre>';
+
+		echo 'Updating.. ';
+		$update = array('title' => 'Updated');
+		$conditions = array('id' => $insert);
+		if ($update = $this->update('articles', $update, $conditions))
+			echo '<b>success!</b> (' . $update . ')<br/><br/>';
+
+		echo 'Deleting.. ';
+		$conditions = array('id' => $insert);
+		if($delete = $this->delete('articles', $conditions))
+			echo '<b>success!</b> (' . $delete . ')<br/><br/>';
+	}
 }
+
+$db = new Database;
+$db->test();
