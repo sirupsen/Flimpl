@@ -12,21 +12,26 @@
  */
 
 header('Content-type: text/css');   
-ob_start('compress');
+
 
 function compress($buffer) {
-    /* remove comments */
+	// Remove comments
     $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
-    /* remove tabs, spaces, newlines, etc. */
+	// Remove tabs, spaces, newlines etc.
     $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
     return $buffer;
 }
 
+// Start the buffer, using the compress function!
+ob_start('compress');
+
+// Open the directory
 if ($handle = opendir('.')) {
+	// Scan all files
 	while (false != ($file = readdir($handle))) {
 		if($file != '.' && $file != '..') {
-			$fileChunks = explode('.', $file);
-			if($fileChunks[1] == 'css')
+			// And include the ones with .css extensions
+			if(end(explode('.', $file)) == 'css')
 				include($file);
 		}
 	}
