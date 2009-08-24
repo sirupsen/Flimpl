@@ -16,6 +16,7 @@ $sample = new Sample;
 // Instances the Template class
 $tpl = new Template;
 
+$tpl->title = 'Welcome to Flimpl!';
 $tpl->articles = $sample->getArticles();
 $tpl->links = $registry->db->select_tpl('links');
 
