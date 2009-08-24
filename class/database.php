@@ -14,6 +14,7 @@ class Database {
 
 	public $mysqli;
 	public $last_query;
+	private $debug;
 	
 	/*
 	 *
@@ -27,8 +28,11 @@ class Database {
 	 *
 	 */
 
-	public function __construct($host='localhost', $user='root', $password='', $db='db') {
-		if (!$this->mysqli = new Mysqli($host, $user, $password, $db))
+	public function __construct($config) {
+		if ($config['debug'] == TRUE)
+			$this->debug = TRUE;
+
+		if (!$this->mysqli = new Mysqli($config['db_host'], $config['db_user'], $config['db_pass'], $config['db_database']))
 			throw new Exception("<b>Database:</b> Unable to connect");
 	}
 
