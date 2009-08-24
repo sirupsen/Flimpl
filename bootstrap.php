@@ -32,8 +32,6 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 
 	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errorstr', file = '$errfile', line = '$errline', time = '$time'";
 
-	echo $sql;
-
 	mysql_query($sql) or die(mysql_error());
 
 	return true;
