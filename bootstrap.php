@@ -13,7 +13,7 @@
  */
 
 // Require the config file for some global configuration
-require_once("static/other/config.php");
+require_once("config.php");
 
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $config;
