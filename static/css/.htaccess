@@ -1,0 +1,4 @@
+AddHandler application/x-httpd-php .css
+AddType application/x-httpd-php .php .php3 .php4 .php5
+AddType application/x-httpd-php-source .phps
+AddHandler cgi-script .cgi .pl
