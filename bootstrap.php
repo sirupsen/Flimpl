@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * The boostrap file is a file which is included in all other files
@@ -12,25 +11,30 @@
  * @started 12. August 2009
  *
  */
+
 // Require the config file for some global configuration
 require_once("static/other/config.php");
 
 function error_handler($errno, $errstr, $errfile, $errline) {
+	global $config;
+
 	$link = mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
-	mysql_select_db($config['db_database'], $link);
+	$db = mysql_select_db($config['db_database'], $link);
 
 	$errorstr = mysql_real_escape_string($errstr);
 	$errfile = mysql_real_escape_string($errfile);
 
 	echo $errstr;
 
-	echo "An error occured. It've been logged, and will be fixed as soon as possible.";
+	echo "\nAn error occured. It've been logged, and will be fixed as soon as possible.";
 	
 	$time = time();
 
-	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errstr', file = '$errfile', line = '$errline', time = '$time'";
+	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errorstr', file = '$errfile', line = '$errline', time = '$time'";
 
-	mysql_query($sql);
+	echo $sql;
+
+	mysql_query($sql) or die(mysql_error());
 
 	return true;
 }
