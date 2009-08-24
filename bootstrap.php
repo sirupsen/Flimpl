@@ -18,18 +18,21 @@ require_once("static/other/config.php");
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $config;
 
-	$link = mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
-	$db = mysql_select_db($config['db_database'], $link);
+	if ($config['debug'] == FALSE) {
+		$link = mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
+		$db = mysql_select_db($config['db_database'], $link);
 
-	$errorstr = mysql_real_escape_string($errstr);
-	$errfile = mysql_real_escape_string($errfile);
+		$errorstr = mysql_real_escape_string($errstr);
+		$errfile = mysql_real_escape_string($errfile);
 
-	echo "An error occured. It've been logged, and will be fixed as soon as possible.";
-	
-	$time = time();
-	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errorstr', file = '$errfile', line = '$errline', time = '$time'";
+		echo "An error occured. It've been logged, and will be fixed as soon as possible.";
 
-	mysql_query($sql) or die(mysql_error());
+		$time = time();
+		$sql = "INSERT INTO errors SET no = '$errorno', message = '$errorstr', file = '$errfile', line = '$errline', time = '$time'";
+
+		mysql_query($sql) or die(mysql_error());
+	} else
+		echo $errorstr;
 
 	return true;
 }
