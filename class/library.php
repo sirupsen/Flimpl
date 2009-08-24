@@ -32,7 +32,7 @@ class Library {
 		$lengths         = array("60","60","24","7","4.35","12","10");
 		
 		$now             = time();
-		$unix_date         = strtotime($date);
+		$unix_date       = strtotime($date);
 		
 		   // check validity of date
 		if(empty($unix_date)) {    
