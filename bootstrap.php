@@ -12,8 +12,13 @@
  * @started 12. August 2009
  *
  */
+// Require the config file for some global configuration
+require_once("static/other/config.php");
 
 function error_handler($errno, $errstr, $errfile, $errline) {
+	$link = mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
+	mysql_select_db($config['db_database'], $link);
+
 	$errorstr = mysql_real_escape_string($errstr);
 	$errfile = mysql_real_escape_string($errfile);
 
@@ -32,8 +37,6 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 
 set_error_handler("error_handler");
 
-// Require the config file for some global configuration
-require_once("static/other/config.php");
 
 // Makes a function which can be used to handle exceptions
 function exception_handler($exception) {
