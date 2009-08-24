@@ -19,7 +19,7 @@
 				<li><h3>Some links..</h3>
 					<ol class="super-indent">
 						<?php foreach($links as $link) : ?>
-						<li><a href="<?php echo $link[url]; ?>"><?php echo $link[name]; ?></a></li>
+						<li><a href="<?php echo $link['url']; ?>"><?php echo $link['name']; ?></a></li>
 						<?php endforeach; ?>
 					</ol>
 				</li>
@@ -29,9 +29,9 @@
 			<h1>Articles..</h1>
 			<div class="indent">
 				<?php foreach($articles as $article) : ?>
-					<h2><?php echo $article[title]; ?></h2>
-					<p><?php echo $article[text]; ?></p>
-					<a><span class="blue"><?php echo $article[author] . '</span> - ' . $article[time]; ?></a>
+					<h2><?php echo $article['title']; ?></h2>
+					<p><?php echo $article['text']; ?></p>
+					<a><span class="blue"><?php echo $article['author'] . '</span> - ' . $article['time']; ?></a>
 				<?php endforeach; ?>
 			</div>
 		</div>
