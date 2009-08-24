@@ -24,12 +24,9 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	$errorstr = mysql_real_escape_string($errstr);
 	$errfile = mysql_real_escape_string($errfile);
 
-	echo $errstr;
-
-	echo "\nAn error occured. It've been logged, and will be fixed as soon as possible.";
+	echo "An error occured. It've been logged, and will be fixed as soon as possible.";
 	
 	$time = time();
-
 	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errorstr', file = '$errfile', line = '$errline', time = '$time'";
 
 	mysql_query($sql) or die(mysql_error());
