@@ -9,6 +9,11 @@
  *  It can be included like any css file, because the
  *  content type is set to text/css.
  *
+ *  This method is good because it automaticly includes
+ *  all the files so you can have nice organization, as
+ *  well as it allows you to only do one request in
+ *  your documents, which results in better speed!
+ *
  */
 
 header('Content-type: text/css');   
