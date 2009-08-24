@@ -381,11 +381,12 @@ class Database {
 	 */
 
 	public function row($obj) {
+		$row = array();
 		foreach ((array) $obj->fetch_assoc() as $key => $value) {
 			$row[$key] = stripslashes($value);
 		}
 
-		return (array) $row;
+		return $row;
 	}
 
 	/*
