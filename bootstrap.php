@@ -20,8 +20,10 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	echo $errstr;
 
 	echo "An error occured. It've been logged, and will be fixed as soon as possible.";
+	
+	$time = time();
 
-	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errstr', file = '$errfile', line = '$errline'";
+	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errstr', file = '$errfile', line = '$errline', time = '$time'";
 
 	mysql_query($sql);
 
