@@ -13,6 +13,23 @@
  *
  */
 
+function error_handler($errno, $errstr, $errfile, $errline) {
+	$errorstr = mysql_real_escape_string($errstr);
+	$errfile = mysql_real_escape_string($errfile);
+
+	echo $errstr;
+
+	echo "An error occured. It've been logged, and will be fixed as soon as possible.";
+
+	$sql = "INSERT INTO errors SET no = '$errorno', message = '$errstr', file = '$errfile', line = '$errline'";
+
+	mysql_query($sql);
+
+	return true;
+}
+
+set_error_handler("error_handler");
+
 // Require the config file for some global configuration
 require_once("static/other/config.php");
 
