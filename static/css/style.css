@@ -31,7 +31,8 @@ function compress($buffer) {
 if ($config['css_compress'] == true)
 	ob_start('compress');
 else
-	ob_start('ob_gzhandler');
+	if(!ob_start("ob_gzhandler")) ob_start();
+
 
 // Open the directory
 if ($handle = opendir('.')) {
