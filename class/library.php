@@ -23,7 +23,7 @@ class Library {
 	 * @return 	string 	$misc 	The time difference
 	 */
 
-	public function timeDifference($date) {
+	public static function timeDifference($date) {
 		if(empty($date)) {
 			return "No date provided";
 		}
@@ -73,7 +73,7 @@ class Library {
 	 *
 	 */
 
-	public function tweet($message, $username, $password) {
+	public static function tweet($message, $username, $password) {
 		$context = stream_context_create(array( 
 			'http' => array( 
 			  'method'  => 'POST', 
@@ -100,7 +100,7 @@ class Library {
 	 *
 	 */
 
-	public function gravatar($email, $size=100, $default = '') {
+	public static function gravatar($email, $size=100, $default = '') {
 		$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=".md5( strtolower($email) ).
 			"&default=".urlencode($default).
 			"&size=".$size;
@@ -120,7 +120,7 @@ class Library {
 	 *
 	 */
 
-	public function email($to, $subject, $message, $from="noreply@example.com", $additional_headers='') {
+	public static function email($to, $subject, $message, $from="noreply@example.com", $additional_headers='') {
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html\r\n";
 		
@@ -142,7 +142,7 @@ class Library {
 	 *
 	 */
 
-	public function randString($length=8, $chars) {
+	public static function randString($length=8, $chars) {
 		$char = $chars;
 
 		if(1 > $char)
