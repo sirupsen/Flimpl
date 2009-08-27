@@ -15,9 +15,9 @@
  *  your documents, which results in better speed!
  *
  */
+require_once("../../config.php");
 
 header('Content-type: text/css');   
-
 
 function compress($buffer) {
 	// Remove comments
@@ -28,7 +28,10 @@ function compress($buffer) {
 }
 
 // Start the buffer, using the compress function!
-ob_start('compress');
+if ($config['css_compress'] == true)
+	ob_start('compress');
+else
+	ob_start('ob_gzhandler');
 
 // Open the directory
 if ($handle = opendir('.')) {
@@ -36,8 +39,9 @@ if ($handle = opendir('.')) {
 	while (false != ($file = readdir($handle))) {
 		if($file != '.' && $file != '..') {
 			// And include the ones with .css extensions
-			if(end(explode('.', $file)) == 'css')
+			if(end(explode('.', $file)) == 'css') {
 				include($file);
+			}
 		}
 	}
 	closedir($handle);
