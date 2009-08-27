@@ -72,4 +72,4 @@ $registry = Registry::getInstance();
 
 // Instance global classes into registry
 $registry->db = new Database($config);
-$registry->lib = new Library;
+$lib = new Library;
