@@ -91,8 +91,12 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		// Oops, error.
-		if (!$query || !is_object($query))
-			throw new Exception('<b>Database:</b> Not able to select (' . $this->mysqli->error . ')');
+		if (!$query || !is_object($query)) {
+			if ($this->debug == TRUE)
+				throw new Exception('<b>Database:</b> Not able to select (' . $this->mysqli->error . ')');	
+	
+				throw new Exception('<b>Database:</b> Not able to select.');	
+		}
 
 		return $query;
 	}
@@ -285,8 +289,12 @@ class Database {
 	public function insertQuery($query) {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
 
-		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the insert query (' . $this->mysqli->error . ')');
+		if (!$this->mysqli->query($query)) {
+			if ($this->debug == TRUE)
+				throw new Exception('<b>Database:</b> Not able to insert (' . $this->mysqli->error . ')');	
+	
+				throw new Exception('<b>Database:</b> Not able to insert.');
+		}
 
 		return $this->mysqli->insert_id;	
 	}
@@ -304,8 +312,13 @@ class Database {
 	public function updateQuery($query) {
 		$this->last_query = '<b>Update Query:</b> ' . $query;
 
-		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the update query (' . $this->mysqli->error . ')');
+		if (!$this->mysqli->query($query)) {
+
+			if ($this->debug == TRUE)
+				throw new Exception('<b>Database:</b> Not able to update (' . $this->mysqli->error . ')');	
+	
+				throw new Exception('<b>Database:</b> Not able to update.');
+		}
 
 		return $this->mysqli->affected_rows;
 	}
@@ -325,8 +338,12 @@ class Database {
 	public function deleteQuery($query) {
 		$this->last_query = '<b>Delete Query:</b> ' . $query;
 
-		if (!$this->mysqli->query($query))
-			throw new Exception('<b>Database:</b> Unable to perform the delete query (' . $this->mysqli->error . ')');
+		if (!$this->mysqli->query($query)) {
+			if ($this->debug == TRUE)
+				throw new Exception('<b>Database:</b> Not able to delete (' . $this->mysqli->error . ')');	
+	
+				throw new Exception('<b>Database:</b> Not able to delete.');
+		}
 
 		return $this->mysqli->affected_rows;
 	}
@@ -341,8 +358,12 @@ class Database {
 	public function executeQuery($query, $file) {
 		$this->last_query = '<b>Execute Query:</b> ' . $query;
 
-		if(!$this->mysqli->query($query))
-					throw new Exception('<b>Database:</b> A query failed while executing ' . $query . ' in ' . $file . ' in execute() (' . $this->mysqli->error . ')');
+		if (!$this->mysqli->query($query)) {
+			if ($this->debug == TRUE)
+				throw new Exception('<b>Database:</b> Not able to execute file (' . $this->mysqli->error . ')');	
+	
+				throw new Exception('<b>Database:</b> Not able to execute file.');
+		}
 
 		return true;
 	}
