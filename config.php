@@ -14,3 +14,6 @@ $config['db_database'] = 'db';
 
 // Handler configuration
 $config['handler_class'] = 'Class';
+
+// Css compression in style.css
+$config['css_compress'] = true;
