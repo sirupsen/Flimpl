@@ -67,9 +67,6 @@ function __autoload($class_name) {
  * @usage 	$registry->objectName = new Object;
  *
  */
-
 $registry = Registry::getInstance();
-
 // Instance global classes into registry
 $registry->db = new Database($config);
-$lib = new Library;
