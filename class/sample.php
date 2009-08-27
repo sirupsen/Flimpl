@@ -45,7 +45,7 @@ class Sample {
 				'title' => $row['title'],
 				'text' => $row['text'],
 				'author' => $row['author'],
-				'time' => $this->registry->lib->timeDifference($row['time'])
+				'time' => Library::timeDifference($row['time'])
 			);
 		}
 
