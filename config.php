@@ -1,5 +1,12 @@
 <?php
-// Configuration
+/*
+ * Configuration file. It's used to configure important
+ * application wide configuration. This file is automaticly
+ * included in the bootstrap file.
+ *
+ * @author 	Sirupsen
+ *
+ */
 
 // Are we debugging? Showing errors directly, instead
 // of logging them. If it's set to false, it's going to
