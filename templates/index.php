@@ -9,31 +9,16 @@
 		<div id="top">
 			<h1>Flimpl</h1>
 			<div class="indent">
-				<h2>Framework, Simple</h2>
+				<h2>Framework Simple</h2>
 			</div>
 		</div>
 
 		<div id="content">
-			<p>Welcome to the <span class="blue">Flimpl framework!</span> A simple framework made by <span class="green">Sirupsen</span>. This is the welcome file, it tells you that everything seems to be working correctly. To get started see the <span class="pink">README</span> file.</p>
-			<ul>
-				<li><h3>Some links..</h3>
-					<ol class="super-indent">
-						<?php foreach($links as $link) : ?>
-						<li><a href="<?php echo $link['url']; ?>"><?php echo $link['name']; ?></a></li>
-						<?php endforeach; ?>
-					</ol>
-				</li>
-			</ul>
+			<p>Welcome to the Flimpl framework! A simple framework made available to you by <a href="http://www.sirupsen.dk" title="Go to sirupsen.dk">Sirupsen</a>. To get started, I encourage you to read through <a href="README.markdown" title="Go to readme file">the readme file</a>, to get an overview of how Flimpl works. Also, I hope you'll read through the source code, it's faily well commented.</p>
 
+			<p>If you enjoy working with Flimpl, I'd love <a href="http://sirupsen.dk#contact" title="Go to the contact page at sirupsen.dk">to hear from you!</a>. If you have any ideas, <a href="http://sirupsen.dk#contact" title="Go to the contact page at sirupsen.dk">don't hestiate to contact me.</a> Or you could create stuff yourself, by forking the git repo and then ask me to pull from you.</p>
 
-			<h1>Articles..</h1>
-			<div class="indent">
-				<?php foreach($articles as $article) : ?>
-					<h2><?php echo $article['title']; ?></h2>
-					<p><?php echo $article['text']; ?></p>
-					<a><span class="blue"><?php echo $article['author'] . '</span> - ' . $article['time']; ?></a>
-				<?php endforeach; ?>
-			</div>
+			<p>For the latest version and updates, be sure to have <a href="http://github.com/Sirupsen/Flimpl/" title="Go to the Github repo for Flimpl">the Github repo</a> bookmarked.</p>
 		</div>
 	</div>
 </body>
