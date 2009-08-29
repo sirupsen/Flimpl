@@ -164,9 +164,9 @@ class Library {
 	 *
 	 */
 
-	public static function urlText($text) {
-		$text = preg_replace("/([a-zA-Z]+:\/\/[a-z0-9\_\.\-]+"."[a-z]{2,6}[a-zA-Z0-9\/\*\-\_\?\&\%\=\,\+\.]+)/"," <a href=\"$1\" target=\"_blank\">$1</a>", $text);
-		$text = preg_replace("/[^a-z]+[^:\/\/](www\."."[^\.]+[\w][\.|\/][a-zA-Z0-9\/\*\-\_\?\&\%\=\,\+\.]+)/"," <a href="\\" target="\">$1</a>", $text);
+	public static function linkify($text) {
+		$text = preg_replace("/([a-zA-Z]+:\/\/[a-z0-9\_\.\-]+"."[a-z]{2,6}[a-zA-Z0-9\/\*\-\_\?\&\%\=\,\+\.]+)/"," <a href=\"$1\">$1</a>", $text);
+		$text = preg_replace("/[^a-z]+[^:\/\/](www\."."[^\.]+[\w][\.|\/][a-zA-Z0-9\/\*\-\_\?\&\%\=\,\+\.]+)/"," <a href=\"$1\">$1</a>", $text);
 		$text = preg_replace("/([\s|\,\>])([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-z" . "A-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})" . "([A-Za-z0-9\!\?\@\#\$\%\^\&\*\(\)\_\-\=\+]*)" . "([\s|\.|\,\<])/i", "$1<a href=\"mailto:$2$3\">$2</a>$4",
 		$text);
 
