@@ -5,7 +5,9 @@ Flimpl is a simple non-mvc framework I made – mostly to see if I could, and ma
 As this is an open source project, you are welcome to fork it and request me to pull your changes.
 
 Author: Sirupsen
+
 Website: http://sirupsen.dk/
+
 Contact: sirup@sirupsen.dk
 
 Introduction
@@ -19,10 +21,12 @@ Flimpl stands for Framework Simple, and that is what it is. An extremely simple 
 * Library Class
 * Validate Class
 
+I'm going to give you a quick brief of the classes included per default. I recommend you to go look at the actual code behind, to figure out how everything works - and how to work with it.
+
 Database Class
 --------------
 
-The database class handles the connection to the database, as well as the queries sent to the database. And it automaticly escapes the input. As this is a very simple framework, you should be able to open the file yourself to check which functions are available, and how to work with them. By default it includes:
+The database class handles the connection to the database, as well as the queries sent to the database. It automaticly escapes the input, for extra security. As the purpose of this framework is learning, and expirementing you should go to the the Database class yourself, to figure out how it works. I'll list functions made available to you though:
 
 * Insert Method
 * Select Method
@@ -30,11 +34,7 @@ The database class handles the connection to the database, as well as the querie
 * Delete Method
 * Execute File Method
 
-The titles should be somewhat self explaining, except maybe the "Select Template Method". This is used if you just need stuff rawly into your template file, and no maniplulation is needed. The usage of this is shown in the /index.php file.
-
-I'm not going to create detailed documentation for this framework, if you need to learn how something works, or your going to work with some method included by default, it shouldn't be much trouble finding it and reading the comments to the method. The source is well commented, and is written in a language everyone should be able to understand.
-
-However, I'll give a quick brief of the default included classes.
+The titles should be somewhat self explanatory, except the "Select Template Method". This is a method made for the purpose of inserting data from your database, which requires no further manipulation.
 
 Registry Class
 --------------
