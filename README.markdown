@@ -56,6 +56,11 @@ Validation Class
 
 A class to validate the users input, like an URL or an email.
 
+Error Logging
+-------------
+
+Errors are automaticly logged to a database table called 'errors' when debug mode is not activated. This is usefull so we do not show fatal errors to the visitors, which could result in showing stuff we do not want them to see. 
+
 
 Installation
 ============
@@ -72,16 +77,10 @@ Installation
 * Open your MySQL client (PHPMyAdmin, Sqlbuddy, HeidiSQL - or whatever you use)
 * Execute the sql.sql file into the database your going to use
 * Upload the files to your server
-* Go to the index.php file (f.e. http://sirupsen.dk/Flimpl/)
-* If > 1 article, and a few links are shown - everything should be working correctly.
+* Go to the index.php file to verify everything is working correctly!
+[Oops. As per default the CSS is loaded from the compressor PHP file, which is hthacked to .CSS, it might not work because mod_rewrite is not enabled on your system!]
 
 What now..?
 -----------
 
-To start developing your own stuff, I'd recommend you to look at the source code to see how everything works. It's commented very well, so it should be easy to understand what everything does. There's three sample files included in order to show you how stuff works:
-
-* /index.php
-* /class/sample.php
-* /templates/index.php
-
-I'd recommend you to at least read those files, to understand how the framework works.
+To start developing, I strongly encourage you to read through the entire source to get a feeling of how everything works. Then it should be rather simple to get started!
