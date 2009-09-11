@@ -80,8 +80,8 @@ class Library {
 			  'header'  => sprintf("Authorization: Basic %s\r\n", base64_encode($username.':'.$password)). 
 						   "Content-type: application/x-www-form-urlencoded\r\n", 
 			  'content' => http_build_query(array('status' => $message)), 
-			  'timeout' => 5, 
-			), 
+			  'timeout' => 5
+			)
 		  )); 
 		  $ret = file_get_contents('http://twitter.com/statuses/update.xml', false, $context); 
 		  
