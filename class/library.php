@@ -43,7 +43,6 @@ class Library {
 		if($now > $unix_date) {    
 			$difference     = $now - $unix_date;
 			$tense         = "ago";
-			
 		} else {
 			$difference     = $unix_date - $now;
 			$tense         = "from now";
