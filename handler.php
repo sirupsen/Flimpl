@@ -24,16 +24,15 @@ if ($_POST['class'] != 'database') {
 $action = $_POST['action'];
 
 // No action defined, give an erro
-if (!$_POST['action'])
-	throw new Exception("No action found @ Handler");
-else {
+if (!$_POST['action']) {
+	throw new Exception("<b>Handler:</b> No action found");
+} else {
 	// Checks if the Method exists
 	if (!method_exists($object, $_POST['action'])) {
 		if ($_POST['class'] != 'database') {
-			throw new Exception($_POST['action'] . ' method not found @ Handler');
+			throw new Exception('<b>Handler:</b>' . $_POST['action'] . ' method not found in ' . $_POST['class']);
 		}
-	} 
-	if ($_POST['class'] == 'database') {
+	} if ($_POST['class'] == 'database') {
 		$registry->db->$action($_POST);
    	} else {
 		$object->$action($_POST);
