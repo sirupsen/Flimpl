@@ -20,7 +20,4 @@ $config['db_pass'] = 'pass';
 $config['db_database'] = 'db';
 
 // Handler configuration
-$config['handler_class'] = 'Class';
-
-// Css compression in style.css
-$config['css_compress'] = true;
+$config['handler_class'] = 'default';
