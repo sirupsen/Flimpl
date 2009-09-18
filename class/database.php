@@ -32,8 +32,9 @@ class Database {
 		if ($config['debug'] == TRUE)
 			$this->debug = TRUE;
 
-		if (!$this->mysqli = new Mysqli($config['db_host'], $config['db_user'], $config['db_pass'], $config['db_database']))
+		if (!$this->mysqli = new Mysqli($config['db_host'], $config['db_user'], $config['db_pass'], $config['db_database'])) {
 			throw new Exception("<b>Database:</b> Unable to connect");
+		}
 	}
 
 	/*
@@ -424,10 +425,25 @@ class Database {
 	 */
 
 	public function test() {
-		echo 'Selecting all..</br>';
+		$table = "CREATE TABLE IF NOT EXISTS `articles` ( 
+			   `id` int(11) not null auto_increment,
+			   `title` varchar(255),
+			   `text` text,
+			   `time` int(11),
+			   PRIMARY KEY (`id`)
+		   ) ";
+
+		$this->mysqli->query($table);
+
+		echo 'Selecting all.. ';
+		$articles = $this->select_tpl('articles');
+
+		if (!$articles) {
+			echo '<b>success</b> (No rows)</br>';
+		}
+
 		echo '<pre>';
-		if($articles = $this->select_tpl('articles'))
-			print_r($articles);
+		print_r($articles);
 		echo '</pre>';
 
 		echo 'Inserting.. ';
