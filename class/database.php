@@ -114,7 +114,10 @@ class Database {
 	public function query($query) {
 		$this->last_query = $query;
 		// So we can do queries directly from Javascript
-		if ($query['query']) $query = $query['query'];
+		// Only do when we're in debug mode, for security reasons
+		if ($this->debug == TRUE) {
+			if ($query['query']) $query = $query['query'];
+		}
 
 		$query = $this->mysqli->query($query);
 

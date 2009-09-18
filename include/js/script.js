@@ -1,4 +1,5 @@
 $(function() {
+	// Tests the database
 	$("#test_database").click(function() {
 		$.ajax({
 			type: "POST",
@@ -10,6 +11,8 @@ $(function() {
 			}
 		});
 	});
+	// Creates the error table using direct access.
+	// Notice: Can only do this when in debug mode. :)
 	$("#create_errors").click(function() {
 		var query = 'CREATE TABLE IF NOT EXISTS `errors` ( `id` int(11), `no` varchar(255), `message` text, `file` varchar(255), `line` varchar(255), `created` timestamp, `time` int(11), PRIMARY KEY (`id`))';
 		$.ajax({
