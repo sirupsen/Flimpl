@@ -121,8 +121,9 @@ class Database {
 			}
 
 			throw new Exception('<b>Database:</b> Not able to perform query.');
+		}
 
-			return $query;
+		return $query;
 	}
 
 	/*
