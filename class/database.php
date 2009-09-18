@@ -104,6 +104,28 @@ class Database {
 
 	/*
 	 *
+	 * Function to perform a query.
+	 *
+	 * @parm 	string 	$query 	Query to perform
+	 * @return 	object 	$query 	The query
+	 *
+	 */
+
+	public function query($query) {
+		$query = $this->mysqli->query($query);
+
+		if (!$query || !is_object($query)) {
+			if ($this->debug == TRUE) {
+				throw new Exception('<b>Database:</b> Not able to perform query (' . $this->mysqli->error . ')');
+			}
+
+			throw new Exception('<b>Database:</b> Not able to perform query.');
+
+			return $query;
+	}
+
+	/*
+	 *
 	 * Selects something from the database, and returns the raw
 	 * array. This is usefull for just dumping a query to the
 	 * database without needing to modify the values.
