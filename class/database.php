@@ -112,6 +112,7 @@ class Database {
 	 */
 
 	public function query($query) {
+		$this->last_query = $query;
 		$query = $this->mysqli->query($query);
 
 		if (!$query || !is_object($query)) {
