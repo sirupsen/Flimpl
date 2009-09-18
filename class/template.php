@@ -33,6 +33,10 @@ final class Template {
 			$dir = $dir . '/';
 
         $this->template = $dir . $this->getTemplate();
+
+		// Loads the top in the start, so we are sure it's there
+		// even if we get an exception.
+		include('include/pages/top.php');
     }
 
 	/*
@@ -58,21 +62,17 @@ final class Template {
 	*
 	* @return 	mixed 	$content 	The template files content
 	*
-        */
+    */
 
     private function process() {
         extract($this->data);
 
 		ob_start();
 
-		include('include/pages/top.php');
 		include($this->template);
 		include('include/pages/bottom.php');
 
-		$content = ob_get_contents();
-		ob_clean();
-
-		return $content;
+		return ob_end_flush();
     }
 
 	/**

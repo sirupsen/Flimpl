@@ -48,8 +48,9 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 
 		// Else, we are in debugging mode and we can safely
 		// just print the error.
-	} else
+	} else {
 		echo $errorstr;
+	}
 }
 
 // Use error_handler function as the error handler

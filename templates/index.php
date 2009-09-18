@@ -3,3 +3,9 @@
 <p>If you enjoy working with Flimpl, I'd love <a href="http://sirupsen.dk#contact" title="Go to the contact page at sirupsen.dk">to hear from you!</a>. If you have any ideas, <a href="http://sirupsen.dk#contact" title="Go to the contact page at sirupsen.dk">don't hestiate to contact me.</a> Or you could create stuff yourself, by forking the git repo and then ask me to pull from you.</p>
 
 <p>For the latest version and updates, be sure to have <a href="http://github.com/Sirupsen/Flimpl/" title="Go to the Github repo for Flimpl">the Github repo</a> bookmarked.</p>
+
+<?php
+
+echo $exception;
+
+?>
