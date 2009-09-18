@@ -64,7 +64,11 @@ final class Template {
         extract($this->data);
 
 		ob_start();
-        include($this->template);
+
+		include('include/pages/top.php');
+		include($this->template);
+		include('include/pages/bottom.php');
+
 		$content = ob_get_contents();
 		ob_clean();
 
