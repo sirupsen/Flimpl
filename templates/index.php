@@ -4,6 +4,6 @@
 
 <p>For the latest version and updates, be sure to have <a href="http://github.com/Sirupsen/Flimpl/" title="Go to the Github repo for Flimpl">the Github repo</a> bookmarked.</p>
 
-<p><a href="#" id="test_database">Click me</a> to test if database is functioning correctly.</p>
+<p><a href="#" id="test_database">Click me</a> to test if database is functioning correctly. <a href="#" id="create_errors">Click here</a> if you want to create error logging table. </p>
 
 <p id="database_response"></p>
