@@ -32,6 +32,7 @@ if (!$_POST['action']) {
 		if ($_POST['class'] != 'database') {
 			throw new Exception('<b>Handler:</b>' . $_POST['action'] . ' method not found in ' . $_POST['class']);
 		}
+	// If we're querying directly to the database
 	} if ($_POST['class'] == 'database') {
 		$registry->db->$action($_POST);
    	} else {
