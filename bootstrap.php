@@ -16,22 +16,12 @@
 // Require the config file for some global configuration
 require_once("config.php");
 
-// Include the error handler function
+// Include error and exception handlers
 require_once("include/misc/functions/error_handler.php");
+require_once("include/misc/functions/exception_handler.php");
 
-// Use error_handler function as the error handler
+// Set handlers
 set_error_handler("error_handler");
-
-
-// Makes a function which can be used to handle exceptions
-function exception_handler($exception) { ?>
-	<div class="error">
-		<?php echo $exception->getMessage(); ?>
-	</div>
-<?php
-}
- 
-// Set's the exception_handler() as the actual exception handler
 set_exception_handler("exception_handler");
 
 // Set's the autoload function to autoload classes in the class/
@@ -40,16 +30,7 @@ function __autoload($class_name) {
 	require_once( 'class/' . strtolower($class_name) . '.php');
 }
 
-/**
- *
- * Loads the registry file which ensures we only have one
- * of each registred file, and that it's globally access-
- * able.
- *
- * @usage 	$registry->objectName = new Object;
- *
- */
-
+/* Loads the registry */
 $registry = Registry::getInstance();
 
 // Instance the Database into the registry
