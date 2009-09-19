@@ -7,8 +7,8 @@ require_once("bootstrap.php");
  * because it seperates all the PHP code from the actual HTML, except for
  * the PHP markup used to output the data.
  *
- * It's used by making a file in the root directory
- *
+ * It's used by making a file in the root directory, and have a template
+ * file with the same name in the templates folder.
  *
  */
 
@@ -23,7 +23,6 @@ final class Template {
 	* This constructs the class, it has one must parameter ($template), and
 	* one optional in case the directory should be different than the default.
 	*
-	* @parm 	string 		$template 	Template file located in template dir
 	* @parm 	string 		$dir 		The template directory 	
 	*
 	*/
