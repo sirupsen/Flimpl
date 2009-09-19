@@ -101,4 +101,3 @@ final class Template {
 		return $this->process();
     }
 }
-?>

@@ -39,4 +39,3 @@ if (!$_POST['action']) {
 		$object->$action($_POST);
 	}
 }
-?>
