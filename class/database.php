@@ -12,8 +12,13 @@
 
 class Database {
 
+	/* Wielding the instance of MySQLI */
 	public $mysqli;
+
+	/* Wields the last query executed */
 	public $last_query;
+
+	/* Are we debugging? */
 	private $debug;
 	
 	/*
@@ -81,7 +86,7 @@ class Database {
 			$columns = implode(', ', $cols);
 		}
 
-		// If somebody passed the columns argument empty
+		// If $columns argument was passed empty
 		if (!$columns) {
 			$columns = '*';
 		}
@@ -94,7 +99,7 @@ class Database {
 		$query = $this->mysqli->query($query);
 
 		// Oops, error.
-		if (!$query || !is_object($query)) {
+		if (!$query) {
 			if ($this->debug == TRUE) {
 				throw new Exception('<b>Database:</b> Not able to select (' . $this->mysqli->error . ')');	
 			}
@@ -124,7 +129,7 @@ class Database {
 
 		$query = $this->mysqli->query($query);
 
-		if (!$query || !is_object($query)) {
+		if (!$query) {
 			if ($this->debug == TRUE) {
 				throw new Exception('<b>Database:</b> Not able to perform query (' . $this->mysqli->error . ') ' . $this->last_query);
 			}
@@ -296,8 +301,9 @@ class Database {
 			// So, what is the contents of this file?
 			$content = file_get_contents($file);
 
-			if(!$content)
+			if(!$content) {
 				throw new Exception('<b>Database:</b> Not able to read ' . $file . ' passed to execute()');
+			}
 
 			// Split it!
 			$sql = explode(';', $content);
@@ -349,7 +355,6 @@ class Database {
 		$this->last_query = '<b>Update Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-
 			if ($this->debug == TRUE) {
 				throw new Exception('<b>Database:</b> Not able to update (' . $this->mysqli->error . ')' . $this->last_query);	
 			}
