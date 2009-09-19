@@ -16,7 +16,7 @@ $config['debug'] = TRUE;
 // Database Configuration
 $config['db_host'] = 'localhost';
 $config['db_user'] = 'root';
-$config['db_pass'] = 'pass';
+$config['db_pass'] = '';
 $config['db_database'] = 'db';
 
 // Handler configuration

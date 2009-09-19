@@ -20,7 +20,7 @@ $(function() {
 			url: "handler.php",
 			data: "action=query&class=database&query=" + query,
 			success: function(response) {
-				alert("Sucessfully created error table (this message also appears if it's already created)");
+				alert("Please check your database to check whetever the operation was sucessful or not");
 			}
 		});
 	});

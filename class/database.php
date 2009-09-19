@@ -32,8 +32,10 @@ class Database {
 		if ($config['debug'] == TRUE)
 			$this->debug = TRUE;
 
-		if (!$this->mysqli = new Mysqli($config['db_host'], $config['db_user'], $config['db_pass'], $config['db_database'])) {
-			throw new Exception("<b>Database:</b> Unable to connect");
+		$this->mysqli = new Mysqli($config['db_host'], $config['db_user'], $config['db_pass'], $config['db_database']);
+
+		if ($this->mysqli->connect_error) {
+			throw new Exception("<b>Database:</b> Failed to connect to databas $this->mysqli->connect_error");
 		}
 	}
 
@@ -93,10 +95,11 @@ class Database {
 
 		// Oops, error.
 		if (!$query || !is_object($query)) {
-			if ($this->debug == TRUE)
+			if ($this->debug == TRUE) {
 				throw new Exception('<b>Database:</b> Not able to select (' . $this->mysqli->error . ')');	
+			}
 	
-				throw new Exception('<b>Database:</b> Not able to select.');	
+			throw new Exception('<b>Database:</b> Not able to select.');	
 		}
 
 		return $query;
@@ -123,7 +126,7 @@ class Database {
 
 		if (!$query || !is_object($query)) {
 			if ($this->debug == TRUE) {
-				throw new Exception('<b>Database:</b> Not able to perform query (' . $this->mysqli->error . ')');
+				throw new Exception('<b>Database:</b> Not able to perform query (' . $this->mysqli->error . ') ' . $this->last_query);
 			}
 
 			throw new Exception('<b>Database:</b> Not able to perform query.');
@@ -259,10 +262,11 @@ class Database {
 		}
 
 		// Prepare $conditions for the query
-		if (is_array($conditions))
+		if (is_array($conditions)) {
 			$conditions = ' WHERE ' . $this->prepare($conditions, ' AND '); 
-		else
+		} else {
 			throw new Exception('<b>Database:</b> Parameter $conditions in delete() were not an array');
+		}
 
 		$sql = "DELETE FROM {$table} {$conditions} {$extra}";
 
@@ -321,10 +325,11 @@ class Database {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE)
-				throw new Exception('<b>Database:</b> Not able to insert (' . $this->mysqli->error . ')');	
+			if ($this->debug == TRUE) {
+				throw new Exception('<b>Database:</b> Not able to insert (' . $this->mysqli->error . ')' . $this->last_query);	
+			}
 	
-				throw new Exception('<b>Database:</b> Not able to insert.');
+			throw new Exception('<b>Database:</b> Not able to insert.');
 		}
 
 		return $this->mysqli->insert_id;	
@@ -345,10 +350,11 @@ class Database {
 
 		if (!$this->mysqli->query($query)) {
 
-			if ($this->debug == TRUE)
-				throw new Exception('<b>Database:</b> Not able to update (' . $this->mysqli->error . ')');	
+			if ($this->debug == TRUE) {
+				throw new Exception('<b>Database:</b> Not able to update (' . $this->mysqli->error . ')' . $this->last_query);	
+			}
 	
-				throw new Exception('<b>Database:</b> Not able to update.');
+			throw new Exception('<b>Database:</b> Not able to update.');
 		}
 
 		return $this->mysqli->affected_rows;
@@ -370,10 +376,11 @@ class Database {
 		$this->last_query = '<b>Delete Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE)
-				throw new Exception('<b>Database:</b> Not able to delete (' . $this->mysqli->error . ')');	
+			if ($this->debug == TRUE) {
+				throw new Exception('<b>Database:</b> Not able to delete (' . $this->mysqli->error . ')' . $this->last_query);	
+			}
 	
-				throw new Exception('<b>Database:</b> Not able to delete.');
+			throw new Exception('<b>Database:</b> Not able to delete.');
 		}
 
 		return $this->mysqli->affected_rows;
@@ -390,10 +397,11 @@ class Database {
 		$this->last_query = '<b>Execute Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE)
-				throw new Exception('<b>Database:</b> Not able to execute file (' . $this->mysqli->error . ')');	
+			if ($this->debug == TRUE) {
+				throw new Exception('<b>Database:</b> Not able to execute file (' . $this->mysqli->error . ')' . $this->last_query);	
+			}
 	
-				throw new Exception('<b>Database:</b> Not able to execute file.');
+			throw new Exception('<b>Database:</b> Not able to execute file.');
 		}
 
 		return true;
@@ -455,13 +463,7 @@ class Database {
 	 */
 
 	public function test() {
-		$table = "CREATE TABLE IF NOT EXISTS `articles` ( 
-			   `id` int(11) not null auto_increment,
-			   `title` varchar(255),
-			   `text` text,
-			   `time` int(11),
-			   PRIMARY KEY (`id`)
-		   ) ";
+		$table = "CREATE TABLE IF NOT EXISTS `articles` ( `id` int(11) not null auto_increment, `title` varchar(255), `text` text, `time` int(11), PRIMARY KEY (`id`))";
 
 		$this->mysqli->query($table);
 
