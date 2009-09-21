@@ -13,12 +13,12 @@ require_once("bootstrap.php");
  */
 
 final class Template {
-    private $template;
-    private $data;
+private $template;
+private $data;
 
-    private function __clone() {}
-	
-	/**
+private function __clone() {}
+
+	/*
 	*
 	* This constructs the class, it has one must parameter ($template), and
 	* one optional in case the directory should be different than the default.
@@ -27,26 +27,26 @@ final class Template {
 	*
 	*/
 
-    public function __construct($dir='templates/') {
+	public function __construct($dir='templates/') {
 		if (substr($dir,-1) != '/')
 			$dir = $dir . '/';
 
-        $this->template = $dir . $this->getTemplate();
+		$this->template = $dir . $this->getTemplate();
 
 		// Loads the top in the start, so we are sure it's there
 		// even if we get an exception.
 		include('include/pages/top.php');
-    }
+	}
 
 	/*
-	 *
-	 * Returns the name of the current script (f.e. index.php),
-	 * this is usefull for including the template file, so the user doesn't have
-	 * to type in the name each time, but it by default takes: templates/file_name.php
-	 *
-	 * @return 	string 	$file_parts 	The name of the file without an extenstion (f.e. index)
-	 *
-	 */
+	*
+	* Returns the name of the current script (f.e. index.php),
+	* this is usefull for including the template file, so the user doesn't have
+	* to type in the name each time, but it by default takes: templates/file_name.php
+	*
+	* @return 	string 	$file_parts 	The name of the file without an extenstion (f.e. index)
+	*
+	*/
 
 	private function getTemplate() {
 		$break = Explode('/', $_SERVER["SCRIPT_NAME"]);
@@ -61,10 +61,10 @@ final class Template {
 	*
 	* @return 	mixed 	$content 	The template files content
 	*
-    */
+	*/
 
-    private function process() {
-        extract($this->data);
+	private function process() {
+		extract($this->data);
 
 		ob_start();
 
@@ -72,9 +72,9 @@ final class Template {
 		include('include/pages/bottom.php');
 
 		return ob_end_flush();
-    }
+	}
 
-	/**
+	/*
 	*
 	* Set's a variable into the template. It's using the __set magic function
 	* and is called like this: $template->variable = "content";
@@ -84,9 +84,9 @@ final class Template {
 	*
 	*/
 
-    public function __set($variable, $data) {
-        $this->data[$variable] = $data;
-    }
+	public function __set($variable, $data) {
+		$this->data[$variable] = $data;
+	}
 
 	/**
 	*
@@ -97,7 +97,7 @@ final class Template {
 	*
 	*/
 
-    public function __toString() {
+	public function __toString() {
 		return $this->process();
-    }
+	}
 }
