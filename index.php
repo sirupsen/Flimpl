@@ -1,9 +1,9 @@
 <?php
-$page = $_GET['page'] . '.php';
+$page = $_GET['page'];
 
-if(file_exists($page)) {
+if (file_exists($page . '.php')) {
 	require_once($page);
-} elseif (!$_GET['page']) {
+} elseif (!$page) {
 	require_once("home.php");
 } else {
 	require_once("404.php");
