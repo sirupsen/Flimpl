@@ -12,11 +12,10 @@ if (file_exists($page . '.php')) {
 
 // If it's not set, include the home file
 } elseif (!$page) {
-	require("home.php");
+	require('home.php');
 
 // If the file doesn't exist, and it's set but that page doesn't exist
 // Redirect to 404
 } else {
-	echo $page;
-	require("404.php");
+	require('404.php');
 }
