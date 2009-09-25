@@ -1,5 +1,4 @@
 <?php
-require_once("bootstrap.php");
 // Create instance of template [required]
 // Top is included right here
 $tpl = new Template;

@@ -1,4 +1,6 @@
 <?php
+require('bootstrap.php');
+
 $page = $_GET['page'];
 
 // If the file requested exists, write out the content
