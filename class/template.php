@@ -50,8 +50,12 @@ private function __clone() {}
 
 	private function getTemplate() {
 		$break = Explode('/', $_SERVER["SCRIPT_NAME"]);
+		$name = $break[count($break) - 1];
 
-		return $break[count($break) - 1];
+		// If we're on the front page we want to use home.php as template
+		if ($name == 'index.php') $name = 'home.php';
+
+		return $name;
 	}
 
 	/*

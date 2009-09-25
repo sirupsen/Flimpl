@@ -1,8 +1,10 @@
 <?php
+require('bootstrap.php');
 $page = $_GET['page'];
 
 // Create instance of template [required]
 // Top is included right here
+$tpl = new Template;
 
 // If the file requested exists, write out the content
 if (file_exists($page . '.php')) {
