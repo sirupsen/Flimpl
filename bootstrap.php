@@ -14,16 +14,16 @@
  */
 
 // Require the config file for some global configuration
-require_once("config.php");
+require_once('config.php');
 // Error handlers
-require_once("include/misc/functions/error_handler.php");
-require_once("include/misc/functions/exception_handler.php");
+require_once('include/misc/functions/error_handler.php');
+require_once('include/misc/functions/exception_handler.php');
 
-set_error_handler("error_handler");
-set_exception_handler("exception_handler");
+set_error_handler('error_handler');
+set_exception_handler('exception_handler');
 
 function __autoload($class_name) {
-	require_once( 'class/' . strtolower($class_name) . '.php');
+	require_once('class/' . strtolower($class_name) . '.php');
 }
 
 /* Loads the registry */
