@@ -1,4 +1,5 @@
 <?php
+require('bootstrap.php');
 $page = $_GET['page'];
 
 // Create instance of template [required]
