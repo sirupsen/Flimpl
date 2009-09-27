@@ -20,7 +20,7 @@ $(function() {
 			url: "handler.php",
 			data: "action=query&class=database&query=" + query,
 			success: function(response) {
-				alert("Please check your database to check whetever the operation was sucessful or not");
+				alert("Please check your database in order to confirm whetever the operation was sucessful or not");
 			}
 		});
 	});

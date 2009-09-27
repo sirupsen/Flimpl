@@ -167,3 +167,10 @@ hr {
 .light-green {
 	color: #D2EC8A;
 }
+
+#database_response {
+	background-color: #D2EC8A;
+	padding: 15px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
