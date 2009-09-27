@@ -503,7 +503,7 @@ class Database {
 		if ($update = $this->update('articles', $update, $conditions))
 			echo '<b>success!</b> (' . $update . ')<br/><br/>';
 
-		echo '<b>Selecting</b> updated row..';
+	echo '<b>Selecting</b> updated row..';
 		echo '<pre>';
 		if ($select = $this->select('articles', array('id' => $insert), '')) {
 			while($row = $this->row($select)) {

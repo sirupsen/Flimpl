@@ -6,8 +6,8 @@ $(function() {
 			url: "handler.php",
 			data: "action=test&class=database",
 			success: function(response) {
-				$("#database_response").append(response).hide();	
-				$("#database_response").slideDown();
+				$("#database_response").html(response).hide();	
+				$("#database_response").fadeIn();
 			}
 		});
 	});
