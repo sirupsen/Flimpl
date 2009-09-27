@@ -483,12 +483,12 @@ class Database {
 		print_r($articles);
 		echo '</pre>';
 
-		echo 'Inserting.. ';
+		echo '<br/>Inserting.. ';
 		$new_article = array('title' => 'New Title', 'text' => 'New Content');
 		if($insert = $this->insert('articles', $new_article))
-			echo '<b>success!</b> (' . $insert . ')<br/><br/>';
+			echo '<b>success!</b> (ID: ' . $insert . ')<br/><br/>';
 
-		echo 'Select..';
+		echo '<b>Selecting</b> new row..';
 		echo '<pre>';
 		if ($select = $this->select('articles', array('id' => $insert), '')) {
 			while($row = $this->row($select)) {
@@ -497,13 +497,13 @@ class Database {
 		}
 		echo '</pre>';
 
-		echo 'Updating.. ';
+		echo '<br/>Updating.. ';
 		$update = array('title' => 'Updated Text', 'text' => 'Updated Content');
 		$conditions = array('id' => $insert);
 		if ($update = $this->update('articles', $update, $conditions))
 			echo '<b>success!</b> (' . $update . ')<br/><br/>';
 
-		echo 'Select again..';
+		echo '<b>Selecting</b> updated row..';
 		echo '<pre>';
 		if ($select = $this->select('articles', array('id' => $insert), '')) {
 			while($row = $this->row($select)) {
@@ -512,12 +512,12 @@ class Database {
 		}
 		echo '</pre>';
 
-		echo 'Deleting.. ';
+		echo '<br/>Deleting that row.. ';
 		$conditions = array('id' => $insert);
 		if($delete = $this->delete('articles', $conditions))
 			echo '<b>success!</b> (' . $delete . ')<br/><br/>';
 
-		echo 'Check if it is deleted..';
+		echo 'Confirm it\'s deleted..';
 		if ($select = $this->select('articles', array('id' => $insert))) {
 			$num = $selected->num_rows;
 			if($num == 0) {
