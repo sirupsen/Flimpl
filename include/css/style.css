@@ -168,9 +168,10 @@ hr {
 	color: #D2EC8A;
 }
 
-#database_response {
+.msg {
 	background-color: #D2EC8A;
 	padding: 15px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+	margin-bottom: 10px;
 }

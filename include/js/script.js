@@ -20,7 +20,13 @@ $(function() {
 			url: "handler.php",
 			data: "action=query&class=database&query=" + query,
 			success: function(response) {
-				alert("Please check your database in order to confirm whetever the operation was sucessful or not");
+				if (response === '1') {
+					$("#error_logging").html("Query was <b>unsuccessful</b>. Please check your configuration, to confirm the database configured is created.").hide();	
+					$("#error_logging").fadeIn();
+				} else {
+					$("#error_logging").html("Success! The error logging table was created successfully. Errors outside debugging mode will now be logged to that table.").hide();	
+					$("#error_logging").fadeIn();
+				}
 			}
 		});
 	});

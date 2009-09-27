@@ -6,4 +6,5 @@
 
 <p><a href="#" id="test_database">Click me</a> to test if database is functioning correctly. <a href="#" id="create_errors">Click here</a> if you want to create error logging table. </p>
 
-<p id="database_response" class="hidden"></p>
+<p id="database_response" class="msg hidden"></p>
+<p id="error_logging" class="msg hidden"></p>

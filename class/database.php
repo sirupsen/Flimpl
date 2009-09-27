@@ -123,15 +123,20 @@ class Database {
 		$this->last_query = $query;
 		// So we can do queries directly from Javascript
 		// Only do when we're in debug mode, for security reasons
-		if ($this->debug == TRUE) {
-			if ($query['query']) $query = $query['query'];
-		}
+		if ($this->debug == TRUE && $query['query']) $ajax = true;
+
+		if ($ajax) $query = $query['query'];
 
 		$query = $this->mysqli->query($query);
 
 		if (!$query) {
-			if ($this->debug == TRUE) {
+			if ($this->debug == TRUE && !$ajax) {
 				throw new Exception('<b>Database:</b> Not able to perform query (' . $this->mysqli->error . ') ' . $this->last_query);
+			}
+
+			if ($this->debug == TRUE && $ajax) {
+				echo '1';
+				exit;
 			}
 
 			throw new Exception('<b>Database:</b> Not able to perform query.');
