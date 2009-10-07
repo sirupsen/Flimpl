@@ -1,5 +1,10 @@
 <?php
-require_once("bootstrap.php");
+
+/*
+ * 
+ * OOPS: This is FAR from done
+ *
+ */
 
 class User {
     protected $registry;
