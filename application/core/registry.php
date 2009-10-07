@@ -20,10 +20,6 @@ final class Registry {
 	// Makes the class variables
 	private static $instance;
   	private $values = array();
-
-	// Privates the clone and construct functio
-  	private function __construct(){}
-  	private function __clone(){}
 	
 	/*
 	 *

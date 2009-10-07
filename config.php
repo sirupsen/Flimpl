@@ -11,7 +11,8 @@
 // Are we debugging? Showing errors directly, instead
 // of logging them. If it's set to false, it's going to
 // put errors in the errors table.
-$config['debug'] = TRUE;
+$config['dev_debug'] = false;
+$config['debug'] = true;
 
 // Database Configuration
 $config['db_host'] = 'localhost';
@@ -19,5 +20,6 @@ $config['db_user'] = 'root';
 $config['db_pass'] = '';
 $config['db_database'] = 'db';
 
-// Handler configuration
-$config['handler_class'] = 'default';
+// Site configuration
+$config['site_url'] = 'http://localhost/';
+$config['site_folder'] = 'Flimpl/';
