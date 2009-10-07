@@ -1,6 +1,6 @@
 Flimpl
 ======
-Flimpl is an extremely simple open source VC-Framework (Viewer, Controller - No model). However, I don't like to call it a framework. Why? Because this is more like a "common application design", I use this for all my own projects - I just wanted something which was super small, and easy to customize.
+Flimpl is an extremely simple open source VC-Framework (Viewer, Controller - No model). However, I don't like to call it a framework. I connect a Framework to a big thing you develop things easily in. You are not sure how everything works, and how to customize core things. Flimpl is trying more to be a common application design which you can modify to your own needs. It also tries to become something which you can learn from, because in my experience developping something like this, is the best programming experience you can ever have.
 
 Author: Sirupsen
 
