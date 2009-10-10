@@ -6,6 +6,6 @@
 	google.load("jqueryui", "1.7.1");
 </script>
 
-<script type="text/javascript" src="include/js/script.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
