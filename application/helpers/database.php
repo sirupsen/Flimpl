@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * The database class, it's used to connect to the database and perform

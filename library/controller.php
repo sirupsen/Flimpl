@@ -7,6 +7,9 @@ class Controller {
 	public function __construct($controller, $function) {
 		$this->registry = Registry::getinstance();
 		$this->template = new Template($controller, $function);
+
+		// Make it easier to access the database by cutting off
+		// one link [->registry]
 		$this->db = $this->registry->db;
 
 		if ($this->registry->config['dev_debug']) {

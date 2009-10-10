@@ -2,19 +2,14 @@
 
 /*
  *
- * The template class to handle the output to a template file. It's good
- * because it seperates all the PHP code from the actual HTML, except for
- * the PHP markup used to output the data.
- *
- * It's used by making a file in the root directory, and have a template
- * file with the same name in the templates folder.
+ * Template class to handle the connection between methods and
+ * the actual template view files.
  *
  */
 
 final class Template {
 	private $template;
 	private $data;
-	private $path;
 	private $reg;
 
 	private $controller;
@@ -31,14 +26,16 @@ final class Template {
 
 	public function __construct($controller, $function) {	
 		$this->reg = Registry::getinstance();
+
 		$this->controller = $controller;
 		$this->action = $function;
 
-		$this->path = getcwd() . '/';
 		$dir = ROOT . 'application/views/' . $controller . '/' . $function . '.php';
 
 		$index = ROOT . 'application/views/' . $controller . '/' . 'index.php';
 
+		// If view for the specific function doesn't exist, use the one
+		// for the index.
 		if (file_exists($dir)) {
 			$this->template = $dir;
 		} elseif (file_exists($index)) {
@@ -46,6 +43,9 @@ final class Template {
 			if (method_exists($class, $function)) {
 				$this->template = $index;
 			} else {
+				if ($this->reg->config['dev_debug']) {
+					echo '404 from Template<br/>';
+				}
 				require(ROOT . 'public/misc/errors/404.php');
 				exit;
 			}
@@ -64,8 +64,7 @@ final class Template {
 
 	/*
 	*
-	* Set's a variable into the template. It's using the __set magic function
-	* and is called like this: $template->variable = "content";
+	* Set's a variable into the template.
 	*
 	* @parm 	string 		$variable 	The name of the variable 	
 	* @parm 	string 		$data 		The content of the varible
@@ -76,10 +75,10 @@ final class Template {
 		$this->data[$variable] = $data;
 	}
 
-	/**
+	/*
 	*
-	* When the class is converted to a string, it retrieves the file
-	* information from the process method, which returns the content.
+	* When the object is converted to a string, it prints out
+	* our content.
 	*
 	* @return  	mixed   $this->process() 	The template file 		
 	*
@@ -94,20 +93,26 @@ final class Template {
 			echo 'Now requiring <b>template files..</b><br/>';
 		}
 
+		// Extracts our array into variables
 		extract($this->data);
-		extract($this->reg->config);
 		
 		$view_path = ROOT . 'application/views/' . $this->controller . '/';	
+
+		// If a custom header for this specific file is found, load it
 		if (file_exists($view_path . 'top.' . $this->action . '.php')) {
 		   require($view_path . 'top.' . $this->action . '.php');
+		// elseIf a custom header for this specific controller is found, load it
 		} elseif (file_exists($view_path . 'top.php')) {
 			require($view_path . 'top.php');
+		// Load default
 		} else { 
 			require(ROOT . 'application/views/top.php');
 		}
 
+		// Include the actual template
 		require($this->template);
 
+		// Same process as header loading
 		if (file_exists($view_path . 'bottom.' . $this->action . '.php')) {
 		   require($view_path . 'bottom.' . $this->action . '.php');
 		} elseif (file_exists($view_path . 'bottom.php')) {
@@ -116,6 +121,7 @@ final class Template {
 			require(ROOT . 'application/views/bottom.php');
 		}
 
+		// Bye!
 		if ($this->reg->config['dev_debug']) {
 			echo 'Destroyed <b>Template</b><br/>';
 		}

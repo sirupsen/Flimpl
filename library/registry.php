@@ -2,12 +2,9 @@
 
 /*
  *
- * The registry singleton patternm which is made here, is to ensure
- * we only work with one instance of a class, and it also ensures
- * that it's accessible from anywhere. In a class we'd call it in
- * the constructer function to make it accessible.
- *
- * @called 	new Registry::getInstance()
+ * This is our singleton registry pattern; it ensures
+ * we only run one instance of an object, and that it's
+ * acceesible from anywhere.
  *
  * @date 	12. August, 2009
  *
@@ -16,7 +13,8 @@
  */
 
 final class Registry {
-	// Makes the class variables
+
+	// Defines the class variables
 	private static $instance;
   	private $values = array();
 	
@@ -34,18 +32,16 @@ final class Registry {
 		if(!isset(self::$instance)){
 			self::$instance = new self;
 		}
-       	return self::$instance;
+
+		return self::$instance;
 	}
 
 	/*
 	 *
 	 * This is the magic function which retrieves all the instances
-	 * created by the registry class, example if we made a database
-	 * class via the registry class, it'd be stored in the values
-	 * array inside, and this function would retrieve it when we
-	 * needed it.
+	 * created by the registry class.
 	 *
-	 * @parm 	string 	$key 	The name of the key it got established with (f.e. db)
+	 * @param 	string 	$key 	The name of the key it got established with (f.e. db)
 	 * 
 	 * @return 	mixed 	mixed 	The class, or null
 	 *
@@ -60,15 +56,10 @@ final class Registry {
 	
 	/*
 	 *
-	 * This is the magic function which creates an instance of a class,
-	 * instead of making a function which does this, so we'd call it like:
-	 * $this->registry->set("name", new Object);
-	 * We do: $this->registry->name = new Object;
-	 * It has the exact same effect, except this is easier to read, and
-	 * faster to type!
+	 * This is the magic function in which we instance an object.
 	 *
-	 * @parm 	string 	$key 	The name which the class should be accessible from (f.e. db)
-	 * @parm 	mixed 	$val 	The class (f.e. new Database)
+	 * @param 	string 	$key 	The name which the class should be accessible from (f.e. db)
+	 * @param 	mixed 	$val 	The class (f.e. new Database)
 	 *
 	 */
 

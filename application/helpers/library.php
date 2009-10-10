@@ -1,17 +1,11 @@
 <?php
-require_once("bootstrap.php");
 
 /*
  *
  * The libary class is used to store commonly used methods.
- * It's accessible by all files in this "framework" via the
- * registry pattern.
- *
- * @author 	Sirupsen
- *
- * @date 	12. August, 2009
  *
  */
+
 class Library {
 
 	/*
@@ -19,7 +13,7 @@ class Library {
 	 * Returns the time difference in words. Like:
 	 * 2 hours ago, 2 days ago, 4 months ago, etc.
 	 *
-	 * @parm 	string|integer 	$date 	The date, get's converted with strtotime
+	 * @param 	string|integer 	$date 	The date, get's converted with strtotime
 	 * @return 	string 	$misc 	The time difference
 	 */
 
@@ -65,9 +59,9 @@ class Library {
 	 *
 	 * We're all happy tweeters, tweet with this function!
 	 *
-	 * @parm 	string 	$message 	The tweet
-	 * @parm 	string 	$username 	The username of the user
-	 * @parm 	string 	$password 	The password of the user
+	 * @param 	string 	$message 	The tweet
+	 * @param 	string 	$username 	The username of the user
+	 * @param 	string 	$password 	The password of the user
 	 * @return 	bool 	true|false
 	 *
 	 */
@@ -92,9 +86,9 @@ class Library {
 	 * Everyone loves gravatar, make it a bit easier to use
 	 * with this function.
 	 *
-	 * @parm 	string 	$email 	Email of the user
-	 * @parm 	int 	$size 	The size of the image
-	 * @parm 	string 	$default 	[OPT] The image shown if the user doesn't have a gravatar
+	 * @param 	string 	$email 	Email of the user
+	 * @param 	int 	$size 	The size of the image
+	 * @param 	string 	$default 	[OPT] The image shown if the user doesn't have a gravatar
 	 * @return 	string 	$grav_url 	The url of gravatar image.
 	 *
 	 */
@@ -137,14 +131,14 @@ class Library {
 	 * Generates a random string with letters and numbers
 	 *
 	 * @parm 	int 	$length 	[OPT] Length of the string
-	 * @parm 	string 	$chars 	[OPT] The chars to generate from
+	 * @parm 	string 	$chars 		[OPT] The chars to generate from
 	 *
 	 */
 
-	public static function randString($length=8, $chars) {
+	public static function randString($length=8, $chars="") {
 		$char = $chars;
 
-		if(1 > $char)
+		if(!$char)
 			$char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 
 		for($i; $i<$length; $i++) {
