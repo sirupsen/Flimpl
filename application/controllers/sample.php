@@ -2,7 +2,7 @@
 class Sample extends Controller {
 	public function index() {
 		$this->title = 'This is a sample!';
-		$this->variable = "Hello, I'm in the class!";
+		$this->variable = 'Hello, I\'m in the class!';
 	}
 	
 	public function test() {
