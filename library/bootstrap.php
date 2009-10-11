@@ -85,6 +85,10 @@ function __autoload($class) {
 	// If it's not a core file, helper or controller we must
 	// hand out a 404 error
 	} else {
+		if ($config['dev_debug']) {
+			echo "Couldn't find <b>$class</b>! (Configured root dir?)";
+		}
+
 		require(ROOT . 'public/misc/errors/404.php');
 		// Exit, no more to see than this custom page
 		exit;
