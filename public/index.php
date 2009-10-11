@@ -42,6 +42,6 @@ if ((int)method_exists($class, $action)) {
 		echo 'Method <b>' . $action . '</b> on <b>' . $class . '</b> instanced<br/>';
 	}
 } else {
-	echo "LOLH";
+	require(ROOT . 'public/misc/errors/404.php');
 	exit;
 }
