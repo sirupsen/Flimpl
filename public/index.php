@@ -45,5 +45,3 @@ if ((int)method_exists($class, $action)) {
 	echo "LOLH";
 	exit;
 }
-
-echo "Sexleg!";
