@@ -10,7 +10,7 @@
 final class Template {
 	private $template;
 	private $data;
-	private $reg;
+	private $registry;
 
 	private $controller;
 	private $action;
@@ -24,43 +24,17 @@ final class Template {
 	*
 	*/
 
-	public function __construct($controller, $function) {	
-		$this->reg = Registry::getinstance();
+	public function __construct($controller, $action) {	
+		// Gets out registry
+		$this->registry = Registry::getinstance();
 
+		// Make these available everywhere
 		$this->controller = $controller;
-		$this->action = $function;
+		$this->action = $action;
 
-		$dir = ROOT . 'application/views/' . $controller . '/' . $function . '.php';
-
-		$index = ROOT . 'application/views/' . $controller . '/' . 'index.php';
-
-		// If view for the specific function doesn't exist, use the one
-		// for the index.
-		if (file_exists($dir)) {
-			$this->template = $dir;
-		} elseif (file_exists($index)) {
-			$class = ucfirst($controller);
-
-			if (method_exists($class, $function)) {
-				$this->template = $index;
-			} else {
-				if ($this->reg->config['dev_debug']) {
-					echo '404 from Template<br/>';
-				}
-				require(ROOT . 'public/misc/errors/404.php');
-				exit;
-			}
-
-			if ($this->reg->config['dev_debug']) {
-				echo 'Template not found for method <b>' . $function . '</b> used main template (index.php)<br/>';
-			}
-		} else {
-				throw new Exception("Template file for class $controller not created.");
-		}
-
-		if ($this->reg->config['dev_debug']) {
-			echo 'Instanced <b>Template</b><br/>';
-		}
+		// Sets the variable $template to be the path to the
+		// most relevant view file
+		$this->viewFile();
 	}
 
 	/*
@@ -86,7 +60,7 @@ final class Template {
 	*/
 
 	public function __toString() {
-		if ($this->reg->config['dev_debug']) {
+		if ($this->registry->config['dev_debug']) {
 			echo '<br/>Variables pushed to <b>Template</b><br/>';
 			echo '<pre>';
 				print_r($this->data);
@@ -95,39 +69,85 @@ final class Template {
 		}
 
 		require('config.php');
-		extract($config);
 
-		// Extracts our array into variables
+		extract($config);
 		extract($this->data);
 		
-		$view_path = ROOT . 'application/views/' . $this->controller . '/';	
-
-		// If a custom header for this specific file is found, load it
-		if (file_exists($view_path . 'top.' . $this->action . '.php')) {
-		   require($view_path . 'top.' . $this->action . '.php');
-		// elseIf a custom header for this specific controller is found, load it
-		} elseif (file_exists($view_path . 'top.php')) {
-			require($view_path . 'top.php');
-		// Load default
-		} else { 
-			require(ROOT . 'application/views/top.php');
-		}
-
-		// Include the actual template
+		require($this->getPart('top'));
 		require($this->template);
-
-		// Same process as header loading
-		if (file_exists($view_path . 'bottom.' . $this->action . '.php')) {
-		   require($view_path . 'bottom.' . $this->action . '.php');
-		} elseif (file_exists($view_path . 'bottom.php')) {
-			require($view_path . 'bottom.php');
-		} else { 
-			require(ROOT . 'application/views/bottom.php');
-		}
+		require($this->getPart('bottom'));
 
 		// Bye!
-		if ($this->reg->config['dev_debug']) {
+		if ($this->registry->config['dev_debug']) {
 			echo 'Destroyed <b>Template</b><br/>';
+		}
+	}
+
+	/*
+	 *
+	 * Checks for custom header or bottom parts, and returns the most
+	 * relevant path for the part.
+	 *
+	 */
+
+	private function getPart($part) {
+		$view_path = ROOT . 'application/views/' . $this->controller . '/';	
+
+		// If a custom header/bottom for this specific file is found, load it
+		if (file_exists($view_path . $part . $this->action . '.php')) {
+		   return $view_path . $part . '.' . $this->action . '.php';
+		// elseIf a custom header/bottom for this specific controller is found, load it
+		} elseif (file_exists($view_path . $part . '.php')) {
+			return $view_path . $part . '.php';
+		// Else, load default
+		} else { 
+			return ROOT . 'application/views/' . $part . '.php';
+		}
+	}
+
+	/*
+	 *
+	 * Fetches the view file which should be used and sets it into
+	 * the class wide variable $template;
+	 *
+	 */
+
+	private function viewFile() {
+		$method_view = ROOT . 'application/views/' . $this->controller . '/' . $this->action . '.php';
+
+		$index = ROOT . 'application/views/' . $this->controller . '/' . 'index.php';
+
+		// If there's a view file for the specific method, use it
+		if (file_exists($method_view)) {
+			$this->template = $method_view;
+		// Else use the view file for the index method
+		} elseif (file_exists($index)) {
+			$class = ucfirst($this->controller);
+
+			// Check if the method exists
+			if (method_exists($class, $this->action)) {
+				$this->template = $index;
+			} else {
+				// So we, when debugging, are sure where the 404 are
+				// comming from
+				if ($this->reg->config['dev_debug']) {
+					echo '404 from Template<br/>';
+				}
+
+				require(ROOT . 'public/misc/errors/404.php');
+				exit;
+			}
+
+			// For debugging
+			if ($this->reg->config['dev_debug']) {
+				echo 'Template not found for method <b>' . $function . '</b> used main template (index.php)<br/>';
+			}
+		} else {
+				throw new Exception("Template file for class $controller not created.");
+		}
+
+		if ($this->reg->config['dev_debug']) {
+			echo 'Instanced <b>Template</b><br/>';
 		}
 	}
 }
