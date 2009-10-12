@@ -23,6 +23,9 @@ class Controller {
 	 * controller, which means template variable can be set via:
 	 * $this->variable = value;
 	 *
+	 * @param 	string 	$variable 	Name of the variable [Access point]
+	 * @param 	string|array 	$data 	Value of the variable
+	 *
 	 */
 
 	protected function __set($variable, $data) {
