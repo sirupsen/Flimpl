@@ -30,7 +30,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	}
 }
 
-// Makes a function which can be used to handle exceptions
+// Makes a function which can be used to handle unexpected exceptions
 function exception_handler($exception) { ?>
 	<div class="error">
 		<?php echo $exception->getMessage(); ?>
@@ -48,32 +48,32 @@ $core = scandir(ROOT . 'library');
 $helpers = scandir(ROOT . 'application/helpers');
 
 function __autoload($class) {
-	// Globalize the scans of the directories and configuration
 	global $core, $helpers, $config;
-	// It's important the classes names are all lowercase
+
 	$class = strtolower($class) . '.php'; 
 
-	// If the class requested exists in the core folder, include
-	// it there
+	// If the class requested exists in the core folder, include it here
 	if (in_array($class, $core)) {
 		require(ROOT . 'library/' . $class);
 		if ($config['dev_debug']) {
 			echo "Loaded Core <b>$class</b>!<br/>";
 		}
+
 	// If class is helper, include it from here
 	} elseif (in_array($class, $helpers)) {
 		require(ROOT . 'application/helpers/' . $class);
 		if ($config['dev_debug']) {
 			echo "Loaded Helper <b>$class</b>!<br/>";
 		}
-	// Else, it must be a controller
+	
+	// Else, it has to be a controller
 	} elseif (file_exists(ROOT . '/application/controllers/' . $class)) {
 		require(ROOT . 'application/controllers/' . $class);
 		if ($config['dev_debug']) {
 			echo "Loaded Controller <b>$class</b>!<br/>";
 		}
-	// If it's not a core file, helper or controller we must
-	// hand out a 404 error
+
+	// 404
 	} else {
 		if ($config['dev_debug']) {
 			echo "Couldn't find <b>$class</b>! (Configured root dir?)<br/>";
