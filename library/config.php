@@ -38,6 +38,15 @@ $config['db_database'] 	= 'db'; // Database we're using
 
 /*
  *
+ * What is the URL to your site? When you've entered it here,
+ * you'll be able to access this variable from your templates.
+ *
+ */
+
+$config['site_url'] = 'http://localhost/Flimpl/';
+
+/*
+ *
  * What's the root for your site?
  * This is where all the main folders are located:
  *

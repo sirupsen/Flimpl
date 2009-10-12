@@ -40,6 +40,7 @@ final class Template {
 			$this->template = $dir;
 		} elseif (file_exists($index)) {
 			$class = ucfirst($controller);
+
 			if (method_exists($class, $function)) {
 				$this->template = $index;
 			} else {
@@ -92,6 +93,9 @@ final class Template {
 			echo '</pre>';
 			echo 'Now requiring <b>template files..</b><br/>';
 		}
+
+		require('config.php');
+		extract($config);
 
 		// Extracts our array into variables
 		extract($this->data);

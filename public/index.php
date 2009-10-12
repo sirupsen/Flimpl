@@ -27,8 +27,6 @@ if (!$controller) $controller = 'home';
 // All controllers class names first char is uppercase, so make a variable
 // with the first char uppercase
 $class = ucfirst($controller);
-// Call the class
-$dispatch = new $class($controller, $action);
 // Get the current working dir
 $cwd = getcwd();
 
@@ -36,11 +34,17 @@ $cwd = getcwd();
 if ((int)method_exists($class, $action)) {
 	// Call the method equal to the action, and pass all the
 	// parameters to it
+	
+	// Call the class
+	$dispatch = new $class($controller, $action);
+
 	call_user_func_array(array($dispatch, $action), $param);
 
 	if ($config['dev_debug'] == 'true') {
 		echo 'Method <b>' . $action . '</b> on <b>' . $class . '</b> instanced<br/>';
 	}
+} elseif (file_exists(ROOT . 'application/views/' . $controller . '/' . $action . '.php')) {
+		require(ROOT . 'application/views/' . $controller . '/' . $action . '.php');
 } else {
 	require(ROOT . 'public/misc/errors/404.php');
 	exit;
