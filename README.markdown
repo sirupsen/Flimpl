@@ -9,3 +9,10 @@ Website: http://sirupsen.dk/
 Contact: sirup@sirupsen.dk
 
 Readme comming someday.. after all, just look through the source to start learning ;)
+
+Error Handling
+==============
+
+If you'd like to log errors when not in debug mode, execute this into your database and this is automatically handled:
+
+CREATE TABLE IF NOT EXISTS `errors` ( `id` int(11), `no` varchar(255), `message` text, `file` varchar(255), `line` varchar(255), `created` timestamp, `time` int(11), PRIMARY KEY (`id`))
