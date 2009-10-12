@@ -26,7 +26,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 		// Else, we are in debugging mode and we can safely
 		// just print the error to the developer
 	} else {
-		echo $errorstr;
+		echo 'An error occurured: ' . $errorstr;
 	}
 }
 
