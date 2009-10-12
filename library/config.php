@@ -9,7 +9,7 @@
  *
  */
 
-$config['dev_debug'] = true;
+$config['dev_debug'] = false;
 
 /*
  *
