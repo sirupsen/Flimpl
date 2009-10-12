@@ -1,8 +1,11 @@
 <?php
 require('../library/bootstrap.php');
+echo "INDEXLOLOL";
 
 // Explode all the parameters from the URL into chunks
 $param = explode('/', $_GET['url']);
+
+print_r($param);
 
 // The controller to be loaded is the first parameter
 $controller = $param['0'];
