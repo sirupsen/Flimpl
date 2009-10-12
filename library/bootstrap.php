@@ -86,7 +86,7 @@ function __autoload($class) {
 	// hand out a 404 error
 	} else {
 		if ($config['dev_debug']) {
-			echo "Couldn't find <b>$class</b>! (Configured root dir?)";
+			echo "Couldn't find <b>$class</b>! (Configured root dir?)<br/>";
 		}
 
 		require(ROOT . 'public/misc/errors/404.php');
