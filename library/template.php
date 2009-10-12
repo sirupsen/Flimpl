@@ -17,10 +17,11 @@ final class Template {
 
 	/*
 	*
-	* This constructs the class, it has one must parameter ($template), and
-	* one optional in case the directory should be different than the default.
+	* The template must be created with two parameters, name
+	* of the controller and name of the action [Method]
 	*
-	* @parm 	string 		$dir 		The template directory 	
+	* @param 	string 	$controller 	Name of the controller
+	* @param 	string 	$action 	Name of the action [Method]
 	*
 	*/
 
@@ -39,10 +40,10 @@ final class Template {
 
 	/*
 	*
-	* Set's a variable into the template.
+	* Stores a variable in the template
 	*
-	* @parm 	string 		$variable 	The name of the variable 	
-	* @parm 	string 		$data 		The content of the varible
+	* @param 	string 		$variable 	The name of the variable 	
+	* @param 	string 		$data 		The content of the varible
 	*
 	*/
 
