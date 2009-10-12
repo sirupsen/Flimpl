@@ -5,8 +5,9 @@ class Sample extends Controller {
 		$this->variable = 'Hello, I\'m in the class!';
 	}
 	
-	public function test() {
+	public function test($item) {
 		$this->title = 'I\'m a test!';
-		$this->variable = 'Woo! Some other text';
+		$item = rtrim($item, 's');
+		$this->variable = 'I loooove ' . $item . 's';
 	}
 }
