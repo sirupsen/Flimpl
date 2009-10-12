@@ -17,9 +17,23 @@ class Controller {
 		}
 	}
 
+	/*
+	 *
+	 * Makes the template configuration easy using __set for the
+	 * controller, which means template variable can be set via:
+	 * $this->variable = value;
+	 *
+	 */
+
 	protected function __set($variable, $data) {
 		$this->template->$variable = $data;
 	}
+
+	/*
+	 *
+	 * When our controller is destructed, write out our template
+	 *
+	 */
 
 	public function __destruct() {
 		echo $this->template;
