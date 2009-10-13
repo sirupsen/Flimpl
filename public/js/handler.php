@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  *
  * Simple way to handle AJAX request, activating a method
  * in a class defined by the REQUEST request.
@@ -9,7 +10,9 @@
  * @return 	bool 	true
  *
  */
+
 require('../../library/bootstrap.php');
+
 $class = ucfirst($_REQUEST['class']);
 
 $object = new $class;
