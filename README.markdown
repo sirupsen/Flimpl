@@ -2,6 +2,8 @@ Flimpl
 ======
 Flimpl is an extremely simple open source VC-Framework (Viewer, Controller - No model). However, I don't like to call it a framework. I connect a Framework to a big, slow thing you develop things easily in without having to understand much (in PHP). You are not sure how everything works, or how you'd customize core things. Flimpl is trying more to be a common application design, which you can modify to your own needs. It also tries to become something which you can learn from, because in my experience, developing something like this, is the best programming experience you can ever have.
 
+The reason why no model is used, is because, for me, it's one extra file where you just from time to time add only one line. This is also over-structered for me, and therefore I builded my design without a model.
+
 Author: Sirupsen
 
 Website: http://sirupsen.dk/
