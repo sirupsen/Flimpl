@@ -4,7 +4,7 @@ class Sample extends Controller {
 		$this->title = 'Hello there, I\'m a view file!';
 		$this->task = 'Do your homework, son!';
 		$this->other = 'sister';
-		$this->link = 'test';
+		$this->link = 'sample/test';
 	}
 	
 	public function test($item) {
@@ -12,6 +12,6 @@ class Sample extends Controller {
 		$this->task = 'Cook me a meal, girl!';
 		$this->also = 'also';
 		$this->other = 'brother';
-		$this->link = 'index';
+		$this->link = 'sample/';
 	}
 }
