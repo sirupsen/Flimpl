@@ -71,9 +71,25 @@ final class Template {
 
 		require('config.php');
 
+		/*
+		 *
+		 * Makes our configuration array and our data array into
+		 * variables which then are easily accessible from the
+		 * view file.
+		 *
+		 */
+
 		extract($config);
 		extract($this->data);
 		
+		/*
+		 *
+		 * Requires the correct top file using the getPart
+		 * function, as well as the correct template and
+		 * at last the bottom part.
+		 *
+		 */
+
 		require($this->getPart('top'));
 		require($this->template);
 		require($this->getPart('bottom'));
