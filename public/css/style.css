@@ -1,3 +1,4 @@
+/* CSS FIX */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -16,31 +17,37 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     font-family: inherit;
     vertical-align: baseline;
 }
-/* remember to define focus styles! */
+
 :focus {
     outline: 0;
 }
- ul {
+
+ul {
     list-style: none;
 }
-/* tables still need 'cellspacing="0"' in the markup */
+
 table {
     border-collapse: separate;
     border-spacing: 0;
 }
+
 caption, th, td {
     text-align: left;
     font-weight: normal;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: "";
 }
+
 blockquote, q {
     quotes: "" "";
 }
 
 /* END Reset */
+
+/* Main stuff */
 
 body {
     background: #FFF;
@@ -119,11 +126,11 @@ hr {
     margin: 0;
 }
 
+/* Small classes */
+
 .weight {
 	font-weight: 700;
 }
-
-/* Small classes */
 
 .hidden {
 	display: none;
@@ -167,6 +174,8 @@ hr {
 .light-green {
 	color: #D2EC8A;
 }
+
+/* Messages, errors etc */
 
 .msg {
 	background-color: #D2EC8A;
