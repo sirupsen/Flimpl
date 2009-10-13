@@ -4,6 +4,6 @@
 
 <p>For the latest updates, pull from the <a href="http://github.com/Sirupsen/Flimpl/" title="Go to the Github repo for Flimpl">the Github repo</a>.</p>
 
-<p>Let's go ahead and do some simple testing. <a href="#" id="test_database">Click me</a> to test if the database is functioning correctly.</p>
+<p>Let's go ahead and do some simple testing. <a href="#" id="test_database">Click me</a> to test if the database is functioning correctly. To test out how the viewers and controllers works, go ahead and check out <a href="sample">this sample page.</a></p>
 
 <p id="database_response" class="msg hidden"></p>
