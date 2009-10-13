@@ -1,13 +1,17 @@
 <?php
 class Sample extends Controller {
 	public function index() {
-		$this->title = 'This is a sample!';
-		$this->variable = 'Hello, I\'m in the class!';
+		$this->title = 'Hello there, I\'m a view file!';
+		$this->task = 'Do your homework, son!';
+		$this->other = 'sister';
+		$this->link = 'sample/test';
 	}
 	
 	public function test($item) {
-		$this->title = 'I\'m a test!';
-		$item = rtrim($item, 's');
-		$this->variable = 'I loooove ' . $item . 's';
+		$this->title = 'Ohai!';
+		$this->task = 'Cook me a meal, girl!';
+		$this->also = 'also';
+		$this->other = 'brother';
+		$this->link = 'sample/';
 	}
 }
