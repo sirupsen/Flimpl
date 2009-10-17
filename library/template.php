@@ -90,9 +90,9 @@ final class Template {
 		 *
 		 */
 
-		require($this->getPart('top'));
+		include($this->getPart('top'));
 		require($this->template);
-		require($this->getPart('bottom'));
+		include($this->getPart('bottom'));
 
 		// Bye!
 		if ($this->registry->config['dev_debug']) {
