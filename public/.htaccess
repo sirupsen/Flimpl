@@ -1,9 +1,9 @@
-# Edit this to your own time zone
-php_value date.timezone Europe/Copenhagen
+# Sometimes you'll need to edit this to your own timezone
+# php_value date.timezone Europe/Copenhagen
 
-# Compress with Zlip
-php_flag zlib.output_compression on
-php_value zlib.output_compression_level 5
+# If you'd like compression, uncomment below
+# php_flag zlib.output_compression on
+# php_value zlib.output_compression_level 5
 
 # Security
 php_flag expose_php Off
