@@ -86,7 +86,7 @@ function __autoload($class) {
 }
 
 function a($link) {
-	return $config['site'] . $link;
+	echo $config['site'] . $link;
 }
 
 // Instance our registry
