@@ -18,3 +18,16 @@ Error Handling
 If you'd like to log errors when not in debug mode, execute this into your database and this is automatically handled:
 
 CREATE TABLE IF NOT EXISTS `errors` ( `id` int(11), `no` varchar(255), `message` text, `file` varchar(255), `line` varchar(255), `created` timestamp, `time` int(11), PRIMARY KEY (`id`))
+
+Public Folder
+=============
+
+The reason for having this folder, is to only make necessary files public available. But there's a few things to note here. You don't want to have your public folder inside a public_html folder on your server. Because public_html (or mainwebsite_html, or whatever it might be called on your server) is basically the same as our public folder. Everything is redirected to it. So if this is the case, basically just merge Flimpl's public folder with yours. :) Also note that if you have a folder called "meow" inside public, it's prioritized > a Flimpl controller! Also note that application and library folder should still be in the root folder! They are fully accessible by public from there. Should you not have a folder already, a .htaccess file to redirect anything to your own public folder is included in the main directory!
+
+Example of structure:
+
+*public_html
+** index.php
+** .htaccess
+*application
+*library
