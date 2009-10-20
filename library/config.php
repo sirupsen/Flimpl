@@ -43,7 +43,7 @@ $config['db_database'] 	= 'db'; // Database we're using
  *
  */
 
-$config['site_url'] = 'http://localhost/Flimpl/';
+$config['site'] = 'http://localhost/Flimpl/';
 
 /*
  *
