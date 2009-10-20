@@ -44,8 +44,8 @@ set_exception_handler('exception_handler');
 
 // Scanning the dirs here, instead of doing it everytime
 // a class is instanced [Speed]
-$core = scandir(ROOT . 'library');
-$helpers = scandir(ROOT . 'application/helpers');
+$core = scandir('../library');
+$helpers = scandir('../application/helpers');
 
 function __autoload($class) {
 	global $core, $helpers, $config;
