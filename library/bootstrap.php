@@ -85,6 +85,10 @@ function __autoload($class) {
 	}
 }
 
+function a($link) {
+	return $config['site'] . $link;
+}
+
 // Instance our registry
 $registry = Registry::getInstance();
 
