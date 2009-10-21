@@ -4,6 +4,9 @@ if ($config['dev_debug'] == 'true') {
 	echo 'Launched <b>Index.php</b><br/>';
 }
 
+// Root path
+DEFINE("ROOT", realpath("../") . '/');
+
 // Explode all the parameters from the URL into chunks
 $param = explode('/', $_GET['url']);
 
