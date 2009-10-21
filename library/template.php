@@ -69,8 +69,6 @@ final class Template {
 			echo 'Now requiring <b>template files..</b><br/>';
 		}
 
-		require('config.php');
-
 		/*
 		 *
 		 * Makes our configuration array and our data array into
@@ -79,7 +77,6 @@ final class Template {
 		 *
 		 */
 
-		extract($config);
 		extract($this->data);
 		
 		/*
