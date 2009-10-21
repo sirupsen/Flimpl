@@ -44,16 +44,3 @@ $config['db_database'] 	= 'db'; // Database we're using
  */
 
 $config['site'] = 'http://localhost/Flimpl/';
-
-/*
- *
- * What's the root for your site?
- * This is where all the main folders are located:
- *
- *  	* Application
- *  	* Library
- *  	* And so on..
- *
- */
-
-DEFINE("ROOT", "/var/www/Flimpl/"); // Example: /var/www/Flimpl

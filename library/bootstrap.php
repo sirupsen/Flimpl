@@ -1,6 +1,6 @@
 <?php
 // Require the config file for some global configuration
-require('config.php');
+require_once('config.php');
 
 // Creates a function to handle errors, and log them if configured to.
 // @TODO: Use Mysqli
@@ -67,7 +67,7 @@ function __autoload($class) {
 		}
 	
 	// Else, it has to be a controller
-	} elseif (file_exists(ROOT . '/application/controllers/' . $class)) {
+	} elseif (file_exists('../application/controllers/' . $class)) {
 		require('../application/controllers/' . $class);
 		if ($config['dev_debug']) {
 			echo "Loaded Controller <b>$class</b>!<br/>";
@@ -86,6 +86,7 @@ function __autoload($class) {
 }
 
 function a($link) {
+	global $config;
 	echo $config['site'] . $link;
 }
 
