@@ -4,4 +4,4 @@
 
 <?php echo $task; ?>
 
-<p>Oh damn, I gotta go. Hopefully you learned a bit about me and my mom! Oh, and you can meet my <?php echo $other; ?> <a href="<?php echo $site; ?><?php echo $link; ?>">here.</a></p>
+<p>Oh damn, I gotta go. Hopefully you learned a bit about me and my mom! Oh, and you can meet my <?php echo $other; ?> <a href="<?php echo Html::anchor($link); ?>">here.</a></p>
