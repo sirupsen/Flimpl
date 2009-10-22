@@ -33,8 +33,6 @@ if (!$controller) $controller = 'home';
 // All controllers class names first char is uppercase, so make a variable
 // with the first char uppercase
 $class = ucfirst($controller);
-// Get the current working dir
-$cwd = getcwd();
 
 // If the action [Method] on the controller [Class] exists:
 if ((int)method_exists($class, $action)) {
