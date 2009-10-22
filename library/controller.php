@@ -1,11 +1,19 @@
 <?php
 class Controller {
+	// Wields instace of registry
 	protected $registry;
+
+	// Template instance
 	protected $template;
+
+	// Instance of our DB, easy to access
 	protected $db;
 
 	public function __construct($controller, $function) {
+		// Get instance of our registry
 		$this->registry = Registry::getinstance();
+
+		// Create template for this controller
 		$this->template = new Template($controller, $function);
 
 		// Make it easier to access the database by cutting off
