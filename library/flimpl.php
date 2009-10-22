@@ -10,6 +10,14 @@ final class Flimpl {
 	// Static variable to hold our registry
 	private static $registry;
 
+	/*
+	 *
+	 * Prepares our environment by setting up autoload, error
+	 * handler, exception handler and injects a few values
+	 * to our registry
+	 *
+	 */
+
 	public static function setup() {
 		// Set autoloader
 		spl_autoload_register(array('Flimpl', 'auto_load'));
@@ -32,6 +40,13 @@ final class Flimpl {
 		self::$registry->config = self::getConfiguration();
 	}
 
+	/*
+	 *
+	 * Runs our method from the controller by the parameters
+	 * given in the URL.
+	 *
+	 */
+
 	public static function run() {
 		// Explode all the parameters from the URL into chunks
 		$param = explode('/', $_GET['url']);
@@ -45,13 +60,7 @@ final class Flimpl {
 		// Get the new first entry, the action [Method]
 		$action = $param['0'];
 
-		/*
-		*
-		* Remove the first entry again [The action/Method]
-		* Remeaning are optional parameters for the method.
-		* 
-		*/
-
+		// Leaving only parameters behind
 		array_shift($param);
 
 		// If no action is defined, use the index action [Index method]
@@ -80,6 +89,15 @@ final class Flimpl {
 			exit;
 		}
 	}
+
+	/*
+	 *
+	 * Autoload function automatic loading of classes.
+	 *
+	 * @param 	string 	$class 	Name of class to load
+	 * @doc 	http://php.net/manual/function.spl-autoload.php
+	 *
+	 */
 
 	public static function auto_load($class) {
 		$class = strtolower($class) . '.php'; 
@@ -121,6 +139,15 @@ final class Flimpl {
 		}
 	}
 
+	/*
+	 *
+	 * Exception handler to catch the uncatched exceptions.
+	 *
+	 * @param 	object 	$exception 	Exception object
+	 * @doc 	http://php.net/manual/function.set-exception-handler.php
+	 *
+	 */
+
 	public static function exception_handler($exception) { ?>
 		<div class="error">
 			<?php echo $exception->getMessage(); ?>
@@ -128,9 +155,28 @@ final class Flimpl {
 		<?php
 	}
 
+	/*
+	 *
+	 * Error handler, uhm.. it handles errors!
+	 *
+	 * @param 	string 	$errno 		Unique number for error
+	 * @param 	string 	$errstr 	Error message
+	 * @param 	string 	$errfile 	In what file did we encounter the error
+	 * @param 	string 	$errline 	In what line did we encounter the error
+	 *
+	 */
+
 	public static function error_handler($errno, $errstr, $errfile, $errline) {
 		echo $errorstr;
 	}
+
+	/*
+	 *
+	 * Returns configuration array
+	 *
+	 * @return 	array 	$config 	Configuration
+	 *
+	 */
 
 	public static function getConfiguration() {
 		require('config.php');

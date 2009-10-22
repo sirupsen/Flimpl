@@ -9,3 +9,6 @@ if ($config['dev_debug'] == 'true') {
 
 // Loading up the bootstrap
 require('../library/bootstrap.php');
+
+// Run controller
+Flimpl::run();

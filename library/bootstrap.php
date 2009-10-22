@@ -4,6 +4,3 @@ require('flimpl.php');
 
 // Prepare environment
 Flimpl::setup();
-
-// Do the magic!
-Flimpl::run();
