@@ -1,9 +1,9 @@
 <?php
 /*
  *
- * Dev debug is a feature which shows a message each time
- * something loads, this is useful for developers of Flimpl
- * to quickly locate bugs and errors, and fix them.
+ * Dev debug is a mode for advanced debugging, giving you a
+ * message each time something loads, making it easier to
+ * troubleshoot what might be wrong!
  *
  * @default 	false
  *
@@ -13,10 +13,9 @@ $config['dev_debug'] = false;
 
 /*
  *
- * Debug mode is a mode you can turn on when you just work
- * on your project, you just want errors to be shown, and not
- * to be logged, because it's only you working on the project.
- * Remember to turn this to false once releasing a project.
+ * Debug mode is a mode you can turn on when you are working
+ * locally, just developping. You want detailed errors to be
+ * showed, and not logged.
  *
  * @default 	true
  *
@@ -24,13 +23,7 @@ $config['dev_debug'] = false;
 
 $config['debug'] = true;
 
-/*
- *
- * This is the database configuration, used as informations on
- * how Flimpl should connect to the database
- *
- */
-
+// Database configuration
 $config['db_host'] 		= 'localhost'; // Host? Usually "localhost"
 $config['db_user'] 		= 'root'; // Username? Locally this is usually "root"
 $config['db_pass'] 		= ''; // Password?
