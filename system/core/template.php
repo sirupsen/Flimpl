@@ -40,7 +40,7 @@ final class Template {
 
 		// Sets the variable $template to be the path to the
 		// most relevant view file
-		$this->viewFile();
+		self::viewFile();
 	}
 
 	/*
@@ -131,7 +131,7 @@ final class Template {
 	 *
 	 */
 
-	private function viewFile() {
+	private static function viewFile() {
 		$method_view = APPPATH . 'views/' . self::$controller . '/' . self::$action . '.php';
 
 		$index = APPPATH. 'views/' . self::$controller . '/' . 'index.php';
@@ -156,7 +156,7 @@ final class Template {
 				throw new Exception('Template file for class ' . self::$controller . ' not created.');
 		}
 
-		if ($this->reg->config['dev_debug']) {
+		if (self::$registry->config['dev_debug']) {
 			echo 'Instanced <b>Template</b><br/>';
 		}
 	}
