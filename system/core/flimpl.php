@@ -14,7 +14,7 @@ final class Flimpl {
 	 *
 	 * Prepares our environment by setting up autoload, error
 	 * handler, exception handler and injects a few values
-	 * to our registry
+	 * to our registry for easy access anywhere.
 	 *
 	 */
 
@@ -28,7 +28,8 @@ final class Flimpl {
 		// Set exception handler
 		set_exception_handler(array('Flimpl', 'exception_handler'));
 
-		// Scan directories for the auto loader
+		// Scan directories, used by the auto loader only scanned once
+		// so we didn't have to scan each time we load a class [Performance]
 		self::$cores = scandir(SYSPATH . 'core');
 		self::$helpers = scandir(SYSPATH . 'helpers');
 
@@ -42,8 +43,8 @@ final class Flimpl {
 
 	/*
 	 *
-	 * Runs our method from the controller by the parameters
-	 * given in the URL.
+	 * Runs our action [Method] from the right controller figured
+	 * by the parameters given in the URL.
 	 *
 	 */
 
@@ -51,7 +52,7 @@ final class Flimpl {
 		// Explode all the parameters from the URL into chunks
 		$param = explode('/', $_GET['url']);
 
-		// The controller to be loaded is the first parameter
+		// Controller [Class] is the first parameter
 		$controller = $param['0'];
 
 		// Remove the first entry from the array [Controller]
@@ -70,7 +71,7 @@ final class Flimpl {
 
 		// If the action [Method] on the controller [Class] exists:
 		if ((int)method_exists($controller, $action)) {
-			// Instance the class
+			// Instance controller 
 			$dispatch = new $controller($controller, $action);
 
 			// Call method, and throw parameters to it
@@ -102,7 +103,7 @@ final class Flimpl {
 	public static function auto_load($class) {
 		$class = strtolower($class) . '.php'; 
 
-		// If the class requested exists in the core folder, include it here
+		// Class requested exists in the core folder, include it from here
 		if (in_array($class, self::$cores)) {
 			require(SYSPATH . 'core/' . $class);
 			
@@ -130,9 +131,10 @@ final class Flimpl {
 		// 404
 		} else {
 			if(self::$registry->config['dev_debug']) {
-				echo "Couldn't find <b>$class</b>! (Configured root dir?)<br/>";
+				echo "Couldn't find <b>$class</b>!<br/>";
 			}
 
+			// Get 404 page
 			require(PBLPATH . 'misc/errors/404.php');
 			// Exit, no more to see than this custom page
 			exit;
@@ -141,7 +143,7 @@ final class Flimpl {
 
 	/*
 	 *
-	 * Exception handler to catch the uncatched exceptions.
+	 * Exception handler to catch uncatched exceptions.
 	 *
 	 * @param 	object 	$exception 	Exception object
 	 * @doc 	http://php.net/manual/function.set-exception-handler.php
@@ -157,7 +159,7 @@ final class Flimpl {
 
 	/*
 	 *
-	 * Error handler, uhm.. it handles errors!
+	 * Error handler, uhm.. for handling errors!
 	 *
 	 * @param 	string 	$errno 		Unique number for error
 	 * @param 	string 	$errstr 	Error message
