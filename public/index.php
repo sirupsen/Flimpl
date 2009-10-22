@@ -1,6 +1,7 @@
 <?php
-// Real root path
-DEFINE("ROOT", realpath("../") . '/');
+DEFINE("APPPATH", realpath('../application') . '/');
+DEFINE("PBLPATH", realpath('../public') . '/');
+DEFINE("SYSPATH", realpath('../system') . '/');
 
 // Launching Index.php
 if ($config['dev_debug'] == 'true') {
@@ -8,7 +9,7 @@ if ($config['dev_debug'] == 'true') {
 }
 
 // Loading up the bootstrap
-require('../library/bootstrap.php');
+require(SYSPATH . 'core/bootstrap.php');
 
 // Run controller
 Flimpl::run();

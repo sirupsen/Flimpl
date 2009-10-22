@@ -105,7 +105,7 @@ final class Template {
 	 */
 
 	private function getPart($part) {
-		$view_path = ROOT . 'application/views/' . $this->controller . '/';	
+		$view_path = APPPATH . 'views/' . $this->controller . '/';	
 
 		// If a custom header/bottom for this specific file is found, load it
 		if (file_exists($view_path . $part . $this->action . '.php')) {
@@ -115,7 +115,7 @@ final class Template {
 			return $view_path . $part . '.php';
 		// Else, load default
 		} else { 
-			return ROOT . 'application/views/' . $part . '.php';
+			return APPPATH . 'views/' . $part . '.php';
 		}
 	}
 
@@ -127,9 +127,9 @@ final class Template {
 	 */
 
 	private function viewFile() {
-		$method_view = ROOT . 'application/views/' . $this->controller . '/' . $this->action . '.php';
+		$method_view = APPPATH . 'views/' . $this->controller . '/' . $this->action . '.php';
 
-		$index = ROOT . 'application/views/' . $this->controller . '/' . 'index.php';
+		$index = APPPATH. 'views/' . $this->controller . '/' . 'index.php';
 
 		// If there's a view file for the specific method, use it
 		if (file_exists($method_view)) {
@@ -148,7 +148,7 @@ final class Template {
 					echo '404 from Template<br/>';
 				}
 
-				require(ROOT . 'public/misc/errors/404.php');
+				require(PBLPATH . 'misc/errors/404.php');
 				exit;
 			}
 

@@ -29,8 +29,8 @@ final class Flimpl {
 		set_exception_handler(array('Flimpl', 'exception_handler'));
 
 		// Scan directories for the auto loader
-		self::$cores = scandir('../library');
-		self::$helpers = scandir('../application/helpers');
+		self::$cores = scandir(SYSPATH . 'core');
+		self::$helpers = scandir(SYSPATH . 'helpers');
 
 		// Instance registry
 		self::$registry = Registry::getInstance();
@@ -82,10 +82,10 @@ final class Flimpl {
 			}
 		// If there's no method, include the view file only
 		} elseif (file_exists(ROOT . 'application/views/' . $controller . '/' . $action . '.php')) {
-				require(ROOT . 'application/views/' . $controller . '/' . $action . '.php');
+				require(APPPATH . 'views/' . $controller . '/' . $action . '.php');
 		// 404
 		} else {
-			require(ROOT . 'public/misc/errors/404.php');
+			require(PBLPATH . 'misc/errors/404.php');
 			exit;
 		}
 	}
@@ -104,7 +104,7 @@ final class Flimpl {
 
 		// If the class requested exists in the core folder, include it here
 		if (in_array($class, self::$cores)) {
-			require('../library/' . $class);
+			require(SYSPATH . 'core/' . $class);
 			
 			// If we are development debugging, tell dev. we are loading
 			if(self::$registry->config['dev_debug']) {
@@ -113,7 +113,7 @@ final class Flimpl {
 
 		// If class is helper, include it from here
 		} elseif (in_array($class, self::$helpers)) {
-			require('../application/helpers/' . $class);
+			require(SYSPATH . 'helpers/' . $class);
 
 			if(self::$registry->config['dev_debug']) {
 				echo "Loaded Helper <b>$class</b>!<br/>";
@@ -121,7 +121,7 @@ final class Flimpl {
 		
 		// Else, it has to be a controller
 		} elseif (file_exists('../application/controllers/' . $class)) {
-			require('../application/controllers/' . $class);
+			require(APPPATH . 'controllers/' . $class);
 
 			if(self::$registry->config['dev_debug']) {
 				echo "Loaded Controller <b>$class</b>!<br/>";
@@ -133,7 +133,7 @@ final class Flimpl {
 				echo "Couldn't find <b>$class</b>! (Configured root dir?)<br/>";
 			}
 
-			require('../public/misc/errors/404.php');
+			require(PBLPATH . 'misc/errors/404.php');
 			// Exit, no more to see than this custom page
 			exit;
 		}
@@ -179,7 +179,7 @@ final class Flimpl {
 	 */
 
 	public static function getConfiguration() {
-		require('config.php');
+		require(SYSPATH . 'config/config.php');
 
 		return $config;
 	}
