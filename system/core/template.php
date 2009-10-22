@@ -8,12 +8,17 @@
  */
 
 final class Template {
-	private $template;
+	// Path to view file
+	private static $template;
+	// Variables to be pushed to the template
 	private $data;
-	private $registry;
+	// Wields the instance of the registry
+	private static $registry;
 
-	private $controller;
-	private $action;
+	// Name of controller [Class]
+	private static $controller;
+	// Name of action [Method]
+	private static $action;
 
 	/*
 	*
@@ -26,12 +31,12 @@ final class Template {
 	*/
 
 	public function __construct($controller, $action) {	
-		// Gets out registry
-		$this->registry = Registry::getinstance();
+		// Get registry instance
+		self::$registry = Registry::getinstance();
 
 		// Make these available everywhere
-		$this->controller = $controller;
-		$this->action = $action;
+		self::$controller = $controller;
+		self::$action = $action;
 
 		// Sets the variable $template to be the path to the
 		// most relevant view file
@@ -88,11 +93,11 @@ final class Template {
 		 */
 
 		include($this->getPart('top'));
-		require($this->template);
+		require(self::$template);
 		include($this->getPart('bottom'));
 
 		// Bye!
-		if ($this->registry->config['dev_debug']) {
+		if (self::$registry->config['dev_debug']) {
 			echo 'Destroyed <b>Template</b><br/>';
 		}
 	}
@@ -105,11 +110,11 @@ final class Template {
 	 */
 
 	private function getPart($part) {
-		$view_path = APPPATH . 'views/' . $this->controller . '/';	
+		$view_path = APPPATH . 'views/' . self::$controller . '/';	
 
 		// If a custom header/bottom for this specific file is found, load it
-		if (file_exists($view_path . $part . $this->action . '.php')) {
-		   return $view_path . $part . '.' . $this->action . '.php';
+		if (file_exists($view_path . $part . '.' . self::$action . '.php')) {
+		   return $view_path . $part . '.' . self::$action . '.php';
 		// elseIf a custom header/bottom for this specific controller is found, load it
 		} elseif (file_exists($view_path . $part . '.php')) {
 			return $view_path . $part . '.php';
@@ -127,37 +132,28 @@ final class Template {
 	 */
 
 	private function viewFile() {
-		$method_view = APPPATH . 'views/' . $this->controller . '/' . $this->action . '.php';
+		$method_view = APPPATH . 'views/' . self::$controller . '/' . self::$action . '.php';
 
-		$index = APPPATH. 'views/' . $this->controller . '/' . 'index.php';
+		$index = APPPATH. 'views/' . self::$controller . '/' . 'index.php';
 
 		// If there's a view file for the specific method, use it
 		if (file_exists($method_view)) {
-			$this->template = $method_view;
+			self::$template = $method_view;
 		// Else use the view file for the index method
 		} elseif (file_exists($index)) {
-			$class = ucfirst($this->controller);
-
 			// Check if the method exists
-			if (method_exists($class, $this->action)) {
-				$this->template = $index;
+			if (method_exists(self::$controller, self::$action)) {
+				self::$template = $index;
 			} else {
-				// So we, when debugging, are sure where the 404 are
-				// comming from
-				if ($this->reg->config['dev_debug']) {
+				if (self::$registry->config['dev_debug']) {
 					echo '404 from Template<br/>';
 				}
 
 				require(PBLPATH . 'misc/errors/404.php');
 				exit;
 			}
-
-			// For debugging
-			if ($this->reg->config['dev_debug']) {
-				echo 'Template not found for method <b>' . $function . '</b> used main template (index.php)<br/>';
-			}
 		} else {
-				throw new Exception("Template file for class $controller not created.");
+				throw new Exception('Template file for class ' . self::$controller . ' not created.');
 		}
 
 		if ($this->reg->config['dev_debug']) {
