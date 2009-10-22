@@ -81,7 +81,7 @@ final class Flimpl {
 				echo 'Method <b>' . $action . '</b> on <b>' . $class . '</b> instanced<br/>';
 			}
 		// If there's no method, include the view file only
-		} elseif (file_exists(ROOT . 'application/views/' . $controller . '/' . $action . '.php')) {
+		} elseif (file_exists(APPPATH . 'views/' . $controller . '/' . $action . '.php')) {
 				require(APPPATH . 'views/' . $controller . '/' . $action . '.php');
 		// 404
 		} else {
