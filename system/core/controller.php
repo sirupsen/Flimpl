@@ -6,7 +6,8 @@ class Controller {
 	// Template instance
 	protected $template;
 
-	// Instance of our DB, easy to access
+	// Carrying instance of DB instead of having to get it manually
+	// from the registry each time, cutting off one link
 	protected $db;
 
 	public function __construct($controller, $function) {
@@ -28,8 +29,7 @@ class Controller {
 	/*
 	 *
 	 * Makes the template configuration easy using __set for the
-	 * controller, which means template variable can be set via:
-	 * $this->variable = value;
+	 * controller, taking off an extra link - faster development.
 	 *
 	 * @param 	string 	$variable 	Name of the variable [Access point]
 	 * @param 	string|array 	$data 	Value of the variable
