@@ -2,46 +2,6 @@
 // Require the config file for some global configuration
 require_once('config.php');
 
-// Creates a function to handle errors, and log them if configured to.
-// @TODO: Use Mysqli
-function error_handler($errno, $errstr, $errfile, $errline) {
-	global $config;
-
-	// If we are not debugging, log the errors
-	if ($config['debug'] == false) {
-		$link = mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
-		$db = mysql_select_db($config['db_database'], $link);
-
-		// To be sure the query can be performed [Injection can happen
-		// naturally]
-		$errorstr = mysql_real_escape_string($errstr);
-		$errfile = mysql_real_escape_string($errfile);
-
-		echo "An error occured. It've been logged, and will be fixed as soon as possible.";
-
-		$sql = "INSERT INTO errors SET no = '$errorno', message = '$errorstr', file = '$errfile', line = '$errline', time = 'time()'";
-
-		mysql_query($sql);
-
-		// Else, we are in debugging mode and we can safely
-		// just print the error to the developer
-	} else {
-		echo $errorstr;
-	}
-}
-
-// Makes a function which can be used to handle unexpected exceptions
-function exception_handler($exception) { ?>
-	<div class="error">
-		<?php echo $exception->getMessage(); ?>
-	</div>
-<?php
-}
-
-// Activate them
-set_error_handler('error_handler');
-set_exception_handler('exception_handler');
-
 // Scanning the dirs here, instead of doing it everytime
 // a class is instanced [Speed]
 $core = scandir('../library');
@@ -89,6 +49,8 @@ function a($link) {
 	global $config;
 	echo $config['site'] . $link;
 }
+
+Flimpl::setup();
 
 // Instance our registry
 $registry = Registry::getInstance();
