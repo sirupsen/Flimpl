@@ -66,7 +66,7 @@ final class Template {
 	*/
 
 	public function __toString() {
-		if ($this->registry->config['dev_debug']) {
+		if (self::$registry->config['dev_debug']) {
 			echo '<br/>Variables pushed to <b>Template</b><br/>';
 			echo '<pre>';
 				print_r($this->data);
@@ -92,9 +92,9 @@ final class Template {
 		 *
 		 */
 
-		include($this->getPart('top'));
+		include(self::getPart('top'));
 		require(self::$template);
-		include($this->getPart('bottom'));
+		include(self::getPart('bottom'));
 
 		// Bye!
 		if (self::$registry->config['dev_debug']) {
@@ -109,7 +109,7 @@ final class Template {
 	 *
 	 */
 
-	private function getPart($part) {
+	private static function getPart($part) {
 		$view_path = APPPATH . 'views/' . self::$controller . '/';	
 
 		// If a custom header/bottom for this specific file is found, load it
@@ -145,10 +145,6 @@ final class Template {
 			if (method_exists(self::$controller, self::$action)) {
 				self::$template = $index;
 			} else {
-				if (self::$registry->config['dev_debug']) {
-					echo '404 from Template<br/>';
-				}
-
 				require(PBLPATH . 'misc/errors/404.php');
 				exit;
 			}
