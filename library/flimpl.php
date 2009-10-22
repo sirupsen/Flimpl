@@ -41,13 +41,14 @@ final class Flimpl {
 
 		// Remove the first entry from the array [Controller]
 		array_shift($param);
+
 		// Get the new first entry, the action [Method]
 		$action = $param['0'];
 
 		/*
 		*
 		* Remove the first entry again [The action/Method]
-		* The rest is optional parameters for the method.
+		* Remeaning are optional parameters for the method.
 		* 
 		*/
 
@@ -55,28 +56,25 @@ final class Flimpl {
 
 		// If no action is defined, use the index action [Index method]
 		if (!$action) $action = 'index';
-
 		// If no controller is defined [Url is blank], use homepage
 		if (!$controller) $controller = 'home';
 
-		// Controller class names are uppercase
-		$class = ucfirst($controller);
-
 		// If the action [Method] on the controller [Class] exists:
-		if ((int)method_exists($class, $action)) {
-			// Call the method equal to the action, and pass all the
-			// parameters to it
-			
-			// Call the class
-			$dispatch = new $class($controller, $action);
+		if ((int)method_exists($controller, $action)) {
+			// Instance the class
+			$dispatch = new $controller($controller, $action);
 
+			// Call method, and throw parameters to it
 			call_user_func_array(array($dispatch, $action), $param);
 
+			// Loaded with success!
 			if ($config['dev_debug'] == 'true') {
 				echo 'Method <b>' . $action . '</b> on <b>' . $class . '</b> instanced<br/>';
 			}
+		// If there's no method, include the view file only
 		} elseif (file_exists(ROOT . 'application/views/' . $controller . '/' . $action . '.php')) {
 				require(ROOT . 'application/views/' . $controller . '/' . $action . '.php');
+		// 404
 		} else {
 			require(ROOT . 'public/misc/errors/404.php');
 			exit;
