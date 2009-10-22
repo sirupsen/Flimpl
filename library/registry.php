@@ -14,9 +14,11 @@
 
 final class Registry {
 
-	// Defines the class variables
+	// To hold instance of self
 	private static $instance;
-  	private $values = array();
+
+	// To hold all data wielded by registry
+  	private $values;
 	
 	/*
 	 *
