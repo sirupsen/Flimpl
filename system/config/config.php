@@ -35,12 +35,3 @@ $config['db_host'] 		= 'localhost'; // Host? Usually "localhost"
 $config['db_user'] 		= 'root'; // Username? Locally this is usually "root"
 $config['db_pass'] 		= ''; // Password?
 $config['db_database'] 	= 'db'; // Database we're using
-
-/*
- *
- * What is the URL to your site? When you've entered it here,
- * you'll be able to access this variable from your templates.
- *
- */
-
-$config['site'] = 'http://localhost/Flimpl/';
