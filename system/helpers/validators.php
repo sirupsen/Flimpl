@@ -61,4 +61,21 @@ class Validators {
 			return false;
 		}
 	}
+
+	public static function length($val, array $length) {
+		$size = strlen($val);
+		$return = false;
+
+		if (count($length) > 1) {
+			list ($min, $max) = $length;
+
+			if ($size >= $min AND $size <= $max) {
+				$return = true;
+			}
+		} else {
+			$return = ($size === (int) $length[0]);
+		}
+
+		return $return;
+	}
 }

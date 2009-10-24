@@ -8,19 +8,17 @@ class Sample extends Controller {
 
 		$data = array(
 			'mail' => 'sirup@sirupsen.dk',
-			'website' => 'http://sirupsen.dk'
+			'website' => 'http://sirupsen.dk',
+			'username' => 'Sirupsen'
 		);
 
 		$val = new Validation($data);
 
 		$val->addRule('mail', 'email', 'required');
 		$val->addRule('website', 'url', 'required');
+		$val->addRule('username', 'length[3,10]', 'required');
 
-		if ($val->validate()) {
-			echo "Valid";
-		} else {
-			echo "Unvalid";
-		}
+		$this->validation = $val->validate();
 	}
 	
 	public function test($item) {
