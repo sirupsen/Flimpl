@@ -6,6 +6,9 @@ final class Flimpl {
 	// Static variable to wield all files in helpers directory
 	private static $helpers;
 
+	// Static variable to wield all files in libraries directory
+	private static $library;
+
 	// Static variable to hold our registry
 	private static $registry;
 
@@ -31,6 +34,7 @@ final class Flimpl {
 		// so we didn't have to scan each time we load a class [Performance]
 		self::$cores = scandir(SYSPATH . 'core');
 		self::$helpers = scandir(SYSPATH . 'helpers');
+		self::$library = scandir(SYSPATH . 'libraries');
 
 		// Instance registry
 		self::$registry = Registry::getInstance();
@@ -117,6 +121,13 @@ final class Flimpl {
 
 			if(self::$registry->config['dev_debug']) {
 				echo "Loaded Helper <b>$class</b>!<br/>";
+			}
+		
+		} elseif (in_array($class, self::$library)) {
+			require(SYSPATH . 'libraries/' . $class);
+
+			if(self::$registry->config['dev_debug']) {
+				echo "Loaded Library <b>$class</b>!<br/>";
 			}
 		
 		// Else, it has to be a controller

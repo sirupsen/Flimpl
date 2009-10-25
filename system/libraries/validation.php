@@ -33,7 +33,7 @@ class Validation {
             // For each of the rules for this field [Length]
 			foreach ($rules as $rule) {
                 // If the function returns false, 
-				if(!call_user_func(array('Validators', $rule), $this->input[$key])) {
+				if(!call_user_func(array('Valid', $rule), $this->input[$key])) {
                     // Add the error with key as name of rule value are arguments
 					$this->errors[$key][] = $rule;
 				}
