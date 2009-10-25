@@ -1,4 +1,9 @@
 <?php
+/*
+ *
+ * HTML class to handle basic HTML usage
+ *
+ */
 
 class Html {
 
