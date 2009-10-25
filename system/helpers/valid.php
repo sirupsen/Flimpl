@@ -54,9 +54,26 @@ class Valid {
 		return true;	
 	}
 
+	/*
+	 *
+	 * Returns true if not empty
+	 *
+	 * @return 	bool 	true|false
+	 *
+	 */
+
 	public static function required($val) {
 		return (bool) $val;
 	}
+
+	/*
+	 *
+	 * Returns true if the length is between the two
+	 * lengths given in an array
+	 *
+	 * @return 	bool 	true|false
+	 *
+	 */
 
 	public static function length($val, array $length) {
 		$size = strlen($val);
