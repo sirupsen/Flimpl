@@ -22,34 +22,27 @@ class Validation {
 
 		// For each of our rules, add it to our rule variable
 		foreach ($rules as $rule) {
-			// If the rule has an argument
-			if (preg_match('/^([^\[]++)\[(.+)\]$/', $rule, $match)) {
-				$rule = $match[1];
-				// Get the argument
-				$args = $args = preg_split('/(?<!\\\\),\s*/', $match[2]);
-
-				// Replace escaped comma
-				$args = str_replace('\,', ',', $args);
-			}
-
             // Add the rule with it's arguments
-			$this->rules[$field][] = array($rule, $args);
+			$this->rules[$field][] = $rule;
 		}
 	}
 
 	public function validate() {
-        // Foreach of the fields [I.e. Username]
+        // Foreach of the fields [Username]
 		foreach ($this->rules as $key => $rules) {
             // For each of the rules for this field [Length]
 			foreach ($rules as $rule) {
                 // If the function returns false, 
-				if(!call_user_func_array(array('Validators', $rule['0']), array($this->input[$key], $rule['1']))) {
-                    // Add the error
-					$this->errors[$rule['0']] = $rule['1'];
+				if(!call_user_func(array('Validators', $rule), $this->input[$key])) {
+                    // Add the error with key as name of rule value are arguments
+					$this->errors[$key][] = $rule;
 				}
 			}
 		}
 
+		echo '<pre>';
+		print_r($this->errors);
+		echo '</pre>';
         // Return true if there are no errors
 		return $this->errors === array();
 	}

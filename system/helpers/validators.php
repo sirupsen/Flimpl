@@ -55,11 +55,7 @@ class Validators {
 	}
 
 	public static function required($val) {
-		if ($val) {
-			return true;
-		} else {
-			return false;
-		}
+		return (bool) $val;
 	}
 
 	public static function length($val, array $length) {
