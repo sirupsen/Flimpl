@@ -16,7 +16,7 @@ class Sample extends Controller {
 
 		$val->addRule('mail', 'email', 'required');
 		$val->addRule('website', 'url', 'required');
-		$val->addRule('username', 'length[3,10]', 'required');
+		$val->addRule('username', 'required');
 
 		$this->validation = $val->validate();
 	}

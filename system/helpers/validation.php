@@ -40,9 +40,6 @@ class Validation {
 			}
 		}
 
-		echo '<pre>';
-		print_r($this->errors);
-		echo '</pre>';
         // Return true if there are no errors
 		return $this->errors === array();
 	}
