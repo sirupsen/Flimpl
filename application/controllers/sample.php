@@ -6,18 +6,22 @@ class Sample extends Controller {
 		$this->other = 'sister';
 		$this->link = 'sample/test';
 
+		// Lets make some data to validate
 		$data = array(
 			'mail' => 'sirup@sirupsen.dk',
 			'website' => 'http://sirupsen.dk',
 			'username' => 'Sirupsen'
 		);
 
+		// New validation with this data
 		$val = new Validation($data);
 
+		// Lets add some rules
 		$val->addRule('mail', 'email', 'required');
 		$val->addRule('website', 'url', 'required');
 		$val->addRule('username', 'required');
 
+		// Did it work? Inject true|false into $validation
 		$this->validation = $val->validate();
 	}
 	
