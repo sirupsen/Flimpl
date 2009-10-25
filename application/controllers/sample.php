@@ -5,6 +5,20 @@ class Sample extends Controller {
 		$this->task = 'Do your homework, son!';
 		$this->other = 'sister';
 		$this->link = 'sample/test';
+
+		$data = array(
+			'mail' => 'sirup@sirupsen.dk',
+			'website' => 'http://sirupsen.dk',
+			'username' => 'Sirupsen'
+		);
+
+		$val = new Validation($data);
+
+		$val->addRule('mail', 'email', 'required');
+		$val->addRule('website', 'url', 'required');
+		$val->addRule('username', 'required');
+
+		$this->validation = $val->validate();
 	}
 	
 	public function test($item) {

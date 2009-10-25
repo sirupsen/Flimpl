@@ -10,7 +10,7 @@
  *
  */
 
-class Validate {
+class Validators {
 
 	/*
 	 *
@@ -21,9 +21,10 @@ class Validate {
 	 *
 	 */
 
-	public function email($email) {
-		if(!preg_match ("/^[\w\.-]{1,}\@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]+$/", $email))
+	public static function email($email) {
+		if(!preg_match ("/^[\w\.-]{1,}\@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]+$/", $email)) {
 			return false;
+		}
 
 		list($prefix, $domain) = split("@",$email);
 
@@ -45,11 +46,32 @@ class Validate {
 	 *
 	 */
 
-	public function url($val) {
+	public static function url($val) {
 		$ereg = "((https?|ftp|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
 		if(!eregi($ereg,$val))
 			return false;
 
 		return true;	
+	}
+
+	public static function required($val) {
+		return (bool) $val;
+	}
+
+	public static function length($val, array $length) {
+		$size = strlen($val);
+		$return = false;
+
+		if (count($length) > 1) {
+			list ($min, $max) = $length;
+
+			if ($size >= $min AND $size <= $max) {
+				$return = true;
+			}
+		} else {
+			$return = ($size === (int) $length[0]);
+		}
+
+		return $return;
 	}
 }
