@@ -1,6 +1,5 @@
 <?php
 final class Flimpl {
-
 	// Static variable to wield files in cores directory
 	private static $cores;
 
