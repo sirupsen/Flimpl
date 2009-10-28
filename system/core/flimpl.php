@@ -79,14 +79,6 @@ final class Flimpl {
 
 			// Call method, and throw parameters to it
 			call_user_func_array(array($dispatch, $action), $param);
-
-			// Loaded with success!
-			if ($config['dev_debug'] == 'true') {
-				echo 'Method <b>' . $action . '</b> on <b>' . $class . '</b> instanced<br/>';
-			}
-		// If there's no method, include the view file only
-		} elseif (file_exists(APPPATH . 'views/' . $controller . '/' . $action . '.php')) {
-				require(APPPATH . 'views/' . $controller . '/' . $action . '.php');
 		// 404
 		} else {
 			require(PBLPATH . 'misc/errors/404.php');
@@ -109,44 +101,18 @@ final class Flimpl {
 		// Class requested exists in the core folder, include it from here
 		if (in_array($class, self::$cores)) {
 			require(SYSPATH . 'core/' . $class);
-			
-			// If we are development debugging, tell dev. we are loading
-			if(self::$registry->config['dev_debug']) {
-				echo "Loaded Core <b>$class</b>!<br/>";
-			}
-
 		// If class is helper, include it from here
 		} elseif (in_array($class, self::$helpers)) {
 			require(SYSPATH . 'helpers/' . $class);
-
-			if(self::$registry->config['dev_debug']) {
-				echo "Loaded Helper <b>$class</b>!<br/>";
-			}
-		
 		} elseif (in_array($class, self::$library)) {
 			require(SYSPATH . 'libraries/' . $class);
-
-			if(self::$registry->config['dev_debug']) {
-				echo "Loaded Library <b>$class</b>!<br/>";
-			}
-		
 		// Else, it has to be a controller
 		} elseif (file_exists('../application/controllers/' . $class)) {
 			require(APPPATH . 'controllers/' . $class);
-
-			if(self::$registry->config['dev_debug']) {
-				echo "Loaded Controller <b>$class</b>!<br/>";
-			}
-
 		// 404
 		} else {
-			if(self::$registry->config['dev_debug']) {
-				echo "Couldn't find <b>$class</b>!<br/>";
-			}
-
 			// Get 404 page
 			require(PBLPATH . 'misc/errors/404.php');
-			// Exit, no more to see than this custom page
 			exit;
 		}
 	}
@@ -191,7 +157,7 @@ final class Flimpl {
 	 */
 
 	public static function getConfiguration() {
-		require(SYSPATH . 'config/config.php');
+		require(APPPATH . 'config/config.php');
 
 		return $config;
 	}
