@@ -18,9 +18,6 @@ class Database {
 
 	/* Wields the last query executed */
 	public $last_query;
-
-	/* Are we debugging? */
-	private $debug;
 	
 	/*
 	 *
@@ -35,10 +32,9 @@ class Database {
 	 */
 
 	public function __construct($config) {
-		if ($config['debug'])
-			$this->debug = true;
+		$access = Config::get('database');
 
-		$this->mysqli = new Mysqli($config['db_host'], $config['db_user'], $config['db_pass'], $config['db_database']);
+		$this->mysqli = new Mysqli($access['host'], $access['username'], $access['password'], $access['database']);
 
 		if ($this->mysqli->connect_error) {
 			throw new Exception("<b>Database:</b> Failed to connect to databas $this->mysqli->connect_error");
@@ -101,7 +97,7 @@ class Database {
 
 		// Oops, error.
 		if (!$query) {
-			if ($this->debug == TRUE) {
+			if (Config::get('debug')) {
 				throw new Exception('<b>Database:</b> Not able to select (' . $this->mysqli->error . ')');	
 			}
 	
@@ -322,7 +318,7 @@ class Database {
 		$this->last_query = '<b>Insert Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE) {
+			if (Config::get('debug')) {
 				throw new Exception('<b>Database:</b> Not able to insert (' . $this->mysqli->error . ')' . $this->last_query);	
 			}
 	
@@ -346,7 +342,7 @@ class Database {
 		$this->last_query = '<b>Update Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE) {
+			if (Config::get('debug')) {
 				throw new Exception('<b>Database:</b> Not able to update (' . $this->mysqli->error . ')' . $this->last_query);	
 			}
 	
@@ -372,7 +368,7 @@ class Database {
 		$this->last_query = '<b>Delete Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE) {
+			if (Config::get('debug')) {
 				throw new Exception('<b>Database:</b> Not able to delete (' . $this->mysqli->error . ')' . $this->last_query);	
 			}
 	
@@ -393,7 +389,7 @@ class Database {
 		$this->last_query = '<b>Execute Query:</b> ' . $query;
 
 		if (!$this->mysqli->query($query)) {
-			if ($this->debug == TRUE) {
+			if (Config::get('debug')) {
 				throw new Exception('<b>Database:</b> Not able to execute file (' . $this->mysqli->error . ')' . $this->last_query);	
 			}
 	

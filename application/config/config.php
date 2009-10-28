@@ -8,14 +8,16 @@
  * @default 	true
  *
  */
-
-$config['debug'] = true;
+Config::set('debug', true);
 
 // Database configuration
-$config['db_host'] 		= 'localhost'; // Host? Usually "localhost"
-$config['db_user'] 		= 'root'; // Username? Locally this is usually "root"
-$config['db_pass'] 		= ''; // Password?
-$config['db_database'] 	= 'db'; // Database we're using
+Config::set('database', array(
+		'host'     => 'localhost',
+		'username' => 'root',
+		'password' => '',
+		'db'       => 'db' 
+	)
+);
 
 /*
  *

@@ -66,14 +66,6 @@ final class Template {
 	*/
 
 	public function __toString() {
-		if (self::$registry->config['dev_debug']) {
-			echo '<br/>Variables pushed to <b>Template</b><br/>';
-			echo '<pre>';
-				print_r($this->data);
-			echo '</pre>';
-			echo 'Now requiring <b>template files..</b><br/>';
-		}
-
 		/*
 		 *
 		 * Makes our configuration array and our data array into
@@ -95,11 +87,6 @@ final class Template {
 		include(self::getPart('top'));
 		require(self::$template);
 		include(self::getPart('bottom'));
-
-		// Bye!
-		if (self::$registry->config['dev_debug']) {
-			echo 'Destroyed <b>Template</b><br/>';
-		}
 	}
 
 	/*
@@ -150,10 +137,6 @@ final class Template {
 			}
 		} else {
 				throw new Exception('Template file for class ' . self::$controller . ' not created.');
-		}
-
-		if (self::$registry->config['dev_debug']) {
-			echo 'Instanced <b>Template</b><br/>';
 		}
 	}
 }
