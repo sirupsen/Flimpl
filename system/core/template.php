@@ -9,16 +9,14 @@
 
 final class Template {
 	// Path to view file
-	private static $template;
+	private $template;
 	// Variables to be pushed to the template
 	private $data;
-	// Wields the instance of the registry
-	private static $registry;
 
 	// Name of controller [Class]
-	private static $controller;
+	private $controller;
 	// Name of action [Method]
-	private static $action;
+	private $action;
 
 	/*
 	*
@@ -31,12 +29,9 @@ final class Template {
 	*/
 
 	public function __construct($controller, $action) {	
-		// Get registry instance
-		self::$registry = Registry::getinstance();
-
 		// Make these available everywhere
-		self::$controller = $controller;
-		self::$action = $action;
+		$this->controller = $controller;
+		$this->action = $action;
 
 		// Sets the variable $template to be the path to the
 		// most relevant view file
@@ -84,9 +79,9 @@ final class Template {
 		 *
 		 */
 
-		include(self::getPart('top'));
-		require(self::$template);
-		include(self::getPart('bottom'));
+		include($this->getPart('top'));
+		require($this->template);
+		include($this->getPart('bottom'));
 	}
 
 	/*
@@ -96,12 +91,12 @@ final class Template {
 	 *
 	 */
 
-	private static function getPart($part) {
-		$view_path = APPPATH . 'views/' . self::$controller . '/';	
+	private function getPart($part) {
+		$view_path = APPPATH . 'views/' . $this->controller . '/';	
 
 		// If a custom header/bottom for this specific file is found, load it
-		if (file_exists($view_path . $part . '.' . self::$action . '.php')) {
-		   return $view_path . $part . '.' . self::$action . '.php';
+		if (file_exists($view_path . $part . '.' . $this->action . '.php')) {
+		   return $view_path . $part . '.' . $this->action . '.php';
 		// elseIf a custom header/bottom for this specific controller is found, load it
 		} elseif (file_exists($view_path . $part . '.php')) {
 			return $view_path . $part . '.php';
@@ -118,25 +113,25 @@ final class Template {
 	 *
 	 */
 
-	private static function viewFile() {
-		$method_view = APPPATH . 'views/' . self::$controller . '/' . self::$action . '.php';
+	private function viewFile() {
+		$method_view = APPPATH . 'views/' . $this->controller . '/' . $this->action . '.php';
 
-		$index = APPPATH. 'views/' . self::$controller . '/' . 'index.php';
+		$index = APPPATH. 'views/' . $this->controller . '/' . 'index.php';
 
 		// If there's a view file for the specific method, use it
 		if (file_exists($method_view)) {
-			self::$template = $method_view;
+			$this->template = $method_view;
 		// Else use the view file for the index method
 		} elseif (file_exists($index)) {
 			// Check if the method exists
-			if (method_exists(self::$controller, self::$action)) {
-				self::$template = $index;
+			if (method_exists($this->controller, $this->action)) {
+				$this->template = $index;
 			} else {
 				require(PBLPATH . 'misc/errors/404.php');
 				exit;
 			}
 		} else {
-				throw new Exception('Template file for class ' . self::$controller . ' not created.');
+				throw new Exception('Template file for class ' . $this->$controller . ' not created.');
 		}
 	}
 }
