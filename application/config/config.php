@@ -15,18 +15,6 @@ Config::set('database', array(
 		'host'     => 'localhost',
 		'username' => 'root',
 		'password' => '',
-		'db'       => 'db' 
+		'database' => 'db' 
 	)
 );
-
-/*
- *
- * Dev debug is a mode for advanced debugging, giving you a
- * message each time something loads, making it easier to
- * troubleshoot what might be wrong!
- *
- * @default 	false
- *
- */
-
-$config['dev_debug'] = false;

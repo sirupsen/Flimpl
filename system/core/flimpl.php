@@ -36,12 +36,14 @@ final class Flimpl {
 		self::$helpers = scandir(SYSPATH . 'helpers');
 		self::$library = scandir(SYSPATH . 'libraries');
 
+		// Load configuration
+		self::loadConfig();
+
 		// Instance registry
 		self::$registry = Registry::getInstance();
 
-		// Instance DB into registry
-		self::$registry->db = new Database(self::getConfiguration());
-		self::$registry->config = self::getConfiguration();
+		// Load database into registry
+		self::$registry->database = new Database;
 	}
 
 	/*
@@ -156,10 +158,8 @@ final class Flimpl {
 	 *
 	 */
 
-	public static function getConfiguration() {
+	public static function loadConfig() {
 		require(APPPATH . 'config/config.php');
-
-		return $config;
 	}
 
 }

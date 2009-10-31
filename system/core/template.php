@@ -35,7 +35,7 @@ final class Template {
 
 		// Sets the variable $template to be the path to the
 		// most relevant view file
-		self::viewFile();
+		$this->viewFile();
 	}
 
 	/*

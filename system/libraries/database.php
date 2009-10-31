@@ -31,7 +31,7 @@ class Database {
 	 *
 	 */
 
-	public function __construct($config) {
+	public function __construct() {
 		$access = Config::get('database');
 
 		$this->mysqli = new Mysqli($access['host'], $access['username'], $access['password'], $access['database']);
