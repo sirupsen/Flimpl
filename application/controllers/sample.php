@@ -24,12 +24,4 @@ class Sample extends Controller {
 		// Did it work? Inject true|false into $validation
 		$this->validation = $val->validate();
 	}
-	
-	public function test($item) {
-		$this->title = 'Ohai!';
-		$this->task = 'Cook me a meal, girl!';
-		$this->also = 'also';
-		$this->other = 'brother';
-		$this->link = 'sample/';
-	}
 }
