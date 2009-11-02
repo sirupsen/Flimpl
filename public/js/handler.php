@@ -29,8 +29,6 @@ if (!$action) {
 	if (!method_exists($object, $action)) {
 		throw new Exception('<b>Handler:</b>' . $_REQUEST['action'] . ' method not found in ' . $_REQUEST['class']);
 	// If we're querying directly to the database
-	} elseif ($class == 'Database') {
-		$registry->db->$action($_REQUEST);
    	} else {
 		$object->$action($_REQUEST);
 	}
