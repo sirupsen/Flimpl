@@ -25,9 +25,9 @@ $action = $_REQUEST['action'];
 if (!$action) {
 	throw new Exception("<b>Handler:</b> No action found");
 } else {
-	// Checks if the Method exists
-	if (!method_exists($object, $action)) {
-		throw new Exception('<b>Handler:</b>' . $_REQUEST['action'] . ' method not found in ' . $_REQUEST['class']);
+	// Checks if the Method on Object is callable
+	if (!is_callable(array($object, $action))) {
+		throw new Exception('<b>Handler:</b>' . $_REQUEST['action'] . ' method not found on object <b>' . $_REQUEST['class'] . '</b>');
 	// If we're querying directly to the database
    	} else {
 		$object->$action($_REQUEST);
