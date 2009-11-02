@@ -4,6 +4,8 @@ Flimpl is an extremely simple open source VC-Framework (Viewer, Controller - No 
 
 The reason why no model is used, is because, for me, it's one extra file where you just from time to time add only one line. This is also over-structered for me, and therefore I builded my design without a model.
 
+If you've used Flimpl, or have gotten inspiration from it - please tell me! I'd love to hear from you. :)
+
 Author: Sirupsen
 
 Website: http://sirupsen.dk/
