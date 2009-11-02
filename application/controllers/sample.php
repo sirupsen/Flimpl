@@ -1,10 +1,9 @@
 <?php
 class Sample extends Controller {
 	public function index() {
+		// Set the title of the page
 		$this->title = 'Hello there, I\'m a view file!';
-		$this->task = 'Do your homework, son!';
-		$this->other = 'sister';
-		$this->link = 'sample/test';
+		$this->variable = 'Hello, I\'m a variable from the controller!';
 
 		// Lets make some data to validate
 		$data = array(
@@ -12,6 +11,9 @@ class Sample extends Controller {
 			'website' => 'http://sirupsen.dk',
 			'username' => 'Sirupsen'
 		);
+
+		// Publish this data so we can display it
+		$this->data = $data;
 
 		// New validation with this data
 		$val = new Validation($data);
