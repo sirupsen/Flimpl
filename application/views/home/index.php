@@ -3,7 +3,3 @@
 <p>If you enjoy working with Flimpl, I'd love <a href="http://sirupsen.dk#contact" title="Go to the contact page at sirupsen.dk">to hear from you!</a>. If you have any ideas, <a href="http://sirupsen.dk#contact" title="Go to the contact page at sirupsen.dk">don't hestiate to contact me.</a> If you make any changes, or improvements please submit the changes to Github.</p>
 
 <p>For the latest updates, pull from the <a href="http://github.com/Sirupsen/Flimpl/" title="Go to the Github repo for Flimpl">the Github repo</a>.</p>
-
-<p>Let's go ahead and do some simple testing. <a href="#" id="test_database">Click me</a> to test if the database is functioning correctly. To test out how the viewers and controllers works, go ahead and check out <a href="sample">this sample page.</a></p>
-
-<p id="database_response" class="msg hidden"></p>
