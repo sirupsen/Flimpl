@@ -159,7 +159,14 @@ final class Flimpl {
 	 */
 
 	public static function loadConfig() {
-		require(APPPATH . 'config/config.php');
+		// Scan config directory
+		$configs = scandir(APPPATH . 'config');
+		// Include each of them
+		foreach ($configs as $file) {
+			if ($file != '.' && $file != '..') {
+				require(APPPATH . 'config/' . $file);
+			}
+		}
 	}
 
 }
