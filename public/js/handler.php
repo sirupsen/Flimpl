@@ -11,10 +11,13 @@
  *
  */
 
+// Prepare environment
 require('../../library/bootstrap.php');
 
+// Classes have first letter big
 $class = ucfirst($_REQUEST['class']);
 
+// Instance class
 $object = new $class;
 $action = $_REQUEST['action'];
 
