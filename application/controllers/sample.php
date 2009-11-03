@@ -23,7 +23,8 @@ class Sample extends Controller {
 		$val->addRule('website', 'url', 'required');
 		$val->addRule('username', 'required');
 
-		// Did it work? Inject true|false into $validation
+		// Did it work? Set true|false into $validation, depending
+		// on if it was a sucess or not
 		$this->validation = $val->validate();
 	}
 }
