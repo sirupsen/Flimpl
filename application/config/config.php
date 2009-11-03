@@ -1,13 +1,7 @@
 <?php
-/*
- *
- * Debug mode is a mode you can turn on when you are working
- * locally, just developping. You want detailed errors to be
- * showed, and not logged.
- *
- * @default 	true
- *
- */
+// Debug mode, showing errors - not logging them, and other
+// functions which are good when you are developping in a loca
+// environment.
 Config::set('debug', true);
 
 // Database configuration
