@@ -1,13 +1,12 @@
 <?php
 class Controller {
-	// Wields instace of registry
+	// Instace of registry
 	protected $registry;
 
 	// Template instance
 	protected $template;
 
-	// Carrying instance of DB instead of having to get it manually
-	// from the registry each time, cutting off one link
+	// Wielding DB instance
 	protected $db;
 
 	public function __construct($controller, $function) {
@@ -20,10 +19,6 @@ class Controller {
 		// Make it easier to access the database by cutting off
 		// one link [->registry]
 		$this->db = $this->registry->db;
-
-		if ($this->registry->config['dev_debug']) {
-			echo "Instanced <b>main controller</b><br/>";
-		}
 	}
 
 	/*
@@ -42,7 +37,7 @@ class Controller {
 
 	/*
 	 *
-	 * When our controller is destructed, write out our template
+	 * When our controller is destructed, write out the template
 	 *
 	 */
 
