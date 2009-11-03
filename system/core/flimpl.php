@@ -161,8 +161,9 @@ final class Flimpl {
 	public static function loadConfig() {
 		// Scan config directory
 		$configs = scandir(APPPATH . 'config');
-		// Include each of them
+		// Include each file
 		foreach ($configs as $file) {
+			// Don't include ".." and "." file
 			if ($file != '.' && $file != '..') {
 				require(APPPATH . 'config/' . $file);
 			}
