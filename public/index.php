@@ -14,7 +14,7 @@ DEFINE("PBLPATH", realpath('../public') . '/');
 // System path
 DEFINE("SYSPATH", realpath('../system') . '/');
 
-// Loading up the bootstrap
+// Loading up the bootstrap which prepares our environment
 require(SYSPATH . 'core/bootstrap.php');
 
 // Run controller
