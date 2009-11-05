@@ -127,8 +127,7 @@ final class Template {
 			if (method_exists($this->controller, $this->action)) {
 				$this->template = $index;
 			} else {
-				require(PBLPATH . 'misc/errors/404.php');
-				exit;
+				Error::load('404');
 			}
 		} else {
 				throw new Exception('Template file for class ' . $this->$controller . ' not created.');

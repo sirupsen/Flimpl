@@ -21,20 +21,20 @@ final class Flimpl {
 	 */
 
 	public static function setup() {
-		// Set autoloader
-		spl_autoload_register(array('Flimpl', 'auto_load'));
-	
-		// Set error handler
-		set_error_handler(array('Flimpl', 'error_handler'));	
-
-		// Set exception handler
-		set_exception_handler(array('Flimpl', 'exception_handler'));
-
 		// Scan directories, used by the auto loader only scanned once
 		// so we didn't have to scan each time we load a class [Performance]
 		self::$cores = scandir(SYSPATH . 'core');
 		self::$helpers = scandir(SYSPATH . 'helpers');
 		self::$library = scandir(SYSPATH . 'libraries');
+
+		// Set autoloader
+		spl_autoload_register(array('Flimpl', 'auto_load'));
+	
+		// Set error handler
+		set_error_handler(array('Error', 'error_handler'));	
+
+		// Set exception handler
+		set_exception_handler(array('Error', 'exception_handler'));
 
 		// Load configuration
 		self::loadConfig();
@@ -83,8 +83,7 @@ final class Flimpl {
 			call_user_func_array(array($dispatch, $action), $param);
 		// 404
 		} else {
-			require(PBLPATH . 'misc/errors/404.php');
-			exit;
+			Error::load('404');
 		}
 	}
 
@@ -113,41 +112,8 @@ final class Flimpl {
 			require(APPPATH . 'controllers/' . $class);
 		// 404
 		} else {
-			// Get 404 page
-			require(PBLPATH . 'misc/errors/404.php');
-			exit;
+			Error::load('404');
 		}
-	}
-
-	/*
-	 *
-	 * Exception handler to catch uncatched exceptions.
-	 *
-	 * @param 	object 	$exception 	Exception object
-	 * @doc 	http://php.net/manual/function.set-exception-handler.php
-	 *
-	 */
-
-	public static function exception_handler($exception) { ?>
-		<div class="error">
-			<?php echo $exception->getMessage(); ?>
-		</div>
-		<?php
-	}
-
-	/*
-	 *
-	 * Error handler, uhm.. for handling errors!
-	 *
-	 * @param 	string 	$errno 		Unique number for error
-	 * @param 	string 	$errstr 	Error message
-	 * @param 	string 	$errfile 	In what file did we encounter the error
-	 * @param 	string 	$errline 	In what line did we encounter the error
-	 *
-	 */
-
-	public static function error_handler($errno, $errstr, $errfile, $errline) {
-		echo $errorstr;
 	}
 
 	/*
