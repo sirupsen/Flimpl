@@ -51,7 +51,7 @@ final class Flimpl {
 		// Explode all the parameters from the URL into chunks
 		$url = explode('/', $_GET['url']);
 
-		if (empty($url[0]) || $url[0] = '/') {
+		if (empty($url[0]) || $url[0] == '/') {
 			// If the URL is empty, use the home controller
 			$url[0] = 'home';
 		}
@@ -68,7 +68,8 @@ final class Flimpl {
 		$controller = new $url[0];
 
 		// If the action [Method] on the controller [Class] exists:
-		if (is_callable($url[0], $url[1])) {
+		if (is_callable(array($controller, $url[1]))) {
+
 			// Load the template for the controller
 			$controller->template = new Template($url[0], $url[1]);
 
