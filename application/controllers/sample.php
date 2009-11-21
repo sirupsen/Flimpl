@@ -1,9 +1,9 @@
 <?php
-class Sample {
+class Sample extends Controller {
 	public function index() {
 		// Set the title of the page
-		$this->tamplate->title = 'Hello there, I\'m a view file!';
-		$this->template->variable = 'Hello, I\'m a variable from the controller!';
+		$this->title = 'Hello there, I\'m a view file!';
+		$this->variable = 'Hello, I\'m a variable from the controller!';
 
 		// Lets make some data to validate
 		$data = array(
@@ -13,7 +13,7 @@ class Sample {
 		);
 
 		// Publish this data so we can display it
-		$this->template->data = $data;
+		$this->data = $data;
 
 		// New validation with this data
 		$val = new Validation($data);
@@ -25,6 +25,6 @@ class Sample {
 
 		// Did it work? Set true|false into $validation, depending
 		// on if it was a sucess or not
-		$this->template->validation = $val->validate();
+		$this->validation = $val->validate();
 	}
 }

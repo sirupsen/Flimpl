@@ -12,3 +12,9 @@ Config::set('database', array(
 		'database' => 'db' 
 	)
 );
+
+// What should we autoload?
+Config::set('autoload', array(
+	'database'
+	)
+);

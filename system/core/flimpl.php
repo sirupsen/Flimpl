@@ -65,17 +65,10 @@ final class Flimpl {
 		}
 
 		// Instance controller 
-		$controller = new $url[0];
+		$controller = new $url[0]($url[0], $url[1]);
 
 		// If the action [Method] on the controller [Class] exists:
 		if (is_callable(array($controller, $url[1]))) {
-
-			// Load the template for the controller
-			$controller->template = new Template($url[0], $url[1]);
-
-			// Load the database into the controller
-			$controller->database = new Database;
-
 			// Call method, and throw arguments to it
 			call_user_func_array(array($controller, $url[1]), $args);
 		// 404
@@ -132,5 +125,4 @@ final class Flimpl {
 			}
 		}
 	}
-
 }

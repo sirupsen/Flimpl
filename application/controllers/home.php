@@ -9,10 +9,10 @@
  *
  */
 
-class Home {
+class Home extends Controller {
 	// Index controller
 	public function index() {
 		// Set title of page
-		$this->template->title = 'Flimpl - Framework Simple';
+		$this->title = 'Flimpl - Framework Simple';
 	}
 }
