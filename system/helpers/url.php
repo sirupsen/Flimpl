@@ -8,4 +8,7 @@ class Url {
 		return 'http://' . $_SERVER['HTTP_HOST'] . '/' . $dirs['1'] . '/';
 	}
 
+	public static function redirect($url='') {
+		header('Location: ' . Url::site() . $url);
+	}
 }
