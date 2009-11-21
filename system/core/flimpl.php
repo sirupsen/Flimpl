@@ -38,12 +38,6 @@ final class Flimpl {
 
 		// Load configuration
 		self::loadConfig();
-
-		// Instance registry
-		self::$registry = Registry::getInstance();
-
-		// Load database into registry
-		self::$registry->database = new Database;
 	}
 
 	/*
@@ -55,32 +49,34 @@ final class Flimpl {
 
 	public static function run() {
 		// Explode all the parameters from the URL into chunks
-		$param = explode('/', $_GET['url']);
+		$url = explode('/', $_GET['url']);
 
-		// Controller [Class] is the first parameter
-		$controller = $param['0'];
+		if (empty($url[0]) || $url[0] = '/') {
+			// If the URL is empty, use the home controller
+			$url[0] = 'home';
+		}
 
-		// Remove the first entry from the array [Controller]
-		array_shift($param);
+		if (!empty($url[1])) {
+			// If we have an action, get the arguments for it
+			$args = array_slice($url, 2);
+		} else {
+			// If there's no action defined use index()
+			$url[1] = 'index';
+		}
 
-		// Get the new first entry, the action [Method]
-		$action = $param['0'];
-
-		// Leaving only parameters behind
-		array_shift($param);
-
-		// If no action is defined, use the index action [Index method]
-		if (!$action) $action = 'index';
-		// If no controller is defined [Url is blank], use homepage
-		if (!$controller) $controller = 'home';
+		// Instance controller 
+		$controller = new $url[0];
 
 		// If the action [Method] on the controller [Class] exists:
-		if ((int)method_exists($controller, $action)) {
-			// Instance controller 
-			$dispatch = new $controller($controller, $action);
+		if (is_callable($url[0], $url[1])) {
+			// Load the template for the controller
+			$controller->template = new Template($url[0], $url[1]);
 
-			// Call method, and throw parameters to it
-			call_user_func_array(array($dispatch, $action), $param);
+			// Load the database into the controller
+			$controller->database = new Database;
+
+			// Call method, and throw arguments to it
+			call_user_func_array(array($controller, $url[1]), $args);
 		// 404
 		} else {
 			Error::load('404');

@@ -60,7 +60,7 @@ final class Template {
 	*
 	*/
 
-	public function __toString() {
+	public function __destruct() {
 		/*
 		 *
 		 * Makes our configuration array and our data array into
