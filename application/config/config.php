@@ -12,9 +12,3 @@ Config::set('database', array(
 		'database' => 'db' 
 	)
 );
-
-// Which libraries should we autoload?
-Config::set('autoload_libraries', array(
-	// 'database'
-	)
-);
