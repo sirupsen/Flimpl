@@ -64,6 +64,9 @@ final class Flimpl {
 			$url[1] = 'index';
 		}
 
+		// Require the controller file
+		require('../application/controllers/' . $url[0] . '.php');
+
 		// Instance controller 
 		$controller = new $url[0]($url[0], $url[1]);
 
@@ -98,9 +101,6 @@ final class Flimpl {
 		} elseif (in_array($class, self::$library)) {
 			require(SYSPATH . 'libraries/' . $class);
 		// Else, it has to be a controller
-		} elseif (file_exists('../application/controllers/' . $class)) {
-			require(APPPATH . 'controllers/' . $class);
-		// 404
 		} else {
 			Error::load('404');
 		}
