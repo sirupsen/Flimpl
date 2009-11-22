@@ -40,21 +40,42 @@ class Url {
 		header('Location: ' . Url::site() . $url);
 	}
 
+	/*
+	 *
+	 * The full url of the link we're currently on, i.e:
+	 *    http://flimpl.com/sample/test/12
+	 *
+	 * @return    string    ...    Full url for current page
+	 *
+	 */
+
 	public static function current() {
 		return self::site() . implode(self::parameter(), '/');
 	}
 
+	/*
+	 *
+	 * Returns a specific or all parameters passed.
+	 *
+	 * @param   mixed    $segment    Which part of the url? [I.e. 1]    
+	 * @return 	string   ...         Parameter
+	 *
+	 */
+
 	public static function parameter($segment='all') {
 		static $url;
 
+		// If static $url is currently empty, get the current parameters
 		if (!$url) {
 			$url = explode('/', $_GET['url']);
 		}
 
+		// If all are requested, return entire thing
 		if ($segment == 'all') {
 			return $url;
 		}
 
+		// Return the specific segment of the parameter
 		return $url[$segment];
 	}
 }
