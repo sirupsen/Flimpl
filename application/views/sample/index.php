@@ -1,4 +1,4 @@
-<p>This is a view file, following is a variable pushed from the controller: 
+<p>This is a view file, following is a variable pushed from the controller:<br/>
 <b><?php echo $variable;?></b></p>
 
 <p>Here we have some data:</p>
