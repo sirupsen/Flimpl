@@ -34,9 +34,9 @@ class Config {
 		// Is the configuration even set?
 		if (isset(self::$settings[$name])) {
 			return self::$settings[$name];
-		} else {
-			return false;
-		}
+		} 
+		
+		return false;
 	}
 }
 ?>
