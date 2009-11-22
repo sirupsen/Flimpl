@@ -13,8 +13,8 @@ Config::set('database', array(
 	)
 );
 
-// What should we autoload?
-Config::set('autoload', array(
-	'database'
+// Which libraries should we autoload?
+Config::set('autoload_libraries', array(
+	// 'database'
 	)
 );

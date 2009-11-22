@@ -2,10 +2,9 @@
 /*
  *
  * The home controller is the controller for the index
- * f.e it would be accesible from:
- * http://flimpl.com/ but also
- * http://flimpl.com/home
- *
+ * so it's the controller for the root.
+ * 
+ * @access 	/
  *
  */
 

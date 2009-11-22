@@ -49,7 +49,7 @@ final class Flimpl {
 
 	public static function run() {
 		// Explode all the parameters from the URL into chunks
-		$url = explode('/', $_GET['url']);
+		$url = Url::parameter();
 
 		if (empty($url[0]) || $url[0] == '/') {
 			// If the URL is empty, use the home controller

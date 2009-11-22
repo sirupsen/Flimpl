@@ -1,4 +1,12 @@
 <?php
+/*
+ *
+ * Sample controller, to show off some of Flimpls features
+ * you can access this from:
+ *
+ * @access {root}/sample
+ *
+ */
 class Sample extends Controller {
 	public function index() {
 		// Set the title of the page
