@@ -6,7 +6,7 @@ class Controller {
 
 	public function __construct($controller, $method) {
 		$this->template = new Template($controller, $method);
-		$this->db = new Database;
+		$this->db = Database::instance();
 		$this->input = Input::instance();
 	}
 

@@ -19,6 +19,16 @@ class Database {
 	/* Wields the last query executed */
 	public $last_query;
 	
+	protected static $instance;
+	
+	public static function instance() {
+		if (!self::$instance) {
+			return new self;
+		}
+
+		return self::$instance;
+	}
+
 	/*
 	 *
 	 * Constructer for the class which connects to the database, due to
@@ -39,6 +49,8 @@ class Database {
 		if ($this->mysqli->connect_error) {
 			throw new Exception("<b>Database:</b> Failed to connect to databas $this->mysqli->connect_error");
 		}
+
+		self::$instance = $this;
 	}
 
 	/*
