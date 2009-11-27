@@ -36,6 +36,16 @@ class Controller {
 
 		// Create/Get the instance of Input, cleans all $_POST data
 		$this->input = Input::instance();
+
+		// Model location
+		$model = APPPATH . 'models/' . $controller . '.php';
+
+		// Does the model file exist?
+		if (file_exists($model)) {
+			// Include it and make it available
+			require($model);
+			$this->model = new $controller;
+		}
 	}
 
 	/*
