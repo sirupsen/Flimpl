@@ -64,9 +64,9 @@ final class Flimpl {
 			$url[1] = 'index';
 		}
 
-		if ($controller = file_exists(APPPATH . 'controllers/' . $url[0] . '.php')) {
+		if (file_exists(APPPATH . 'controllers/' . $url[0] . '.php')) {
 			// Require the controller file
-			require($controller);
+			require(APPPATH . 'controllers/' . $url[0] . '.php');
 		} else {
 			Error::load('404');
 		}
