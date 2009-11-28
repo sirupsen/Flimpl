@@ -1,6 +1,8 @@
 <?php
-require('/var/www/Flimpl/system/helpers/benchmark.php');
+require('../system/helpers/benchmark.php');
+// This is the start of Flimpl
 Benchmark::start();
+
 /*
  *
  * Default timezone

@@ -83,6 +83,8 @@ final class Template {
 		require($this->template);
 		include($this->getPart('bottom'));
 
+			
+		// This is the end of Flimpl.
 		Benchmark::end();
 	}
 
