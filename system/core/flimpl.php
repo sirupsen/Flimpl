@@ -65,7 +65,7 @@ final class Flimpl {
 		}
 
 		// Require the controller file
-		require('../application/controllers/' . $url[0] . '.php');
+		require(APPPATH . 'controllers/' . $url[0] . '.php');
 
 		// Instance controller 
 		$controller = new $url[0]($url[0], $url[1]);
