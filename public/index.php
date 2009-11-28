@@ -1,4 +1,6 @@
 <?php
+require('/var/www/Flimpl/system/helpers/benchmark.php');
+Benchmark::start();
 /*
  *
  * Default timezone
