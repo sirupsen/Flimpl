@@ -84,6 +84,8 @@ final class Template {
 		include($this->getPart('bottom'));
 
 		Benchmark::end();
+
+		echo Benchmark::result();
 	}
 
 	/*
