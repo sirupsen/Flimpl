@@ -71,8 +71,10 @@ final class Flimpl {
 			Error::load('404');
 		}
 
+		$controller = $url[0] . '_Controller';
+
 		// Instance controller 
-		$controller = new $url[0]($url[0], $url[1]);
+		$controller = new $controller($url[0], $url[1]);
 
 		// If the action [Method] on the controller [Class] exists:
 		if (is_callable(array($controller, $url[1]))) {

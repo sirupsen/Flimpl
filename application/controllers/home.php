@@ -8,7 +8,7 @@
  *
  */
 
-class Home extends Controller {
+class Home_Controller extends Controller {
 	// Index controller
 	public function index() {
 		// Set title of page

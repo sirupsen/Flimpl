@@ -7,7 +7,8 @@
  * @access {root}/sample
  *
  */
-class Sample extends Controller {
+
+class Sample_Controller extends Controller {
 	public function index() {
 		// Set the title of the page
 		$this->title = 'Flimpl - Sample app.';

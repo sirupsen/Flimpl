@@ -50,6 +50,7 @@ class Controller {
 
 			$model = $controller . '_Model';
 		 	$this->model = new $model;
+			$this->this = $this->model;
 		 }
 	}
 
