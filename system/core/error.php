@@ -17,12 +17,12 @@ class Error {
 	 *
 	 */
 
-	public static function load($type, $where = 'Unknown') {
+	public static function load($type) {
 		if (file_exists(APPPATH . 'errors/' . $type . '.php')) {
 			require(APPPATH . 'errors/' . $type . '.php');
 			exit;
 		} else {
-			throw new Exception("Not able to find 404 file!");
+			throw new Exception("Not able to find error file for $type");
 		}
 	}
 
