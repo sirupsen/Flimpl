@@ -47,7 +47,7 @@ class Controller {
 		 if (file_exists($model)) {
 			$model = $controller . '_Model';
 		 	$this->model = new $model;
-			$this->this = $this->model;
+			$this->template->model = $this->model;
 		 }
 	}
 

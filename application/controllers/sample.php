@@ -12,7 +12,7 @@ class Sample_Controller extends Controller {
 	public function index() {
 		// Set the title of the page
 		$this->title = 'Flimpl - Sample app.';
-		$this->variable = 'I came from the controller! <br/> Random number: ' . rand(1,10);
+		$this->number = rand(1,10);
 
 		// Lets make some data to validate
 		$data = array(

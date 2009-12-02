@@ -1,5 +1,5 @@
-<p>This is a view file, following is a variable pushed from the controller:<br/>
-<b><?php echo $variable;?></b></p>
+<p>This is a view file, here's a random number from the controller:
+<b><?php echo $number;?></b></p>
 
 <p>Here we have some data:</p>
 
@@ -15,4 +15,5 @@
 <p>Let's check if it's valid data with some cool server-side validation! <br/>
 Was the data valid? <b><?php echo ($validation) ? 'Yes' : 'No'; ?></b></p>
 
-<p>This data came from our model: <b><?php echo $model_output; ?></b>
+<p>This data came from our model: <b> <?php echo $model->example(); ?> </b>
+
