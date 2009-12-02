@@ -17,7 +17,7 @@ class Error {
 	 *
 	 */
 
-	public static function load($type) {
+	public static function load($type, $where = 'Unknown') {
 		if (file_exists(APPPATH . 'errors/' . $type . '.php')) {
 			require(APPPATH . 'errors/' . $type . '.php');
 			exit;
