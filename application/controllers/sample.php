@@ -35,9 +35,5 @@ class Sample_Controller extends Controller {
 		// Did it work? Set true|false into $validation, depending
 		// on if it was a sucess or not
 		$this->validation = $val->validate();
-
-		// Take some stuff from the model and put it into the model_output
-		// variable.
-		$this->model_output = $this->model->example();
 	}
 }
