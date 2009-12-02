@@ -9,6 +9,9 @@ final class Flimpl {
 	// Static variable to wield all files in libraries directory
 	private static $library;
 
+	// Static variable to wield all files in model directory
+	private static $models;
+
 	// Static variable to hold our registry
 	private static $registry;
 
@@ -26,6 +29,7 @@ final class Flimpl {
 		self::$cores = scandir(SYSPATH . 'core');
 		self::$helpers = scandir(SYSPATH . 'helpers');
 		self::$library = scandir(SYSPATH . 'libraries');
+		self::$models = scandir(APPPATH . 'models');
 
 		// Set autoloader
 		spl_autoload_register(array('Flimpl', 'auto_load'));
@@ -96,7 +100,8 @@ final class Flimpl {
 	 */
 
 	public static function auto_load($class) {
-		$class = strtolower($class) . '.php'; 
+		$class = explode('_', $class);
+		$class = strtolower($class[0]) . '.php'; 
 
 		// Class requested exists in the core folder, include it from here
 		if (in_array($class, self::$cores)) {
@@ -104,6 +109,8 @@ final class Flimpl {
 		// If class is helper, include it from here
 		} elseif (in_array($class, self::$helpers)) {
 			require(SYSPATH . 'helpers/' . $class);
+		} elseif (in_array($class, self::$models)) {
+			require(APPPATH . 'models/' . $class);
 		} elseif (in_array($class, self::$library)) {
 			require(SYSPATH . 'libraries/' . $class);
 		// Else, it has to be a controller

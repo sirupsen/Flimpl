@@ -45,9 +45,6 @@ class Controller {
 
 		 // Does the model file exist?
 		 if (file_exists($model)) {
-		 	// Include it and make it available
-		 	require($model);
-
 			$model = $controller . '_Model';
 		 	$this->model = new $model;
 			$this->this = $this->model;
