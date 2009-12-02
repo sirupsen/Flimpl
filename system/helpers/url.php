@@ -1,5 +1,11 @@
 <?php
 
+/*
+ *
+ * Class to handle the URLs of the application
+ *
+ */
+
 class Url {
 
 	/*
