@@ -1,7 +1,20 @@
 <?php
+/*
+ *
+ * Class to handle input
+ *
+ */
+
 class Input {
+	// Instance of self
 	protected static $instance;
 	
+	/*
+	 *
+	 * Singleton
+	 *
+	 */
+
 	public static function instance() {
 		if (!self::$instance) {
 			return new self;
@@ -11,8 +24,17 @@ class Input {
 	}
 
 
+	/*
+	 *
+	 * When class is instanced, clear for XSS.
+	 *
+	 */
+
 	public function __construct() {
+		// Only run this once, so only run it if we are not instanced in
+		// the singleton yet.
 		if (!self::$instance) {
+			// If there's any $_POST data, clean it
 			if (is_array($_POST)) {
 				foreach($_POST as $key => $val) {
 					$_POST[$key] = $this->xssClean($val);
@@ -20,8 +42,19 @@ class Input {
 			}
 		}
 
+		// Singleton instance
 		self::$instance = $this;
 	}
+
+
+	/*
+	 *
+	 * Clean string for any XSS
+	 *
+	 * @param    string    $string    String to clean
+	 * @return   string    $string    Cleaned string
+	 *
+	 */
 
 	public function xssClean($string) {
 		// +----------------------------------------------------------------------+
