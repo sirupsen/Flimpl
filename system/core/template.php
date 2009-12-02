@@ -127,6 +127,7 @@ final class Template {
 			$this->template = $method_view;
 		// Else use the view file for the index method
 		} elseif (file_exists($index)) {
+			$this->template = $method_view;
 			// Check if the method exists
 			if (method_exists($this->controller, $this->action)) {
 				$this->template = $index;
@@ -134,7 +135,7 @@ final class Template {
 				Error::load('404');
 			}
 		} else {
-				throw new Exception('Template file for class ' . $this->$controller . ' not created.');
+			throw new Exception('Template file for class ' . $this->controller . ' not created.');
 		}
 	}
 }
