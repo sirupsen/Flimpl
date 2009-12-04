@@ -1,5 +1,5 @@
 <?php
-require('../helpers/benchmark.php');
+require('../system/helpers/benchmark.php');
 // This is the start of Flimpl
 Benchmark::start();
 

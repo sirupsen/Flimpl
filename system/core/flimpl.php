@@ -1,4 +1,12 @@
 <?php
+/*
+ *
+ * File for setting up the environment, and then
+ * run the controller. The core file for Flimpl to work,
+ * which instances and starts everything.
+ *
+ */
+
 final class Flimpl {
 	// Static variable to wield files in cores directory
 	private static $cores;
