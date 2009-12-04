@@ -1,4 +1,10 @@
 <?php
+/*
+ *
+ * Validation class, here in order to make server-side
+ * validation easier.
+ *
+ */
 
 class Validation {
     // Wielding all errors
