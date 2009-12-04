@@ -1,5 +1,5 @@
 <?php
-require('../system/helpers/benchmark.php');
+require('../helpers/benchmark.php');
 // This is the start of Flimpl
 Benchmark::start();
 
@@ -20,6 +20,7 @@ DEFINE("APPPATH", $root . '/application' . '/');
 DEFINE("PBLPATH", $root . '/public' . '/');
 // System path
 DEFINE("SYSPATH", $root . '/system' . '/');
+
 
 // Loading up the bootstrap which prepares our environment
 require(SYSPATH . 'core/bootstrap.php');
