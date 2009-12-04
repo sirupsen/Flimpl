@@ -123,7 +123,6 @@ final class Flimpl {
 			require(SYSPATH . 'libraries/' . $class);
 		// Else, it has to be a controller
 		} else {
-			echo $class;
 			Error::load('404');
 		}
 	}

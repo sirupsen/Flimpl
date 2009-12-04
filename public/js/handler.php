@@ -11,14 +11,29 @@
  *
  */
 
+// Faster to find the root path and then figure the others from there..
+$root = realpath('../../');
+
+// Application path
+DEFINE("APPPATH", $root . '/application' . '/');
+// Public path
+DEFINE("PBLPATH", $root . '/public' . '/');
+// System path
+DEFINE("SYSPATH", $root . '/system' . '/');
+
 // Prepare environment
-require('../../library/bootstrap.php');
+require(SYSPATH . 'core/bootstrap.php');
 
 // Classes have first letter big
 $class = ucfirst($_REQUEST['class']);
 
+if (!$class) $class = 'CLASSNOTSET';
+
+$model = $class . '_Model';
+
 // Instance class
-$object = new $class;
+$object = new $model;
+
 $action = $_REQUEST['action'];
 
 // No action defined, give an erro
@@ -27,9 +42,9 @@ if (!$action) {
 } else {
 	// Checks if the Method on Object is callable
 	if (!is_callable(array($object, $action))) {
-		throw new Exception('<b>Handler:</b>' . $_REQUEST['action'] . ' method not found on object <b>' . $_REQUEST['class'] . '</b>');
+		throw new Exception('<b>Handler:</b> ' . $_REQUEST['action'] . ' method not found on object <b>' . $_REQUEST['class'] . '</b>');
 	// If we're querying directly to the database
    	} else {
-		$object->$action($_REQUEST);
+		echo $object->$action($_REQUEST);
 	}
 }
