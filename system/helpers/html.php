@@ -30,4 +30,17 @@ class Html {
 		return Url::site() . $link;				
 	}
 
+	/*
+	 *
+	 * Directly outputs the URL unlike anchor which returns it
+	 *
+	 * @param   string   $link   The link
+	 * @return  string   ...     The real link
+	 *
+	 */
+
+	public static function a($link) {
+		echo Url::site() . $link;				
+	}
+
 }
