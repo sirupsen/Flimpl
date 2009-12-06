@@ -6,6 +6,20 @@ import shutil
 
 class Flimpl:
 
+	def run(self):
+		try:
+			func = getattr(self, sys.argv[1])
+		except AttributeError:
+			print "The command", sys.argv[1], "doesn't exist"
+		except IndexError:
+			self.help()
+		else:
+			if callable(func):
+				try:
+					func()
+				except IndexError:
+					print "Missing argument for command '" + sys.argv[1] + "' check help"
+
 	def help(self):
 		print "Commands are as follows:"
 		print "\tapp [name] - Creates the files for a new app."
@@ -63,15 +77,4 @@ class Flimpl:
 		else:
 			print "Not deleting app", sys.argv[2]
 
-try:
-	func = getattr(Flimpl(), sys.argv[1])
-except AttributeError:
-	print "The command", sys.argv[1], "doesn't exist"
-except IndexError:
-	Flimpl().help()
-else:
-	if callable(func):
-		try:
-			func()
-		except IndexError:
-			print "Missing argument for command '" + sys.argv[1] + "' check help"
+Flimpl().run()
