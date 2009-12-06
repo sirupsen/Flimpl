@@ -24,6 +24,7 @@ class Url {
 		// Put all the folders from this path which are not public or index.php
 		// into an array
 		for ($i = 1; $i < count($script_path); $i++) {
+			// If the file is not public or index.php add it to the dirs array
 			if (!in_array($script_path[$i], array('public', 'index.php'))) {
 				$dirs[] = $script_path[$i];
 			}
