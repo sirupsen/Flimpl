@@ -36,6 +36,7 @@ class Input {
 		if (!self::$instance) {
 			// If there's any $_POST data, clean it
 			if (is_array($_POST)) {
+				// For each value, clean it
 				foreach($_POST as $key => $val) {
 					$_POST[$key] = $this->xssClean($val);
 				}
