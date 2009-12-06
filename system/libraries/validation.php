@@ -20,19 +20,6 @@ class Validation {
 		$this->input = $input;
 	}
 
-	public function addRule($field, $rules) {
-		// Get all rules
-		$rules = func_get_args();
-		// Slice them up
-		$rules = array_slice($rules, 1);
-
-		// For each of our rules, add it to our rule variable
-		foreach ($rules as $rule) {
-            // Add the rule with it's arguments
-			$this->rules[$field][] = $rule;
-		}
-	}
-
 	public function addRules($field) {
 		$this->rules = $field;
 	}
