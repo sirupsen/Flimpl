@@ -13,10 +13,6 @@ class Flimpl:
 		print "\thelp - Lists this information"
 
 	def app(self):
-
-		if len(sys.argv[2]) < 1:
-			exit
-
 		# Open the controller for the new app
 		controller = open('application/controllers/' + sys.argv[2] + '.php', 'wa')
 		# Create the basic class
