@@ -2,11 +2,21 @@
 
 import sys
 import os
+import shutil
 
 class Flimpl:
 
+	def help(self):
+		print "Commands are as follows:"
+		print "\tapp [name] - Creates the files for a new app."
+		print "\tappdel [name] - Delete the files from an existing app."
+		print "\thelp - Lists this information"
+
 	def app(self):
-	 	
+
+		if len(sys.argv[2]) < 1:
+			exit
+
 		# Open the controller for the new app
 		controller = open('application/controllers/' + sys.argv[2] + '.php', 'wa')
 		# Create the basic class
@@ -22,8 +32,10 @@ class Flimpl:
 		os.mkdir('application/views/' + sys.argv[2])
 
 		# Create the view file for the index
-		index = open('application/views/' + sys.argv[2] + '.php', 'wa')
+		index = open('application/views/' + sys.argv[2] + '/index.php', 'wa')
 		index.close()
+
+		print "Files created for", sys.argv[2], "app"
 
 	def appdel(self):
 		# Confirm deletion
@@ -47,7 +59,7 @@ class Flimpl:
 			
 			# If the view directory for the app is present, delete it, else - error
 			if os.path.exists('application/views/' + sys.argv[2]):
-				os.removedirs('application/views/' + sys.argv[2])
+				shutil.rmtree('application/views/' + sys.argv[2])
 				print "View for", sys.argv[2], "app deleted"
 			else:
 				print "View for", sys.argv[2], "app not found"
@@ -55,5 +67,15 @@ class Flimpl:
 		else:
 			print "Not deleting app", sys.argv[2]
 
-# Call the method defined in the argument given
-getattr(Flimpl(), sys.argv[1])()
+try:
+	func = getattr(Flimpl(), sys.argv[1])
+except AttributeError:
+	print "The command", sys.argv[1], "doesn't exist"
+except IndexError:
+	Flimpl().help()
+else:
+	if callable(func):
+		try:
+			func()
+		except IndexError:
+			print "Missing argument for command '" + sys.argv[1] + "' check help"
