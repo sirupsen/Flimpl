@@ -19,8 +19,15 @@ class Database {
 	/* Wields the last query executed */
 	public $last_query;
 	
+	// Singleton instance
 	protected static $instance;
 	
+	/*
+	 *
+	 * Singleton
+	 *
+	 */
+
 	public static function instance() {
 		if (!self::$instance) {
 			return new self;
