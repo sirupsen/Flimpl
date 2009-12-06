@@ -1,8 +1,8 @@
 <?php
 /*
  *
- * Validation class, here in order to make server-side
- * validation easier.
+ * Validation class, simplifying the process of making
+ * server-side validation
  *
  */
 
