@@ -2,7 +2,7 @@
 
 /*
  *
- * Benchmarking of the application
+ * Benchmarking for an application
  *
  */
 
@@ -39,7 +39,7 @@ class Benchmark {
 
 	/*
 	 *
-	 * What's the result of the benchmark in seconds?
+	 * Result of benchmark in seconds?
 	 *
 	 * @param    string    $name    Name of the benchmark
 	 * @return   int       ..       The time in seconds
