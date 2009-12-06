@@ -16,7 +16,7 @@
 
 <!-- If we return true, say yes - no if false -->
 <p>Let's check if it's valid data with some cool server-side validation! <br/>
-Was the data valid? <b><?php echo ($validation) ? 'Yes' : 'No'; ?></b></p>
+Was the data valid? <b><?php echo ((bool)$validation) ? 'Yes' : 'No'; ?></b></p>
 
 <!-- Call some data directly from the model -->
 <p>This data came from our model: <b> <?php echo $model->example(); ?> </b>

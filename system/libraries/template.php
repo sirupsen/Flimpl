@@ -51,6 +51,10 @@ final class Template {
 		$this->data[$variable] = $data;
 	}
 
+	public function __get($name) {
+		return $this->data[$name];
+	}
+
 	/*
 	*
 	* When the object is converted to a string, it prints out

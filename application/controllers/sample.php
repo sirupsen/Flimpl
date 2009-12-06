@@ -27,10 +27,11 @@ class Sample_Controller extends Controller {
 		// New validation with this data
 		$val = new Validation($data);
 
-		// Lets add some rules
-		$val->addRule('mail', 'email', 'required');
-		$val->addRule('website', 'url', 'required');
-		$val->addRule('username', 'required');
+		$val->addRules(array(
+			'mail' => array('email', 'required'),
+			'website' => array('url', 'required'),
+			'username' => array('required')
+		));
 
 		// Did it work? Set true|false into $validation, depending
 		// on if it was a sucess or not

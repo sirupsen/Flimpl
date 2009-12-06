@@ -66,4 +66,8 @@ class Controller {
 	public function __set($name, $data) {
 		$this->template->$name = $data;
 	}
+
+	public function __get($name) {
+		return $this->template->$name;
+	}
 }

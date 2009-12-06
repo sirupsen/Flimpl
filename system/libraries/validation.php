@@ -33,6 +33,10 @@ class Validation {
 		}
 	}
 
+	public function addRules($field) {
+		$this->rules = $field;
+	}
+
 	public function validate() {
         // Foreach of the fields [Username]
 		foreach ($this->rules as $key => $rules) {
@@ -47,6 +51,6 @@ class Validation {
 		}
 
         // Return true if there are no errors
-		return $this->errors === array();
+		return empty($this->errors);
 	}
 }
