@@ -24,7 +24,13 @@ class Flimpl:
 		print "Commands are as follows:"
 		print "\tapp [name] - Creates the files for a new app."
 		print "\tappdel [name] - Delete the files from an existing app."
+		print "\tview [app] [name] - Create a view file for an app."
 		print "\thelp - Lists this information"
+	
+	def view(self):
+		# Create the view file
+		index = open('application/views/' + sys.argv[2] + '/' + sys.argv[3] + '.php', 'wa')
+		index.close()
 
 	def app(self):
 		# Open the controller for the new app
