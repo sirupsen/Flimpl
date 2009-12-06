@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="<?php echo Html::anchor('css/style.css'); ?>" type="text/css">
+	<link rel="stylesheet" href="<?php html::a('css/style.css'); ?>" type="text/css">
 </head>
 <body>
 	<div id="wrapper">

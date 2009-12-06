@@ -8,6 +8,6 @@
 </script>
 
 <!-- Include the JS script -->
-<script type="text/javascript" src="<?php echo html::anchor('js/scripts'); ?>"></script>
+<script type="text/javascript" src="<?php echo html::a('js/scripts'); ?>"></script>
 </body>
 </html>
