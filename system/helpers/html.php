@@ -40,7 +40,7 @@ class Html {
 	 */
 
 	public static function a($link) {
-		echo Url::site() . $link;				
+		echo self::anchor($link);
 	}
 
 }
