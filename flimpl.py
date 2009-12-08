@@ -10,8 +10,10 @@ class Flimpl:
 	def run(self):
 		try:
 			func = getattr(self, sys.argv[1])
+		# Command not found
 		except AttributeError:
 			print "The command", sys.argv[1], "doesn't exist"
+		# No action defined, show help
 		except IndexError:
 			self.help()
 		else:
@@ -23,39 +25,46 @@ class Flimpl:
 
 	def help(self):
 		print "Commands are as follows:"
-		print "\tapp [name] - Creates the files for a new app."
-		print "\tappdel [name] - Delete the files from an existing app."
-		print "\tview [app] [name] - Create a view file for an app."
-		print "\treadme - Download README file for Flimpl."
-		print "\tsample - Download the Sample app."
+		print "\tapp [name] - Creates files for new app."
+		print "\tappdel [name] - Delete files from existing app."
+		print "\tview [app] [name] - Create a view file for app."
+		print "\treadme - Download README file"
+		print "\tsample - Download Sample app."
 		print "\thelp - Lists this information"
 
 	def readme(self):
+		# Prepare
 		url = urllib.URLopener()
 
+		# If the README file already exists, delete it
 		if os.path.exists('README.markdown'):
 			print "Readme already exists, deleting and downloding new.."
 			os.remove('README.markdown')	
-			url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown', 'README.markdown')
-			print "Done! Saved to ./README.markdown"
-		else:
-			url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown', 'README.markdown')
-			print "Done! Saved to ./README.markdown"
+
+		# Download the file
+		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown', 'README.markdown')
+		print "Done! Saved to ./README.markdown"
 
 	def sample(self):
+		# Prepare
 		url = urllib.URLopener()
 
+		# Download the controller for the sample
 		print "Downloading controller.."
 		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/controllers/sample.php', 'application/controllers/sample.php')
 		print "Done!"
 
+		# Then the model
 		print "Downloading model.."
 		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/models/sample.php', 'application/models/sample.php')
 		print "Done!"
 		
+		# Finally, create the sample view folder and put the index into here
 		print "Creating view folder and fetching sample view.."
 		os.mkdir("application/views/sample")
 		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/views/sample/index.php', 'application/views/sample/index.php')
+
+		# All done!
 		print "Done!"
 	
 	def view(self):
