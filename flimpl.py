@@ -2,6 +2,7 @@
 
 import sys
 import os
+import urllib
 import shutil
 
 class Flimpl:
@@ -25,7 +26,37 @@ class Flimpl:
 		print "\tapp [name] - Creates the files for a new app."
 		print "\tappdel [name] - Delete the files from an existing app."
 		print "\tview [app] [name] - Create a view file for an app."
+		print "\treadme - Download README file for Flimpl."
+		print "\tsample - Download the Sample app."
 		print "\thelp - Lists this information"
+
+	def readme(self):
+		url = urllib.URLopener()
+
+		if os.path.exists('README.markdown'):
+			print "Readme already exists, deleting and downloding new.."
+			os.remove('README.markdown')	
+			url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown', 'README.markdown')
+			print "Done! Saved to ./README.markdown"
+		else:
+			url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown', 'README.markdown')
+			print "Done! Saved to ./README.markdown"
+
+	def sample(self):
+		url = urllib.URLopener()
+
+		print "Downloading controller.."
+		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/controllers/sample.php', 'application/controllers/sample.php')
+		print "Done!"
+
+		print "Downloading model.."
+		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/models/sample.php', 'application/models/sample.php')
+		print "Done!"
+		
+		print "Creating view folder and fetching sample view.."
+		os.mkdir("application/views/sample")
+		url.retrieve('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/views/sample/index.php', 'application/views/sample/index.php')
+		print "Done!"
 	
 	def view(self):
 		# Create the view file
