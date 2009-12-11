@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require 'open-uri'
 require 'fileutils'
 
