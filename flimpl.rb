@@ -9,7 +9,6 @@ class Utilities
 		file.write(open(url).read)
 		file.close
 	end
-
 end
 
 class Flimpl < Utilities
@@ -20,19 +19,27 @@ class Flimpl < Utilities
 
 	def initialize(*argv)
 		@argv = argv
+		# Set the paths
 		@controller = "application/controllers/#{@argv[1]}.php"
 		@model = "application/models/#{@argv[1]}.php"
 		@view = "application/views/#{@argv[1]}"
 
+		# Try to call method from first argument
 		begin
-			send(ARGV[0])
+			send(@argv[0])
+		# Not found
 		rescue NoMethodError
-			puts "Command '" + ARGV[0] + "' doesn't exist"
+			puts "Command '#{@argv[0]}' not found."
+		# No argument
 		rescue TypeError
-			self.help
+			help
+		# Calling function which has arguments
+		rescue ArgumentError
+			puts "Command '#{@argv[0]}' not found."
 		end
 	end
 
+	# Print out help
 	def help
 		puts <<-help
 Commands for Flimpl.rb:
@@ -45,30 +52,38 @@ Commands for Flimpl.rb:
 help
 	end
 
+	# Get readme
 	def readme
+		# Confirm replacing old readme
 		if File.exist?('README')
 			print "Replace old README file? "
-			input = $stdin.gets
+			input = $stdin.gets.strip
 		end
 
-		if ["y", "yes", "ok", "k", "yeah", "ye"].include?(input.strip)
+		# If positive, delete old
+		if ["y", "yes", "ok", "k", "yeah", "ye"].include?(input)
 			File.delete('README') 
 			puts "Deleted old README file."
+		# Exit only if input (which would be negative)
 		else
 			exit if input
 		end
 
 		print "Downloading README file.. "
+		# Download the file
 		download("http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown", 'README')
 		print "Done!\nREADME file saved to ./README\n"
 	end 
 
+	# Download sample file
 	def sample
+		# Set paths
 		controller = "application/controllers/sample.php"
 		model = "application/models/sample.php"
 		view = "application/views/sample"
 		sample_view = "application/views/sample/index.php"
 
+		# Download controller
 		print "Downloading controller.. "
 		if File.exist?(controller)
 			puts "Already exists!"
@@ -102,12 +117,14 @@ help
 		end
 	end
 
+	# Create new app
 	def app
 		unless @argv[1]
 			puts "Lacking argument [App name]"
 			exit
 		end
 
+		# Make controller for app
 		if File.exist?(@controller)
 			puts "Controller for #{@argv[1]} (#{@controller}) already exist."
 		else
@@ -118,6 +135,7 @@ help
 			puts "Created Controller. (#{@controller})"
 		end
 
+		# Make model
 		if File.exist?(@model)
 			puts "Model for #{@argv[1]} (#{@model}) already exist."
 		else
@@ -128,6 +146,7 @@ help
 			puts "Created Model. (#{@model})"
 		end
 
+		# Make view
 		if File.exist?(@view)
 			puts "View folder for #{@argv[1]} (#{@view}) already exist."
 		else
@@ -136,6 +155,7 @@ help
 			puts "Created View folder. (#{@view})"
 		end
 
+		# Make view index
 		if File.exist?(@view + '/index.php')
 			puts "Index file for #{@argv[1]} (#{@view}/index.php) already exist."
 		else
@@ -146,16 +166,19 @@ help
 		end
 	end
 
+	# Delete app
 	def appdel
 		unless @argv[1]
 			puts "Lacking argument [App name]"
 			exit
 		end
 
+		# Confirm deletion
 		print "Confirm deletion of app. #{@argv[1]}: "
-		input = $stdin.gets
+		input = $stdin.gets.strip
 
-		if ["y", "yes", "ok", "k", "yeah", "ye"].include?(input.strip)
+		# If positive, delete it
+		if ["y", "yes", "ok", "k", "yeah", "ye"].include?(input)
 			if File.exist?(@controller)
 				File.delete(@controller)
 				puts "Deleted Controller. (#{@controller})"
@@ -176,11 +199,13 @@ help
 			else
 				puts "View folder (#{@view}) not found."
 			end
+		# Else, exit
 		else
-			exit if input
+			exit
 		end
 	end
 
+	# Create view file
 	def view
 		unless @argv[1]
 			puts "Lacking argument [App name]"
@@ -191,6 +216,7 @@ help
 			exit
 		end
 
+		# Create it, that's all
 		file = open('application/views/' + @argv[1] + '/' + @argv[2] + '.php', 'wb')
 		file.close
 	end
