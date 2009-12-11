@@ -12,11 +12,6 @@ class Utilities
 end
 
 class Flimpl < Utilities
-	@argv
-	@controller
-	@model
-	@view
-
 	def initialize(*argv)
 		@argv = argv
 		# Set the paths
