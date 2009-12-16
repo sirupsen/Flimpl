@@ -1,220 +1,234 @@
 #!/usr/bin/env ruby
 
-require 'open-uri'
 require 'fileutils'
+require 'open-uri'
 
-class Utilities
-	def download(url, save)
-		file = File.open(save, 'wb')
-		file.write(open(url).read)
-		file.close
-	end
+# App list
+class FlimplList < Hash
+  # New instance
+  def initialize(path)
+    @path = path
+ 
+    notallowed = ["..", "."]
+ 
+    # Load existing apps
+    Dir.foreach(@path + 'controllers/') do |file|
+      unless notallowed.include?(file)
+        add file.split(".")[0]
+      end
+    end
+ 
+    self
+  end
+ 
+  # Add an app
+  def add(app)
+    if app.is_a?(App)
+      self[app.name] = app
+    else
+      self[app] = App.new(app)
+    end
+  end
+ 
+  # Write
+  def write
+    # For each of the apps
+    each do |index, app|
+      # Possible files and their contents
+      files = [
+        ["controllers/#{app}.php", "<?php\n\nclass #{app}_Controller extends Controller {\n}"],
+        ["models/#{app}.php", "<?php\n\nclass #{app}_Model {\n}"],
+        ["views/#{app}"],
+        ["views/#{app}/index.php"],
+      ]
+ 
+      # If app wants to be ccreated
+      if app.write?
+        files.each do |file|
+          if File.exist?(@path + file[0])
+            return false
+          elsif file[0][-3..-1] == 'php'
+            File.open(@path + file[0], 'w') { |f| f.write(file[1]) }
+          else
+            Dir.mkdir(@path + file[0])
+          end
+        end
+      # If app wants to be deleted
+      elsif app.delete?
+        files.each do |file|
+          if File.directory?(@path + file[0])
+            FileUtils.rm_rf(@path + file[0])
+          elsif File.exist?(@path + file[0])
+            File.delete(@path + file[0])
+          end
+        end
+      end
+      
+      app.view.each do |view|
+        File.open(@path + "/views/#{app}/#{view}.php", 'w') {}
+      end
+    end
+  end
+end
+ 
+# App
+class App
+  attr_accessor :name, :write, :delete
+  attr_reader :view
+ 
+  alias_method :write?, :write
+  alias_method :delete?, :delete
+ 
+  def initialize(name, write = false, delete = false)
+    @name = name
+    @write = write
+    @delete = delete
+    @view = []
+  end
+
+  def view=(name)
+    @view << name
+  end
+
+  def delete
+    @delete = true
+  end
+ 
+  def to_s
+    @name
+  end
 end
 
-class Flimpl < Utilities
-	def initialize(*argv)
-		@argv = argv
-		# Set the paths
-		@controller = "application/controllers/#{@argv[1]}.php"
-		@model = "application/models/#{@argv[1]}.php"
-		@view = "application/views/#{@argv[1]}"
+# Handling external content
+class FlimplExternal
+  # Download a file
+  def download(file, url, input = false)
+    if ["y", "Y"].include?(input) 
+      File.delete(file)
+    else 
+      exit if input
+    end
 
-		# Try to call method from first argument
-		begin
-			send(@argv[0])
-		# Not found
-		rescue NoMethodError
-			puts "Command '#{@argv[0]}' not found."
-		# No argument
-		rescue TypeError
-			help
-		# Calling function which has arguments
-		rescue ArgumentError
-			puts "Command '#{@argv[0]}' not found."
-		end
-	end
+    raise "File #{file} already exist." if File.exist?(file)
 
-	# Print out help
-	def help
-		puts <<-help
+    File.open(file, 'w') { |f| f.write(open(url).read) }
+  end
+
+  # Download sample files
+  def sample(input = false)
+    files = [
+            ['application/controllers/sample.php', 'http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/controllers/sample.php'],
+            ['application/models/sample.php', 'http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/models/sample.php'], 
+            ['application/views/sample'],
+            ['application/views/sample/index.php', 'http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/views/sample/index.php']
+    ] 
+
+    files.each do |file|
+      if file[0][-3..-1] == 'php'
+        download(file[0], file[1], input)
+      else
+        Dir.mkdir(file[0])
+      end
+    end
+  end
+end
+ 
+# Command line interface
+class CommandLineInterface
+  # Instance
+  def initialize
+    @list = FlimplList.new("application/")	
+    @ext = FlimplExternal.new
+
+    # Handle command
+    begin
+      send ARGV[0]
+      write
+    rescue ArgumentError
+      puts $!
+    rescue TypeError
+      help
+    end
+  end
+ 
+  # List apps
+  def list
+    @list.each { |index, app| puts app.name.capitalize }
+  end
+
+  # Download sample
+  def sample
+    @ext.sample
+  end
+
+  # Create view
+  def view
+    raise ArgumentError, "Missing argument: [App name] for View" unless ARGV[1]
+    raise ArgumentError, "Missing argument: [View name] for View" unless ARGV[2]
+
+    begin
+      @list[ARGV[1]].view = ARGV[2]
+    # Couldn't call #view on object
+    rescue NoMethodError
+      puts "App. '" + ARGV[1] + "' doesn't exist."
+    end
+  end
+
+  # Get readme
+  def readme
+    file = "README"
+    url = "http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown"
+
+    begin
+      @ext.download(file, url)
+    rescue RuntimeError
+      print file + " already exist. Confirm replacing: [Y/N] "
+      input = $stdin.gets.strip
+    end
+
+    @ext.download(file, url, input)
+  end
+
+  def help
+    puts <<-help
 Commands for Flimpl.rb:
    app [name] - Creates files for new app.
-   appdel [name] - Delete files from existing app.
+   del [name] - Delete files from existing app.
    view [app] [name] - Create a view file for app.
    readme - Download README file
    sample - Download Sample app.
    help - Prints this information.
 help
-	end
+  end
+ 
+  # Create app
+  def app
+    raise ArgumentError, "Missing argument: [App name] for View" unless ARGV[1]
 
-	# Get readme
-	def readme
-		# Confirm replacing old readme
-		if File.exist?('README')
-			print "Replace old README file? "
-			input = $stdin.gets.strip
-		end
+    @list.add App.new(ARGV[1], true)
+  end
+ 
+  # Delete app
+  def del
+    raise ArgumentError, "Missing argument: [App name] for View" unless ARGV[1]
 
-		# If positive, delete old
-		if ["y", "yes", "ok", "k", "yeah", "ye"].include?(input)
-			File.delete('README') 
-			puts "Deleted old README file."
-		# Exit only if input (which would be negative)
-		else
-			exit if input
-		end
+    ARGV[1..ARGV.length].each do |app|
+      print "Confirm deletion of #{app}: [Y/N] "
+      input = $stdin.gets.strip
 
-		print "Downloading README file.. "
-		# Download the file
-		download("http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown", 'README')
-		print "Done!\nREADME file saved to ./README\n"
-	end 
-
-	# Download sample file
-	def sample
-		# Set paths
-		controller = "application/controllers/sample.php"
-		model = "application/models/sample.php"
-		view = "application/views/sample"
-		sample_view = "application/views/sample/index.php"
-
-		# Download controller
-		print "Downloading controller.. "
-		if File.exist?(controller)
-			puts "Already exists!"
-		else
-			download('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/controllers/sample.php', controller)
-			print "Done!\n"
-		end
-
-		print "Downloading model.. "
-		if File.exist?(model)
-			puts "Already exists!"
-		else
-			download('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/models/sample.php', model)
-			print "Done!\n"
-		end
-
-		print "Creating view folder.. "
-		if File.exist?(view)
-			puts "Already exists!"
-		else
-			Dir.mkdir(view)
-			print "Done!"
-		end
-
-		print "Downloading sample view.. "
-		if File.exist?(sample_view)
-			puts "Already exists!"
-		else
-			download('http://github.com/Sirupsen/Flimpl-Extras/raw/master/sample/views/sample/index.php', sample_view)
-			print "Done!"
-		end
-	end
-
-	# Create new app
-	def app
-		unless @argv[1]
-			puts "Lacking argument [App name]"
-			exit
-		end
-
-		# Make controller for app
-		if File.exist?(@controller)
-			puts "Controller for #{@argv[1]} (#{@controller}) already exist."
-		else
-			controller = open(@controller, 'wb')
-			controller.write("<?php\n\nclass #{@argv[1].capitalize}_Controller extends Controller {\n}")
-			controller.close()
-
-			puts "Created Controller. (#{@controller})"
-		end
-
-		# Make model
-		if File.exist?(@model)
-			puts "Model for #{@argv[1]} (#{@model}) already exist."
-		else
-			model = open(@model, 'wb')
-			model.write("<?php\n\nclass #{@argv[1].capitalize}_Model {\n}")
-			model.close()
-
-			puts "Created Model. (#{@model})"
-		end
-
-		# Make view
-		if File.exist?(@view)
-			puts "View folder for #{@argv[1]} (#{@view}) already exist."
-		else
-			Dir.mkdir(@view)
-
-			puts "Created View folder. (#{@view})"
-		end
-
-		# Make view index
-		if File.exist?(@view + '/index.php')
-			puts "Index file for #{@argv[1]} (#{@view}/index.php) already exist."
-		else
-			view = open("application/views/#{@argv[1]}/index.php", 'wb')
-			view.close()
-
-			puts "Created Index view. (#{@view}/index.php)"
-		end
-	end
-
-	# Delete app
-	def appdel
-		unless @argv[1]
-			puts "Lacking argument [App name]"
-			exit
-		end
-
-		# Confirm deletion
-		print "Confirm deletion of app. #{@argv[1]}: "
-		input = $stdin.gets.strip
-
-		# If positive, delete it
-		if ["y", "yes", "ok", "k", "yeah", "ye"].include?(input)
-			if File.exist?(@controller)
-				File.delete(@controller)
-				puts "Deleted Controller. (#{@controller})"
-			else
-				puts "Controller (#{@controller}) not found."
-			end
-
-			if File.exist?(@model)
-				File.delete(@model)
-				puts "Deleted Model. (#{@model})"
-			else
-				puts "Model (#{@model}) not found."
-			end
-
-			if File.exist?(@view)
-				FileUtils.rm_rf(@view)
-				puts "Deleted view folder. (#{@view})"
-			else
-				puts "View folder (#{@view}) not found."
-			end
-		# Else, exit
-		else
-			exit
-		end
-	end
-
-	# Create view file
-	def view
-		unless @argv[1]
-			puts "Lacking argument [App name]"
-			exit
-		end
-		unless @argv[2]
-			puts "Lacking argument [View name]"
-			exit
-		end
-
-		# Create it, that's all
-		file = open('application/views/' + @argv[1] + '/' + @argv[2] + '.php', 'wb')
-		file.close
-	end
+      begin
+        @list[app].delete = true if ["y", "Y"].include?(input)
+      # App not found, #delete not found on object
+      rescue NoMethodError
+        puts "App '" + app + "' doesn't exist"
+      end
+    end
+  end
+ 
+  # Write
+  def write
+    @list.write
+  end
 end
-
-Flimpl.new(*ARGV)
+ 
+CommandLineInterface.new
