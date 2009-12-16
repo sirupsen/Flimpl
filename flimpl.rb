@@ -35,37 +35,49 @@ class FlimplList < Hash
     # For each of the apps
     each do |index, app|
       # Possible files and their contents
-      files = [
+      @files = [
         ["controllers/#{app}.php", "<?php\n\nclass #{app}_Controller extends Controller {\n}"],
         ["models/#{app}.php", "<?php\n\nclass #{app}_Model {\n}"],
         ["views/#{app}"],
         ["views/#{app}/index.php"],
       ]
- 
-      # If app wants to be ccreated
-      if app.write?
-        files.each do |file|
-          if File.exist?(@path + file[0])
-            return false
-          elsif file[0][-3..-1] == 'php'
-            File.open(@path + file[0], 'w') { |f| f.write(file[1]) }
-          else
-            Dir.mkdir(@path + file[0])
-          end
-        end
-      # If app wants to be deleted
-      elsif app.delete?
-        files.each do |file|
-          if File.directory?(@path + file[0])
-            FileUtils.rm_rf(@path + file[0])
-          elsif File.exist?(@path + file[0])
-            File.delete(@path + file[0])
-          end
+
+      new(app)
+      delete(app)
+      view(app)
+    end
+  end
+
+  def view(app)
+    app.view.each do |view|
+      File.open(@path + "/views/#{app}/#{view}.php", 'w') {}
+    end
+  end
+
+  def new(app)
+    # If app wants to be ccreated
+    if app.write?
+      @files.each do |file|
+        if File.exist?(@path + file[0])
+          return false
+        elsif file[0][-3..-1] == 'php'
+          File.open(@path + file[0], 'w') { |f| f.write(file[1]) }
+        else
+          Dir.mkdir(@path + file[0])
         end
       end
-      
-      app.view.each do |view|
-        File.open(@path + "/views/#{app}/#{view}.php", 'w') {}
+    end
+  end
+
+  def delete(app)
+    # If app wants to be deleted
+    if app.delete?
+      @files.each do |file|
+        if File.directory?(@path + file[0])
+          FileUtils.rm_rf(@path + file[0])
+        elsif File.exist?(@path + file[0])
+          File.delete(@path + file[0])
+        end
       end
     end
   end
