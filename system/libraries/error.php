@@ -54,6 +54,7 @@ class Error {
 	 */
 
 	public static function error_handler($errno, $errstr, $errfile, $errline) {
-		echo $errorstr;
+    if ($errno != 8)
+      echo "<b>Error {$errno}:</b> {$errstr} (In $errfile at line $errline)<br/>";
 	}
 }

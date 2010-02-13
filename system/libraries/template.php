@@ -73,7 +73,7 @@ final class Template {
 		 *
 		 */
 
-		extract($this->data);
+    if ($this->data) extract($this->data);
 		
 		/*
 		 *

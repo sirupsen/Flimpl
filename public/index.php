@@ -9,7 +9,7 @@ Benchmark::start();
  * http://www.php.net/timezones
  *
  */
-date_default_timezone_set('Copenhagen/Denmark');
+// date_default_timezone_set('Copenhagen/Denmark');
 
 // Faster to find the root path and then figure the others from there..
 $root = realpath('../');

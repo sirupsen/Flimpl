@@ -8,7 +8,7 @@ Config::set('debug', true);
 Config::set('database', array(
 		'host'     => 'localhost',
 		'username' => 'root',
-		'password' => '',
+		'password' => 'root',
 		'database' => 'db' 
 	)
 );

@@ -53,18 +53,6 @@ class Input {
 					$_POST[$key] = $this->xssClean($val);
 				}
 			}
-			// Clean SESSION
-			if (is_array($_SESSION)) {
-				foreach($_SESSION as $key => $val) {
-					$_POST[$key] = $this->xssClean($val);
-				}
-			}
-			// Clean COOKIES
-			if (is_array($_COOKIES)) {
-				foreach($_COOKIE as $key => $val) {
-					$_POST[$key] = $this->xssClean($val);
-				}
-			}
 		}
 
 		// Singleton instance

@@ -73,7 +73,7 @@ class Url {
 		static $url;
 
 		// If static $url is currently empty, get the current parameters
-		if (!$url) {
+		if (!$url && $_GET['url']) {
 			$url = explode('/', $_GET['url']);
 		}
 
