@@ -189,16 +189,16 @@ class CommandLineInterface
   # Get readme
   def readme
     file = "README"
-    url = "http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown"
+    Url = "http://github.com/Sirupsen/Flimpl-Extras/raw/master/README_FLIMPL.markdown"
 
     begin
-      @ext.download(file, url)
+      @ext.download(file, Url)
     rescue RuntimeError
       print file + " already exist. Confirm replacing: [Y/N] "
       input = $stdin.gets.strip
     end
 
-    @ext.download(file, url, input)
+    @ext.download(file, Url, input)
   end
 
   def help

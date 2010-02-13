@@ -105,7 +105,7 @@ final class Template {
 		// If a custom header/bottom for this specific file is found, load it
 		if (file_exists($view_path . $part . '.' . $this->action . '.php')) {
 		   return $view_path . $part . '.' . $this->action . '.php';
-		// elseIf a custom header/bottom for this specific controller is found, load it
+		// elseIf a custom header/bottom for this specific app. is found, load it
 		} elseif (file_exists($view_path . $part . '.php')) {
 			return $view_path . $part . '.php';
 		// Else, load default

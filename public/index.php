@@ -21,7 +21,6 @@ DEFINE("PBLPATH", $root . '/public' . '/');
 // System path
 DEFINE("SYSPATH", $root . '/system' . '/');
 
-
 // Loading up the bootstrap which prepares our environment
 require(SYSPATH . 'core/bootstrap.php');
 

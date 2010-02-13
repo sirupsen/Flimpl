@@ -12,83 +12,83 @@
 
 class Valid {
 
-	/*
-	 *
-	 * Email validation, checks if the email is valid
-	 *
-	 * @parm 	string 	$email 	The email to be validated
-	 * @return 	bool 	true|false
-	 *
-	 */
+  /*
+   *
+   * Email validation, checks if the email is valid
+   *
+   * @parm 	string 	$email 	The email to be validated
+   * @return 	bool 	true|false
+   *
+   */
 
-	public static function email($email) {
-		if(!preg_match ("/^[\w\.-]{1,}\@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]+$/", $email)) {
-			return false;
-		}
+  public static function email($email) {
+    if(!preg_match ("/^[\w\.-]{1,}\@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]+$/", $email)) {
+      return false;
+    }
 
-		list($prefix, $domain) = split("@",$email);
+    list($prefix, $domain) = split("@",$email);
 
-        if(function_exists("getmxrr") && getmxrr($domain, $mxhosts)) {
-      		return true;
-        } elseif (@fsockopen($domain, 25, $errno, $errstr, 5)) {
-        	return true;
-        } else {
-        	return false;
-        }
-	}
+    if(function_exists("getmxrr") && getmxrr($domain, $mxhosts)) {
+      return true;
+    } elseif (@fsockopen($domain, 25, $errno, $errstr, 5)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-	/*
-	 *
-	 * URL validation, checks if the url passed is valid
-	 *
-	 * @parm 	string 	$val 	The url to check
-	 * @return 	bool 	true|false
-	 *
-	 */
+  /*
+   *
+   * URL validation, checks if the url passed is valid
+   *
+   * @parm 	string 	$val 	The url to check
+   * @return 	bool 	true|false
+   *
+   */
 
-	public static function url($val) {
-		$ereg = "((https?|ftp|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
-		if(!eregi($ereg,$val))
-			return false;
+  public static function url($val) {
+    $ereg = "((https?|ftp|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
+    if(!eregi($ereg,$val))
+      return false;
 
-		return true;	
-	}
+    return true;	
+  }
 
-	/*
-	 *
-	 * Returns true if not empty
-	 *
-	 * @return 	bool 	true|false
-	 *
-	 */
+  /*
+   *
+   * Returns true if not empty
+   *
+   * @return 	bool 	true|false
+   *
+   */
 
-	public static function required($val) {
-		return (bool) $val;
-	}
+  public static function required($val) {
+    return (bool) $val;
+  }
 
-	/*
-	 *
-	 * Returns true if the length is between the two
-	 * lengths given in an array
-	 *
-	 * @return 	bool 	true|false
-	 *
-	 */
+  /*
+   *
+   * Returns true if the length is between the two
+   * lengths given in an array
+   *
+   * @return 	bool 	true|false
+   *
+   */
 
-	public static function length($val, array $length) {
-		$size = strlen($val);
-		$return = false;
+  public static function length($val, array $length) {
+    $size = strlen($val);
+    $return = false;
 
-		if (count($length) > 1) {
-			list ($min, $max) = $length;
+    if (count($length) > 1) {
+      list ($min, $max) = $length;
 
-			if ($size >= $min AND $size <= $max) {
-				$return = true;
-			}
-		} else {
-			$return = ($size === (int) $length[0]);
-		}
+      if ($size >= $min AND $size <= $max) {
+        $return = true;
+      }
+    } else {
+      $return = ($size === (int) $length[0]);
+    }
 
-		return $return;
-	}
+    return $return;
+  }
 }

@@ -42,5 +42,4 @@ class Html {
 	public static function a($link) {
 		echo self::anchor($link);
 	}
-
 }
